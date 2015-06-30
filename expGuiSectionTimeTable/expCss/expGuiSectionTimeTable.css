@@ -1,0 +1,493 @@
+@charset "utf-8";
+/* 区間時刻表パーツ */
+.expGuiSectionTimeTable {
+    border-collapse: collapse;
+    font-size: 1em;
+    font-family: "メイリオ", Meiryo, Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    _font-family: "メイリオ", Meiryo,"ＭＳ Ｐゴシック", Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "MS PGothic", sans-serif;
+    text-align: left;
+}
+/* 汎用処理 */
+.expGuiSectionTimeTable .exp_clearfix:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: ".";
+    font-size: 0;
+}
+/* 時刻表のヘッダー */
+.expGuiSectionTimeTable .exp_header {
+    border: 1px solid #a0aab4;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 0px 1px #fff;
+}
+/* ヘッダーの発着地 */
+.expGuiSectionTimeTable .exp_header .exp_from,
+.expGuiSectionTimeTable .exp_header .exp_to,
+.expGuiSectionTimeTable .exp_header .exp_name {
+    margin: 10px 7px;
+}
+.expGuiSectionTimeTable .exp_header .exp_title {
+    padding: 2px 10px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #3A97DD;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.expGuiSectionTimeTable .exp_header .exp_title,
+.expGuiSectionTimeTable .exp_header .exp_value {
+    text-align: center;
+}
+.expGuiSectionTimeTable .exp_header .exp_value {
+    margin-left: 0.8em;
+    margin-left: 0.8em;
+    padding-top: 0.2em;
+    padding-top: 0.2em;
+    color: #384556;
+    font-size: 0.9em;
+}
+.expGuiSectionTimeTable .exp_headerTitle {
+    margin: auto;
+    width: 100%;
+    min-height: 3em;
+    height: auto !important;
+    height: 3em;
+    border-top: 1px solid  #eee;
+}
+/* 時刻表の本体 */
+.expGuiSectionTimeTable .exp_timeTable {
+    margin-top: 1em;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+/* 情報 */
+.expGuiSectionTimeTable .exp_timeTable .exp_data {
+    padding: 5px;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_arrival .exp_caption {
+    background-color: #D96441;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_arrival a {
+    color: #d96441;
+    text-decoration: none;
+    font-weight: normal;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_departure .exp_caption {
+    background-color: #384556;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_departure .exp_value,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_arrival .exp_value {
+    margin-left: 10px;
+    padding: 2px;
+    font-size: 0.9em;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_departure a {
+    color: #384556;
+    text-decoration: none;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon {
+    margin-right: 3px;
+    margin-left: 6px;
+    padding: 2px 5px 0 0;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_bus {
+    background: url(../expImages/spicnbus.png) no-repeat;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_plane {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url(../expImages/spicnair.png) no-repeat;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_ship {
+    background: url(../expImages/spicnship.png) no-repeat;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_train {
+    background: url(../expImages/spicneki.png) no-repeat;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_train,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_ship,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon .exp_bus {
+    display: block;
+    width: 16px;
+    height: 16px;
+}
+/* 名称 */
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_name,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_no,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_separator {
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_icon,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_name,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_no,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_separator,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_departure,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_arrival {
+    float: left;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_name a,
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_no a {
+    color: #384556;
+    text-decoration: none;
+    font-weight: normal;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_return {
+    clear: both;
+    font-size: 0;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_data .exp_time {
+    float: right;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_even {
+    border-right: 1px solid #a0aab4;
+    border-bottom: 1px solid #a0aab4;
+    border-left: 1px solid #a0aab4;
+    background-color: #E7F2FC;
+}
+/* 時間ごとにヘッダーを出力 */
+.expGuiSectionTimeTable .exp_timeTable .exp_hour {
+    clear: both;
+    border: 1px solid #3E6F99;
+    background: -moz-linear-gradient(top, #4682B5, #3A6F9D);
+    background: -webkit-gradient(linear, left top, left bottom, from(#4682B5), to(#3A6F9D));
+    background-color: #4682B5;
+    font-size: 0.8em;
+    line-height: 2.2em;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_hour .exp_value {
+    margin-left: 1em;
+    color: #FFFFFF;
+}
+.expGuiSectionTimeTable .exp_timeTable .exp_odd {
+    border-right: 1px solid #a0aab4;
+    border-bottom: 1px solid #a0aab4;
+    border-left: 1px solid #a0aab4;
+    background-color: #F8FCFF;
+}
+/* 分毎に出力 */
+.expGuiSectionTimeTable .exp_timeTable .exp_tablet {
+    float: left;
+    width: 30em;
+}
+.expGuiSectionTimeTablePC .exp_timeTable .exp_data .exp_departure .exp_caption,
+.expGuiSectionTimeTablePC .exp_timeTable .exp_data .exp_arrival .exp_caption {
+    display: block;
+    float: left;
+    padding: 1px 4px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #FFFFFF;
+    font-size: 0.9em;
+}
+.expGuiSectionTimeTablePC .exp_timeTable .exp_data .exp_departure,
+.expGuiSectionTimeTablePC .exp_timeTable .exp_data .exp_arrival {
+    width: 6em;
+}
+.expGuiSectionTimeTablePC .exp_timeTable .exp_data .exp_name {
+    margin-right: 1em;
+    min-width: 10%;
+}
+.expGuiSectionTimeTablePC .exp_timeTable .exp_data .exp_no {
+    min-width: 10%;
+}
+.expGuiSectionTimeTablePc .exp_timeTable .exp_data .exp_separator {
+    margin-right: 1em;
+    border-left: 1px solid #000000;
+}
+/* スマホ用のヘッダー */
+.expGuiSectionTimeTablePhone {
+    width: 100%;
+}
+.expGuiSectionTimeTablePhone .exp_header {
+    position: relative;
+    margin: 0px auto;
+    height: auto !important;
+    height: 2em;
+    background-color: #4b4b59;
+    box-shadow: 0 2px 1px #3C3C49;
+    color: #FFFFFF;
+    text-align: left;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.expGuiSectionTimeTablePhone .exp_header .exp_clock {
+    top: 8px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+}
+.expGuiSectionTimeTablePhone .exp_header .exp_clock select,
+.expGuiSectionTimeTableTablet .exp_header .exp_clock select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    opacity: 0;
+}
+.expGuiSectionTimeTablePhone .exp_header .exp_clock,
+.expGuiSectionTimeTableTablet .exp_header .exp_clock {
+    position: absolute;
+    width: 42px;
+    height: 40px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background: url(../expImages/btnCtrTime.png) no-repeat center,-webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+    background: url(../expImages/btnCtrTime.png) no-repeat center,-moz-linear-gradient(top, #ffffff, #dbdee3 70%, #ebeef2);
+}
+.expGuiSectionTimeTablePhone .exp_header .exp_from,
+.expGuiSectionTimeTablePhone .exp_header .exp_to,
+.expGuiSectionTimeTablePhone .exp_header .exp_name {
+    padding-bottom: 4%;
+}
+.expGuiSectionTimeTablePhone .exp_header .exp_headerTitle {
+    padding: 4% 2% 0 2%;
+    min-height: 2.8em;
+    width: 100%;
+}
+.expGuiSectionTimeTablePhone .exp_header .exp_title {
+    padding: 3px 6px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background-color: #FFFFFF;
+    color: #3A97DD;
+}
+.expGuiSectionTimeTablePhone .exp_header .exp_title,
+.expGuiSectionTimeTablePhone .exp_header .exp_value {
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: normal;
+}
+.expGuiSectionTimeTablePhone .exp_header .exp_value {
+    margin-left: 1em;
+    padding-top: 0.2em;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable {
+    width: 100%;
+}
+/* 情報 */
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data {
+    clear: both;
+    padding: 8px;
+    font-size: 0.9em;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_arrival .exp_caption {
+    background-color: #D96441;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_departure .exp_caption {
+    background-color: #384556;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_departure .exp_caption,
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_arrival .exp_caption {
+    display: block;
+    float: left;
+    margin: 2px;
+    padding: 2px 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_departure .exp_value,
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_arrival .exp_value {
+    float: left;
+    margin: 4px;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_departure a,
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_arrival a {
+    color: #384556;
+    text-decoration: none;
+    font-weight: normal;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_departure,
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_arrival {
+    width: 6em;
+}
+/* 名称 */
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon {
+    float: left;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_bus {
+    background: url("../expImages/spicnbus.png") no-repeat;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_plane {
+    background: url("../expImages/spicnair.png") no-repeat;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_ship {
+    background: url("../expImages/spicnship.png") no-repeat;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_train {
+    background: url("../expImages/spicneki.png") no-repeat;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_train,
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_plane,
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_ship,
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_icon .exp_bus {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_info {
+    font-weight: bold;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_name a,
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_no a {
+    color: #384556;
+    text-decoration: none;
+    font-weight: bold;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_name,
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_no {
+    margin: 5px;
+    width: 70%;
+    font-weight: bold;
+    font-weight: bold;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_separator {
+    width: 1em;
+    border-left: 1px solid #000000;
+}
+.expGuiSectionTimeTablePhone .exp_timeTable .exp_data .exp_time {
+    float: right;
+    width: 5em;
+}
+/* タブレット用のヘッダー */
+.expGuiSectionTimeTableTablet {
+    width: 100%;
+}
+.expGuiSectionTimeTableTablet .exp_header {
+    position: relative;
+    margin: 0px auto;
+    height: 3.9em;
+    background-color: #4b4b59;
+    box-shadow: 0 2px 1px #3C3C49;
+    color: #FFFFFF;
+    text-align: left;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.expGuiSectionTimeTableTablet .exp_header .exp_clock {
+    top: 8px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+}
+.expGuiSectionTimeTableTablet .exp_header .exp_cursor {
+    float: left;
+    margin-top: 8px;
+    width: 19px;
+    height: 11px;
+    background: url(../expImages/sectionCursor.png) no-repeat center;
+}
+.expGuiSectionTimeTableTablet .exp_header .exp_from,
+.expGuiSectionTimeTableTablet .exp_header .exp_to,
+.expGuiSectionTimeTableTablet .exp_header .exp_name {
+    float: left;
+    margin: 0 10px;
+    padding: 5px;
+}
+.expGuiSectionTimeTableTablet .exp_header .exp_headerTitle {
+    float: left;
+    padding: 0.9em 0 0 0;
+}
+.expGuiSectionTimeTableTablet .exp_header .exp_title {
+    padding: 3px 6px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+    color: #3A97DD;
+    font-weight: bold;
+    font-size: 0.75em;
+    font-size: 1em;
+}
+.expGuiSectionTimeTableTablet .exp_header .exp_title,
+.expGuiSectionTimeTableTablet .exp_header .exp_value {
+    vertical-align: middle;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: normal;
+}
+.expGuiSectionTimeTableTablet .exp_header .exp_value {
+    margin-left: 0.5em;
+    padding-top: 0.2em;
+}
+.expGuiSectionTimeTableTablet .exp_headerTitle {
+    margin: auto;
+    width: auto;
+    height: 100%;
+    border-top: none;
+}
+.expGuiSectionTimeTableTablet .exp_timeTable {
+    border-right: 1px solid #a0aab4;
+    border-left: 1px solid #a0aab4;
+    background: #f9f9f9;
+    font-size: 1em;
+}
+.expGuiSectionTimeTableTablet .exp_timeTable .exp_data .exp_departure .exp_caption,
+.expGuiSectionTimeTableTablet .exp_timeTable .exp_data .exp_arrival .exp_caption {
+    display: block;
+    float: left;
+    margin: 3px 0;
+    padding: 2px 5px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    color: #FFFFFF;
+    font-size: 0.7em;
+}
+.expGuiSectionTimeTableTablet .exp_timeTable .exp_data .exp_departure,
+.expGuiSectionTimeTableTablet .exp_timeTable .exp_data .exp_arrival {
+    width: 6em;
+}
+.expGuiSectionTimeTableTablet .exp_timeTable .exp_data .exp_name {
+    margin-right: 1%;
+    min-width: 15%;
+}
+.expGuiSectionTimeTableTablet .exp_timeTable .exp_data .exp_no {
+    margin-right: 2%;
+    min-width: 28%;
+}
+.expGuiSectionTimeTableTablet .exp_timeTable .exp_data .exp_separator {
+    margin-right: 0.5em;
+    border-left: 1px solid #000000;
+}
+.expGuiSectionTimeTableTablet .exp_timeTable .exp_even {
+    border-right: none;
+    border-bottom: 1px solid #a0aab4;
+    border-left: none;
+    background-color: #E7F2FC;
+}
+.expGuiSectionTimeTableTablet .exp_timeTable .exp_line {
+    width: 29em;
+}
+.expGuiSectionTimeTableTablet .exp_timeTable .exp_odd {
+    border-right: 1px solid #a0aab4;
+    border-bottom: 1px solid #a0aab4;
+    border-left: none;
+    background-color: #F8FCFF;
+}
+.expLoading{
+    border: 1px solid #a0aab4;
+    height: 3em;
+}
+.expLoading .expText {
+    width: 10em;
+    height:24px;
+    margin: auto;
+    margin-top: 0.6em;
+    padding-top: 3px;
+    background: url(../expImages/loading.gif) no-repeat;
+    text-align: center;
+    font-weight: bold;
+    color: #a0aab4;
+}

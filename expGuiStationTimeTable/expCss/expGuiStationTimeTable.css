@@ -1,0 +1,430 @@
+@charset "utf-8";
+/* 駅時刻表パーツ */
+.expGuiStationTimeTable {
+    border-collapse: collapse;
+    font-size: 1em;
+    font-family: "メイリオ", Meiryo, Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    _font-family: "メイリオ", Meiryo,"ＭＳ Ｐゴシック", Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "MS PGothic", sans-serif;
+    text-align: left;
+}
+/* 汎用処理 */
+.expGuiStationTimeTable .exp_clearfix:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: ".";
+    font-size: 0;
+}
+/* 時刻表のヘッダー */
+.expGuiStationTimeTable .exp_header {
+    margin: 0px auto;
+    width: 100%;
+    background-color: #4b4b59;
+    box-shadow: 0px 0px 1px #eee;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.expGuiStationTimeTable .exp_header .exp_title {
+    padding: 1em 1em;
+}
+/* 時刻表のマーク */
+.expGuiStationTimeTable .exp_markInfo {
+    margin: 0.5em auto;
+    padding: 1px 0;
+    width: 100%;
+    border: 1px solid #a0aab4;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+/* マーク一覧を閉じる */
+.expGuiStationTimeTable .exp_markInfo .exp_closeButton {
+    width: 100%;
+    height: 1.5em;
+    border-top: 1px solid #A0AAB4;
+    background: -moz-linear-gradient(top, #f4f7fa, #e5e9ed);
+    background: -moz-linear-gradient(top, #f4f7fa, #e5e9ed);
+}
+.expGuiStationTimeTable .exp_markInfo .exp_closeButton .exp_link {
+    margin: auto;
+    width: 100%;
+}
+.expGuiStationTimeTable .exp_markInfo .exp_closeButton .exp_link a {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    color: #8691A3;
+    text-align: center;
+    text-decoration: none;
+    text-indent: -9999px;
+    background: url(../expImages/closeButtonlinka.png) no-repeat center;
+}
+/* マークの行き先 */
+.expGuiStationTimeTable .exp_markInfo .exp_destination {
+    width: 100%;
+    background: #F1F5F9;
+}
+.expGuiStationTimeTable .exp_markInfo .exp_destination .exp_data .exp_name {
+    display: block;
+    float: left;
+    padding: 2px 5px;
+    background-color: #548dbf;
+    color: #FFFFFF;
+}
+/* マークの種別 */
+.expGuiStationTimeTable .exp_markInfo .exp_kind {
+    margin-top: -1px;
+    width: 100%;
+    border-top: 1px solid #DDDDDD;
+    border-bottom: 1px dotted #B7BABD;
+    background: none repeat scroll 0 0 #F1F5F9;
+}
+/* 画面上のマーク */
+.expGuiStationTimeTable .exp_markInfo .exp_kind .exp_data .exp_name {
+    display: block;
+    float: left;
+    padding: 2px 5px;
+    background-color: #004986;
+    color: #FFFFFF;
+}
+.expGuiStationTimeTable .exp_markInfo .exp_kind .exp_data .exp_plain,
+.expGuiStationTimeTable .exp_markInfo .exp_destination .exp_data .exp_plain {
+    display: block;
+    float: left;
+    font-weight: bold;
+}
+/* 無印固定 */
+.expGuiStationTimeTable .exp_markInfo .exp_kind .exp_data .exp_plain,
+.expGuiStationTimeTable .exp_markInfo .exp_destination .exp_data .exp_plain,
+.expGuiStationTimeTable .exp_markInfo .exp_kind .exp_data .exp_value,
+.expGuiStationTimeTable .exp_markInfo .exp_destination .exp_data .exp_value {
+    margin: 4px;
+}
+/* マークの意味 */
+.expGuiStationTimeTable .exp_markInfo .exp_kind .exp_data .exp_value,
+.expGuiStationTimeTable .exp_markInfo .exp_destination .exp_data .exp_value {
+    display: block;
+    float: left;
+    color: #333333;
+    white-space: nowrap;
+}
+/* マーク */
+.expGuiStationTimeTable .exp_markInfo .exp_kind .exp_data,
+.expGuiStationTimeTable .exp_markInfo .exp_destination .exp_data {
+    float: left;
+    margin: 8px;
+    font-size: 0.8em;
+}
+/* マーク一覧を開く */
+.expGuiStationTimeTable .exp_openButton {
+    margin: 0.5em auto;
+    width: 100%;
+    height: 1.5em;
+    border: 1px solid #A0AAB4;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background: -moz-linear-gradient(top, #f4f7fa, #e5e9ed);
+}
+.expGuiStationTimeTable .exp_openButton .exp_link a {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    color: #8691A3;
+    text-align: center;
+    text-decoration: none;
+    text-indent: -9999px;
+    background: url(../expImages/openButtonlinka.png) no-repeat center;
+}
+/* 時刻表 */
+.expGuiStationTimeTable .exp_timeTable {
+    clear: both;
+    width: 100%;
+    border-collapse: collapse;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+/* ヘッダー */
+.expGuiStationTimeTable .exp_timeTable .exp_header {
+    border: none;
+    background: none;
+}
+/* ヘッダーの時間表示部分 */
+.expGuiStationTimeTable .exp_timeTable .exp_header .exp_hour {
+    padding-top: 3px;
+    width: 34px;
+    height: 34px;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+    background: url(../expImages/timeTable_header_hour.png) no-repeat left;
+}
+/* ヘッダーの分表示部分 */
+.expGuiStationTimeTable .exp_timeTable .exp_header .exp_minute {
+    padding-top: 3px;
+    width: 100%;
+    border-bottom: 1px solid #5f87a9;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+    background: url(../expImages/timeTable_header_minute.png) repeat right;
+}
+.expGuiStationTimeTable .exp_timeTable .exp_hour_even {
+    border-bottom: 1px solid #5f87a9;
+    background: url(../expImages/timeTable_hourthline.png) repeat-y left #6891B4;
+}
+.expGuiStationTimeTable .exp_timeTable .exp_hour_odd {
+    border-bottom: 1px solid #5f87a9;
+    background: url(../expImages/timeTable_hourthline.png) repeat-y left #80A5C4;
+}
+/* 時間表示 */
+.expGuiStationTimeTable .exp_timeTable .exp_hour_odd,
+.expGuiStationTimeTable .exp_timeTable .exp_hour_even {
+    width: 34px;
+    color: #FFFFFF;
+    text-align: center;
+}
+/* 分の表示詳細 */
+.expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteBody {
+    padding: 0;
+}
+/* 分の表示 */
+.expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteBody .exp_minute {
+    float: left;
+    width: 60px;
+    height: 70px;
+    border-right: 1px solid #A0AAB4;
+}
+/* 分のマーク */
+.expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteBody .exp_minute .exp_mark {
+    margin-top: 14px;
+    height: 1.5em;
+    text-align: center;
+}
+.expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteBody .exp_minute .exp_mark .exp_direction {
+    background-color: #004986;
+}
+/* 2種類のマーク */
+.expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteBody .exp_minute .exp_mark .exp_direction,
+.expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteBody .exp_minute .exp_mark .exp_kind {
+    margin: 2px;
+    padding: 1px 4px;
+    color: #FFFFFF;
+    font-size: 0.8em;
+}
+.expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteBody .exp_minute .exp_mark .exp_kind {
+    background-color: #548dbf;
+}
+/* 出発時刻の出力 */
+.expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteBody .exp_minute .exp_value {
+    display: block;
+    clear: both;
+    padding-top: 1px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+/* 出発時刻のリンク */
+.expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteBody .exp_minute .exp_value .exp_link a {
+    color: #000000;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+/* 分の表示行 */
+.expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteTable_odd,
+.expGuiStationTimeTable .exp_timeTable .exp_timeTableBody .exp_minuteTable_even {
+    height: 70px;
+    border: 1px solid #A0AAB4;
+    background-image: url("../expImages/border.png");
+}
+/* 時刻表のヘッダー */
+.expGuiStationTimeTablePhone .exp_header {
+    margin: 0px auto;
+    text-align: left;
+}
+.expGuiStationTimeTablePhone .exp_header .exp_clock select,
+.expGuiStationTimeTableTablet .exp_header .exp_clock select {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.expGuiStationTimeTablePhone .exp_header .exp_clock,
+.expGuiStationTimeTableTablet .exp_header .exp_clock {
+    position: relative;
+    display: block;
+    float: right;
+    margin-top: 0.3em;
+    margin-right: 0.3em;
+    width: 42px;
+    height: 40px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background: url(../expImages/btnCtrTime.png) no-repeat center,-webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+    background: url(../expImages/btnCtrTime.png) no-repeat center,-moz-linear-gradient(top, #ffffff, #dbdee3 70%, #ebeef2);
+}
+.expGuiStationTimeTablePhone .exp_header,
+.expGuiStationTimeTableTablet .exp_header {
+    background-color: #4b4b59;
+    box-shadow: 0 2px 1px #3C3C49;
+    color: #FFFFFF;
+}
+.expGuiStationTimeTablePhone .exp_timeTable {
+    clear: both;
+    margin-top: 1em;
+    width: 100%;
+}
+.expGuiStationTimeTablePhone .exp_timeTable .exp_hour {
+    clear: both;
+    padding-left: 0.4em;
+    width: 100%;
+    border: 1px solid #346085;
+    background: -webkit-gradient(linear, left bottom, left top,  from(#3a6f9d),color-stop(0.5, #4079a9),to(#4682b5));
+    background: -moz-linear-gradient(top, #4682b5, #4079a9 50%, #3a6f9d);
+    color: #FFFFFF;
+    text-align: left;
+}
+.expGuiStationTimeTablePhone .exp_timeTable .exp_minuteBody {
+    border-right: 1px solid #a0aab4;
+    border-left: 1px solid #a0aab4;
+    background-color: #FFFFFF;
+}
+.expGuiStationTimeTablePhone .exp_timeTable .exp_minuteBody .exp_even {
+    border-bottom: 1px solid #a0aab4;
+    background-color: #e7f2fc;
+}
+.expGuiStationTimeTablePhone .exp_timeTable .exp_minuteBody .exp_minute {
+    clear: both;
+    height: 3.5em;
+}
+.expGuiStationTimeTablePhone .exp_timeTable .exp_minuteBody .exp_minute .exp_mark {
+    float: left;
+    padding: 0.5em 0.5em 0;
+    height: 1.5em;
+    font-size: 0.9em;
+}
+/* 行き先のマーク */
+.expGuiStationTimeTablePhone .exp_timeTable .exp_minuteBody .exp_minute .exp_mark .exp_direction {
+    color: #396e9b;
+    font-weight: bold;
+}
+/* 2種類のマーク */
+.expGuiStationTimeTablePhone .exp_timeTable .exp_minuteBody .exp_minute .exp_mark .exp_direction,
+.expGuiStationTimeTablePhone .exp_timeTable .exp_minuteBody .exp_minute .exp_mark .exp_kind {
+    display: block;
+}
+/* 列車種別のマーク */
+.expGuiStationTimeTablePhone .exp_timeTable .exp_minuteBody .exp_minute .exp_mark .exp_kind {
+    color: #384556;
+    font-weight: bold;
+}
+.expGuiStationTimeTablePhone .exp_timeTable .exp_minuteBody .exp_minute .exp_value {
+    float: left;
+    padding: 1em 0.5em 0.5em;
+}
+.expGuiStationTimeTablePhone .exp_timeTable .exp_minuteBody .exp_minute .exp_value .exp_link a {
+    display: inline-block;
+    color: #384556;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.expGuiStationTimeTablePhone .exp_timeTable .exp_minuteBody .exp_odd {
+    border-bottom: 1px solid #a0aab4;
+    background-color: #FFFFFF;
+}
+/* タブレット用 */
+.expGuiStationTimeTableTablet .exp_header {
+    margin: 0px auto;
+    text-align: left;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.expGuiStationTimeTableTablet .exp_timeTable {
+    clear: both;
+    margin-top: 1em;
+    width: 100%;
+}
+.expGuiStationTimeTableTablet .exp_timeTable .exp_hour {
+    clear: both;
+    padding-left: 0.4em;
+    width: 100%;
+    border-right: 1px solid #3a6f9d;
+    background: -webkit-gradient(linear, left bottom, left top,  from(#3a6f9d),color-stop(0.5, #4079a9),to(#4682b5));
+    background: -moz-linear-gradient(top, #4682b5, #4079a9 50%, #3a6f9d);
+    color: #FFFFFF;
+    text-align: left;
+}
+.expGuiStationTimeTableTablet .exp_timeTable .exp_minuteBody {
+    border-right: 1px solid #a0aab4;
+    border-left: 1px solid #a0aab4;
+}
+.expGuiStationTimeTableTablet .exp_timeTable .exp_minuteBody .exp_even {
+    border-right: 1px solid #a0aab4;
+    border-bottom: 1px solid #a0aab4;
+    background-color: #e7f2fc;
+}
+.expGuiStationTimeTableTablet .exp_timeTable .exp_minuteBody .exp_minute {
+    float: left;
+    margin-bottom: 1px;
+    min-width: 10em;
+    height: 48px;
+}
+.expGuiStationTimeTableTablet .exp_timeTable .exp_minuteBody .exp_minute .exp_mark {
+    float: left;
+    padding: 0.2em 0.8em 0;
+    font-size: 0.9em;
+}
+/* 行き先のマーク */
+.expGuiStationTimeTableTablet .exp_timeTable .exp_minuteBody .exp_minute .exp_mark .exp_direction {
+    color: #396e9b;
+    font-weight: bold;
+}
+/* 2種類のマーク */
+.expGuiStationTimeTableTablet .exp_timeTable .exp_minuteBody .exp_minute .exp_mark .exp_direction,
+.expGuiStationTimeTableTablet .exp_timeTable .exp_minuteBody .exp_minute .exp_mark .exp_kind {
+    display: block;
+}
+/* 列車種別のマーク */
+.expGuiStationTimeTableTablet .exp_timeTable .exp_minuteBody .exp_minute .exp_mark .exp_kind {
+    color: #384556;
+    font-weight: bold;
+}
+.expGuiStationTimeTableTablet .exp_timeTable .exp_minuteBody .exp_minute .exp_value {
+    float: left;
+    padding-left: 0.5em;
+    line-height: 3em;
+}
+.expGuiStationTimeTableTablet .exp_timeTable .exp_minuteBody .exp_minute .exp_value .exp_link a {
+    display: inline-block;
+    color: #384556;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.expGuiStationTimeTableTablet .exp_timeTable .exp_minuteBody .exp_odd {
+    border-right: 1px solid #a0aab4;
+    border-bottom: 1px solid #a0aab4;
+    background-color: #FFFFFF;
+}
+.expLoading{
+    border: 1px solid #a0aab4;
+    height: 3em;
+}
+.expLoading .expText {
+    width: 10em;
+    height:24px;
+    margin: auto;
+    margin-top: 0.6em;
+    padding-top: 3px;
+    background: url(../expImages/loading.gif) no-repeat;
+    text-align: center;
+    font-weight: bold;
+    color: #a0aab4;
+}
