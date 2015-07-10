@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-06-17
+ *  Version:2015-07-02
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -368,48 +368,43 @@ var expGuiRepayment = function (pObject, config) {
     */
     function viewRepayment() {
         var buffer = '';
-        if (routeList.length > 0) {
-            // 払い戻し区間が単一
-            if (routeList.length == 1) {
-                buffer += getRoute(1, routeList[0], true, true);
-            } else {
-                // 払い戻し区間が複数
-                buffer += '<div class="exp_routeList exp_clearfix">';
-                buffer += '<a id="' + baseId + ':routeList"></a>';
-                for (var i = 0; i < routeList.length; i++) {
-                    if (i == 0) {
-                        // 最初
-                        buffer += getRoute((i + 1), routeList[i], true, separatorList[i]);
-                    } else if ((i + 1) == routeList.length) {
-                        // 最後
-                        buffer += getRoute((i + 1), routeList[i], separatorList[i - 1], true);
-                    } else {
-                        buffer += getRoute((i + 1), routeList[i], separatorList[i - 1], separatorList[i]);
-                    }
-                    // 分割用のハサミ
-                    buffer += '<div class="exp_separator">';
-                    if ((i + 1) != routeList.length) {
-                        buffer += '<div class="exp_cut">';
-                        if (separatorChangeableList[i]) {
-                            if (separatorList[i]) {
-                                buffer += '<a class="exp_close" id="' + baseId + ':separator:' + String(i + 1) + '" href="Javascript:void(0);"></a>';
-                            } else {
-                                buffer += '<a class="exp_open" id="' + baseId + ':separator:' + String(i + 1) + '" href="Javascript:void(0);"></a>';
-                            }
+        // 払い戻し区間が複数
+        if (routeList.length >= 2) {
+            buffer += '<div class="exp_routeList exp_clearfix">';
+            buffer += '<a id="' + baseId + ':routeList"></a>';
+            for (var i = 0; i < routeList.length; i++) {
+                if (i == 0) {
+                    // 最初
+                    buffer += getRoute((i + 1), routeList[i], true, separatorList[i]);
+                } else if ((i + 1) == routeList.length) {
+                    // 最後
+                    buffer += getRoute((i + 1), routeList[i], separatorList[i - 1], true);
+                } else {
+                    buffer += getRoute((i + 1), routeList[i], separatorList[i - 1], separatorList[i]);
+                }
+                // 分割用のハサミ
+                buffer += '<div class="exp_separator">';
+                if ((i + 1) != routeList.length) {
+                    buffer += '<div class="exp_cut">';
+                    if (separatorChangeableList[i]) {
+                        if (separatorList[i]) {
+                            buffer += '<a class="exp_close" id="' + baseId + ':separator:' + String(i + 1) + '" href="Javascript:void(0);"></a>';
                         } else {
-                            if (separatorList[i]) {
-                                buffer += '<span class="exp_closeDisable"></span>';
-                            } else {
-                                buffer += '<span class="exp_openDisable"></span>';
-                            }
+                            buffer += '<a class="exp_open" id="' + baseId + ':separator:' + String(i + 1) + '" href="Javascript:void(0);"></a>';
                         }
-                        buffer += '</div>';
+                    } else {
+                        if (separatorList[i]) {
+                            buffer += '<span class="exp_closeDisable"></span>';
+                        } else {
+                            buffer += '<span class="exp_openDisable"></span>';
+                        }
                     }
                     buffer += '</div>';
                 }
-                buffer += '<div class="exp_clear">&nbsp;</div>';
                 buffer += '</div>';
             }
+            buffer += '<div class="exp_clear">&nbsp;</div>';
+            buffer += '</div>';
         }
 
         // 払い戻し区間表示
@@ -744,9 +739,9 @@ var expGuiRepayment = function (pObject, config) {
         } else if (name.toLowerCase() == String("Agent").toLowerCase()) {
             agent = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }
