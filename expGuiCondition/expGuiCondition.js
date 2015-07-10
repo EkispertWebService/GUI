@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-06-17
+ *  Version:2015-06-30
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -1277,7 +1277,7 @@ var expGuiCondition = function (pObject, config) {
             apiURL = value;
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
             agent = value;
-        } else if (value.toLowerCase() == "visible") {
+        } else if (String(value).toLowerCase() == "visible") {
             conditionObject[name.toLowerCase()].visible = true;
             // 探索条件の表示
             if (document.getElementById(baseId + ':' + name.toLowerCase() + ':separator')) {
@@ -1289,7 +1289,7 @@ var expGuiCondition = function (pObject, config) {
             if (document.getElementById(baseId + ':' + name.toLowerCase() + ':simple')) {
                 document.getElementById(baseId + ':' + name.toLowerCase() + ':simple').style.display = "block";
             }
-        } else if (value.toLowerCase() == "hidden") {
+        } else if (String(value).toLowerCase() == "hidden") {
             conditionObject[name.toLowerCase()].visible = false;
             // 探索条件の非表示
             if (document.getElementById(baseId + ':' + name.toLowerCase() + ':separator')) {
