@@ -1,0 +1,189 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiStationInfo.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var station;
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 駅情報
+  station = new expGuiStationInfo();
+  station.setConfigure("type",station.TYPE_TRAIN);
+  station.setConfigure("corporationBind","ＪＲ");
+}
+
+/*
+ * 駅一覧取得
+ */
+function getStationList(){
+  station.getStation("東",setStationList);
+}
+
+/*
+ * 駅情報取得コールバック
+ */
+function setStationList(isSuccess){
+  if(!isSuccess){
+    alert("駅情報が取得出来ませんでした");
+  }else{
+    var tmp_stationList = station.getStationList().split(",");
+    var buffer = '';
+    buffer += '<select id="stationCode">';
+    for(var i=0;i<tmp_stationList.length;i++){
+      buffer += '<option value="'+ station.getPointObject(tmp_stationList[i]).code +'">'+ tmp_stationList[i] +'</option>';
+    }
+    buffer += '</select>';
+    document.getElementById("stationList").innerHTML = buffer;
+    
+  }
+}
+
+/*
+ * 駅付加情報取得
+ */
+function getStationInfo(){
+  if(document.getElementById("stationCode")){
+    if(document.getElementById("stationCode").options.length > 0){
+      var code = document.getElementById("stationCode").options.item(document.getElementById("stationCode").selectedIndex).value;
+      station.getStationInfo(code,setStationInfo);
+    }else{
+      alert("駅情報を取得してください");
+    }
+  }else{
+    alert("駅情報を取得してください");
+  }
+}
+
+/*
+ * 駅付加情報取得コールバック
+ */
+function setStationInfo(isSuccess){
+  if(!isSuccess){
+    alert("駅付加情報が取得出来ませんでした");
+  }else{
+    var railInfoList = station.getInformationList(station.TYPE_RAIL).split(",");
+    var nearrailInfoList = station.getInformationList(station.TYPE_NEARRAIL).split(",");
+    var exitInfoList = station.getInformationList(station.TYPE_EXIT).split(",");
+    var welfareInfoList = station.getInformationList(station.TYPE_WELFARE).split(",");
+    var buffer = '';
+    // 乗り入れ路線
+    buffer += '乗り入れ路線：<select id="railInfo">';
+    for(var i=0;i<railInfoList.length;i++){
+      buffer += '<option value="'+ railInfoList[i] +'">'+ railInfoList[i] +'</option>';
+    }
+    buffer += '</select>';
+    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"路線確認\" onClick=\"JavaScript:viewInformation('rail');\"><br>";
+    // 最寄路線
+    buffer += '最寄路線：<select id="nearrailInfo">';
+    for(var i=0;i<nearrailInfoList.length;i++){
+      buffer += '<option value="'+ nearrailInfoList[i] +'">'+ nearrailInfoList[i] +'</option>';
+    }
+    buffer += '</select>';
+    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"路線確認\" onClick=\"JavaScript:viewInformation('nearrail');\"><br>";
+    // 出口
+    buffer += '出口：<select id="exitInfo">';
+    for(var i=0;i<exitInfoList.length;i++){
+      buffer += '<option value="'+ exitInfoList[i] +'">'+ exitInfoList[i] +'</option>';
+    }
+    buffer += '</select>';
+    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"コメント確認\" onClick=\"JavaScript:viewInformation('exit');\"><br>";
+    // 福祉設備
+    buffer += '福祉設備：<select id="welfareInfo">';
+    for(var i=0;i<welfareInfoList.length;i++){
+      buffer += '<option value="'+ welfareInfoList[i] +'">'+ welfareInfoList[i] +'</option>';
+    }
+    buffer += '</select>';
+    buffer += "<input class=\"sample_btn\" type=\"button\" value=\"コメント確認\" onClick=\"JavaScript:viewInformation('welfare');\"><br>";
+    document.getElementById("info").innerHTML = buffer;
+  }
+}
+
+function viewInformation(type){
+  if(type == "rail"){
+    var infoName = document.getElementById("railInfo").options.item(document.getElementById("railInfo").selectedIndex).value;
+    var tmp_info = station.getInformationObject(infoName,station.TYPE_RAIL);
+    if(typeof tmp_info != 'undefined'){
+      var buffer = '';
+      buffer += "会社名："+ tmp_info.corporation +"\n";
+      buffer += "路線名："+ tmp_info.name;
+      alert(buffer);
+    }else{
+      alert("乗り入れ路線情報はありません");
+    }
+  }else if(type == "nearrail"){
+    var infoName = document.getElementById("nearrailInfo").options.item(document.getElementById("nearrailInfo").selectedIndex).value;
+    var tmp_info = station.getInformationObject(infoName,station.TYPE_NEARRAIL);
+    if(typeof tmp_info != 'undefined'){
+      var buffer = '';
+      buffer += "会社名："+ tmp_info.corporation +"\n";
+      buffer += "路線名："+ tmp_info.name;
+      alert(buffer);
+    }else{
+      alert("最寄路線情報はありません");
+    }
+  }else if(type == "exit"){
+    var infoName = document.getElementById("exitInfo").options.item(document.getElementById("exitInfo").selectedIndex).value;
+    var tmp_info = station.getInformationObject(infoName,station.TYPE_EXIT);
+    if(typeof tmp_info != 'undefined'){
+      alert(station.getInformationObject(infoName,station.TYPE_EXIT).comment);
+    }else{
+      alert("出口情報はありません");
+    }
+  }else if(type == "welfare"){
+    var infoName = document.getElementById("welfareInfo").options.item(document.getElementById("welfareInfo").selectedIndex).value;
+    var tmp_info = station.getInformationObject(infoName,station.TYPE_WELFARE);
+    if(typeof tmp_info != 'undefined'){
+      alert(station.getInformationObject(infoName,station.TYPE_WELFARE).comment);
+    }else{
+      alert("福祉施設情報はありません");
+    }
+  }
+}
+
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<table class="sample">
+  <tr>
+    <td class="sample_header">駅情報パーツ</td>
+  </tr>
+  <tr>
+    <td class="sample_title">駅基本情報</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      <input class="sample_btn" type="button" value="「東」から始まる駅一覧取得" onClick="Javascript:getStationList();">
+      <div id="stationList"></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">駅付加情報</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      <input class="sample_btn" type="button" value="駅付加情報取得" onClick="Javascript:getStationInfo();">
+      <div id="info"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+

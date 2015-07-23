@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCourse.css">
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiTools.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var resultApp;
+var expTools;
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // ツール
+  expTools = new expGuiTools();
+  // 経路探索
+  resultApp = new expGuiCourse(document.getElementById("result"));
+}
+
+/*
+ * 探索ボタンの動作
+ */
+function search(){
+    var searchWord = "";
+    // 発着地リストを作成
+    var viaList="高円寺:東京";
+    searchWord +="viaList="+viaList;
+    searchWord += '&searchType=plain';
+    // 探索結果数
+    searchWord += '&answerCount=5';
+    // 探索を実行
+    resultApp.search(searchWord,resultApp.PRICE_ONEWAY,result);
+}
+/*
+ * 探索実行時のコールバック関する
+ */
+function result(isSuccess){
+  if(!isSuccess){
+    alert("探索結果が取得できませんでした");
+  }else{
+    // JSONのセット
+    var json = resultApp.getResultString();
+    // 文字列のセット
+    document.getElementById("resultJson").value = json;
+    document.getElementById("resultXml").value = expTools.json2xml(json);
+  }
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<table class="sample">
+  <tr>
+    <td>
+      <input class="sample_btn" type="button" value="経路を取得" onClick="Javascript:search();"><br>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">探索結果：変換前のJSONデータ</td>
+  </tr>
+  <tr>
+    <td>
+      <textarea id="resultJson" cols="120" rows="10"></textarea>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">探索結果：変換後のXMLデータ</td>
+  </tr>
+  <tr>
+    <td>
+      <textarea id="resultXml" cols="120" rows="10"></textarea>
+    </td>
+  </tr>
+</table>
+
+<!-- 経路表示パーツ -->
+<table class="sample">
+  <tr>
+    <td>
+      <div id="result"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+

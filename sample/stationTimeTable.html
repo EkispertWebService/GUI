@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiStationTimeTable.css">
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiStationTimeTable.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var stationTimetable;
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 駅時刻表
+  stationTimetable = new expGuiStationTimeTable(document.getElementById("stationTimetable"));
+  stationTimetable.bind("click",setTime);
+}
+
+/*
+ * 駅の路線一覧を取得
+ */
+function searchRailList(){
+  var stationName = document.getElementById("stationName").value;
+  stationTimetable.searchLine(stationName,setRailList);
+}
+
+/*
+ * 駅の路線一覧をリストで表示
+ */
+function setRailList(isSuccess){
+  if(!isSuccess){
+    alert("路線一覧が取得できませんでした");
+  }else{
+    var buffer = '';
+    var tmp_line = stationTimetable.getLineObjectList();
+    buffer += '<select class="sample_select" id="line">';
+    for(var i=0;i<tmp_line.length;i++){
+      buffer += '<option value="'+ tmp_line[i].code +'">'+ tmp_line[i].name +'['+ tmp_line[i].direction +']</option>';
+    }
+    buffer += '</select><br>';
+    buffer += '<input class="sample_btn" type="button" value="時刻表を表示" onClick="JavaScript:outTimeTable();;">';
+    document.getElementById("lineList").innerHTML = buffer;
+  }
+}
+
+/*
+ * 時刻表の出力
+ */
+function outTimeTable(){
+  var stationName = document.getElementById("stationName").value;
+  var code = document.getElementById("line").options.item(document.getElementById("line").selectedIndex).value;
+  stationTimetable.dispStationTimetable(stationName,code,resultTimeTable);
+}
+
+/*
+ * 時刻表取得時のコールバック関数
+ */
+function resultTimeTable(isSuccess){
+  if(!isSuccess){
+    alert("時刻表が取得できませんでした");
+  }
+}
+
+/*
+ * 時刻表をクリックした際のイベント
+ */
+function setTime(lineCode){
+  var tmpLineObject = stationTimetable.getTimeTableObject(lineCode);
+  if(typeof tmpLineObject != 'undefined'){
+    var buffer = "";
+    buffer += "出発時刻:"+ tmpLineObject.hour +"時"+ ((tmpLineObject.minute<=10)?"0":"") + tmpLineObject.minute +"分\n";
+    buffer += "名称:"+ tmpLineObject.lineName +"\n";
+    buffer += "種別:"+ tmpLineObject.lineKind +"\n";
+    buffer += "行き先:"+ tmpLineObject.lineDestination +"\n";
+    alert(buffer);
+  }
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<!-- 時刻表パーツ -->
+<table class="sample">
+  <tr>
+    <td class="sample_title">設定</td>
+  </tr>
+  <tr>
+    <td class="sample_conf">
+      <input class="sample_input" type="text" id="stationName" value="新宿" readonly="readonly"><br>
+      <input class="sample_btn" type="button" value="駅の路線一覧を表示" onClick="JavaScript:searchRailList();"><br>
+      <div id="lineList"></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">時刻表</td>
+  </tr>
+  <tr>
+    <td>
+      <div id="stationTimetable" style="width:100%"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+

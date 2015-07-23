@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiRepayment.css">
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiRepayment.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var repayment;// 定期払い戻しパーツ
+var resultApp;// 経路表示パーツ
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 払い戻し計算
+  repayment = new expGuiRepayment(document.getElementById("repayment"));
+  repayment.bind('change',changeRepay);
+  // 計算用の経路探索
+  resultApp = new expGuiCourse(document.getElementById("teikiResult"));
+}
+
+/*
+ * 定期経路の取得
+ */
+function search(viaList){
+  // 探索条件を設定
+  var searchObject = resultApp.createSearchInterface();
+  // 発着地を設定
+  searchObject.setViaList(viaList);
+  // 探索種別を平均に設定
+  searchObject.setSearchType(resultApp.SEARCHTYPE_PLAIN);
+  // ソート順を定期に変更
+  searchObject.setSort(resultApp.SORT_TEIKI);
+  resultApp.search(searchObject,setResult);
+}
+
+/*
+ * 定期経路の取得
+ */
+function search2(){
+  // 探索条件を設定
+  var searchObject = resultApp.createSearchInterface();
+  // 発着地を設定
+  searchObject.setViaList(stationApp1.getStation() +':'+ stationApp2.getStation());
+  // 探索種別を平均に設定
+  searchObject.setSearchType(resultApp.SEARCHTYPE_PLAIN);
+  // ソート順を定期に変更
+  searchObject.setSort(resultApp.SORT_TEIKI);
+  resultApp.search(searchObject,setResult);
+}
+
+/*
+ * 経路探索のコールバック
+ */
+function setResult(isSuccess){
+  if(!isSuccess){
+    alert("探索結果が取得できませんでした");
+  }else{
+    // 探索結果が取得できているかを確認
+    if(resultApp.getResultCount() >= 1){
+      // シリアライズデータのセット
+      calc(resultApp.getSerializeData());
+    }
+  }
+}
+
+/*
+ * 払い戻し計算開始
+ */
+function calc(serializeData){
+  // インターフェースを作成
+  var tmpRepayment = repayment.createRepaymentInterface();
+  // シリアライズ
+  tmpRepayment.setSerializeData(serializeData);
+  // 開始日
+  tmpRepayment.setStartDate(document.getElementById("repay_start").value);
+  // 払戻日
+  tmpRepayment.setRepaymentDate(document.getElementById("repay_repayment").value);
+  // 有効期間
+  if(document.getElementById("repay_validity").options.item(document.getElementById("repay_validity").selectedIndex).value == "1"){
+    tmpRepayment.setValidityPeriod(repayment.TEIKI1);
+  }else   if(document.getElementById("repay_validity").options.item(document.getElementById("repay_validity").selectedIndex).value == "3"){
+    tmpRepayment.setValidityPeriod(repayment.TEIKI3);
+  }else   if(document.getElementById("repay_validity").options.item(document.getElementById("repay_validity").selectedIndex).value == "6"){
+    tmpRepayment.setValidityPeriod(repayment.TEIKI6);
+  }
+  // 区間変更
+  if(document.getElementById("repay_change").options.item(document.getElementById("repay_change").selectedIndex).value == "1"){
+    tmpRepayment.setChangeSection(true);
+  }else{
+    tmpRepayment.setChangeSection(false);
+  }
+  repayment.dispRepayment(tmpRepayment);
+}
+
+function changeRepay(){
+//  alert(String(repayment.getRepayPrice())+'円');
+}
+
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<!-- 払い戻しパーツ -->
+<table class="sample">
+  <tr>
+    <td class="sample_title">定期経路</td>
+  </tr>
+  <tr>
+    <td class="sample_conf">
+      <span class="sample_label">高円寺～銀座</span><input class="sample_btn" type="button" value="払い戻し計算" onClick="JavaScript:search('高円寺:銀座');"><br>
+      <span class="sample_label">高円寺～しながわ水族館前／京急バス</span><input class="sample_btn" type="button" value="払い戻し計算" onClick="JavaScript:search('高円寺:しながわ水族館前／京急バス');"><br>
+      <span class="sample_label">高円寺～産業振興センター</span><input class="sample_btn" type="button" value="払い戻し計算" onClick="JavaScript:search('高円寺:産業振興センター');"><br>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">定期券設定</td>
+  </tr>
+  <tr>
+    <td class="sample_conf">
+      <span class="sample_label">開始日</span><input class="sample_input" type="text" id="repay_start" value="20121001"><br>
+      <span class="sample_label">払戻日</span><input class="sample_input" type="text" id="repay_repayment" value="20121218"><br>
+      <span class="sample_label">有効期間</span>
+      <select id="repay_validity">
+                <option value="1">1ヶ月</option>
+                <option value="3">3ヶ月</option>
+                <option value="6" selected>6ヶ月</option>
+              </select><br>
+      <span class="sample_label">区間変更</span>
+      <select id="repay_change">
+                <option value="1" selected>する</option>
+                <option value="0">しない</option>
+              </select><br>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">払い戻し計算</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      <div id="repayment" style="width:100%;"></div>
+    </td>
+  </tr>
+</table>
+
+<!-- 経路特定用経路表示パーツ -->
+<div id="teikiResult" style="display:none;">
+  <div id="result"></div>
+</div>
+
+</body>
+</html>
+

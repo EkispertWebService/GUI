@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCourse.css">
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiDivided.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var divided;
+var resultApp;
+var priceType;
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 分割計算
+  divided = new expGuiDivided();
+  // 経路探索
+  resultApp = new expGuiCourse(document.getElementById("course"));
+  resultApp.bind("change",changeCourse);
+}
+
+/*
+ * 経路の取得(定期代)
+ */
+function searchTeiki(){
+  priceType = "teiki";
+  // 探索実行
+  resultApp.search("viaList=大宮(埼玉県):高円寺&searchType="+ resultApp.SEARCHTYPE_PLAIN,resultApp.PRICE_TEIKI,searchDivided);
+}
+
+/*
+ * 経路の取得(運賃)
+ */
+function searchFare(){
+  priceType = "fare";
+  // 探索実行
+  resultApp.search("viaList=大宮(埼玉県):高円寺&searchType="+ resultApp.SEARCHTYPE_PLAIN,resultApp.PRICE_ONEWAY,searchDivided);
+}
+
+/*
+ * 経路探索のコールバック
+ */
+function searchDivided(isSuccess){
+  if(!isSuccess){
+    alert("探索結果が取得できませんでした");
+  }else{
+    if(priceType == "teiki"){
+      divided.searchTeikiDivided(resultApp.getSerializeData(),setResultTeiki);
+    }else{
+      divided.searchFareDivided(resultApp.getSerializeData(),setResultFare);
+    }
+  }
+}
+
+/*
+ * 経路の切り替え検出
+ */
+function changeCourse(){
+  if(priceType == "teiki"){
+    divided.searchTeikiDivided(resultApp.getSerializeData(),setResultTeiki);
+  }else{
+    divided.searchFareDivided(resultApp.getSerializeData(),setResultFare);
+  }
+}
+
+/*
+ * 分割計算取得のコールバック
+ */
+function setResultFare(isSuccess){
+  if(!isSuccess){
+    document.getElementById("priceDivided").innerHTML = "";
+    alert("分割購入で節約できる駅が存在しません。");
+  }else{
+    //分割計算取得
+    var buffer = "";
+    buffer += '<table class="sample_table">';
+    buffer += '<tr>';
+    buffer += '<th>開始区間</th>';
+    buffer += '<th>終了区間</th>';
+    buffer += '<th>金額</th>';
+    buffer += '</tr>';
+    //各情報
+    for(var i=1;i<=divided.getDividedCount(); i++) {
+      buffer += '<tr>';
+      buffer += '<td>'+ divided.getDividedObject(i).from +'</td>';
+      buffer += '<td>'+ divided.getDividedObject(i).to +'</td>';
+      buffer += '<td>\\'+ num2String(divided.getDividedObject(i).price) +'円</td>';
+      buffer += '</tr>';
+    }
+    buffer += '</table>';
+    document.getElementById("priceDivided").innerHTML = buffer;
+  }
+}
+
+/*
+ * 分割計算取得のコールバック
+ */
+function setResultTeiki(isSuccess){
+  if(!isSuccess){
+    document.getElementById("priceDivided").innerHTML = "";
+    alert("分割購入で節約できる駅が存在しません。");
+  }else{
+    //分割計算取得
+    var buffer = "";
+    buffer += '<table class="sample_table">';
+    buffer += '<tr>';
+    buffer += '<th>開始区間</th>';
+    buffer += '<th>終了区間</th>';
+    buffer += '<th>金額</th>';
+    buffer += '</tr>';
+    //各情報
+    for(var i=1;i<=divided.getDividedCount(); i++) {
+      buffer += '<tr>';
+      if(divided.getDividedObject(i).type == divided.TYPE_TEIKI6){
+        buffer += '<td>'+ divided.getDividedObject(i).from +'</td>';
+        buffer += '<td>'+ divided.getDividedObject(i).to +'</td>';
+        buffer += '<td>\\'+ num2String(divided.getDividedObject(i).price) +'円</td>';
+      }
+      buffer += '</tr>';
+    }
+    buffer += '</table>';
+    document.getElementById("priceDivided").innerHTML = buffer;
+  }
+}
+
+/*
+ * カンマ区切りの数値を出力
+ */
+function num2String(str) {
+  var num = new String(str).replace(/,/g, "");
+  while (num != (num = num.replace(/^(-?\d+)(\d{3})/, "$1,$2")));
+  return num;
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<table class="sample">
+  <tr>
+    <td class="sample_header">経路表示パーツ</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      <input class="sample_btn" type="button" value="６ヶ月定期代を表示" onClick="Javascript:searchTeiki();">
+      <input class="sample_btn" type="button" value="運賃を表示" onClick="Javascript:searchFare();">
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">探索結果</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      <div id="course"></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_header">分割計算パーツ</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      <div id="priceDivided"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+

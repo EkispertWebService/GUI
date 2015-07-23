@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiVersion.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var version;
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 駅情報
+  version = new expGuiVersion();
+}
+
+/*
+ * バージョン情報取得
+ */
+function getVersion(){
+  version.getVersion(setVersionInfo);
+}
+
+/*
+ * バージョン情報取得コールバック
+ */
+function setVersionInfo(isSuccess){
+  if(!isSuccess){
+    alert("バージョン情報が取得できませんでした");
+  }else{
+    var buffer = "";
+    buffer += '<table class="sample_table">';
+    // APIバージョン
+    buffer += '<tr>';
+    buffer += '<td>APIバージョン</td>';
+    buffer += '<td>'+ version.getApiVersion() +'</td>';
+    buffer += '</tr>';
+    // エンジンバージョン
+    buffer += '<tr>';
+    buffer += '<td>エンジンバージョン</td>';
+    buffer += '<td>'+ version.getEngineVersion() +'</td>';
+    buffer += '</tr>';
+    // 各バージョン
+    var versionList = version.getVersionList();
+    for(var i=0;i<versionList.length;i++){
+    buffer += '<tr>';
+      buffer += '<td>'+ versionList[i].caption +'</td>';
+      buffer += '<td>';
+      buffer += versionList[i].version;
+      if(typeof versionList[i].rangeCaption != 'undefined'){
+        buffer += "("+ versionList[i].rangeCaption +"："+ versionList[i].rangeFrom +"～"+ versionList[i].rangeTo +")";
+      }
+      buffer += '</td>';
+      buffer += '</tr>';
+    }
+    buffer += '</table>';
+    document.getElementById("versionInfo").innerHTML = buffer;
+  }
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<table class="sample">
+  <tr>
+    <td class="sample_title">バージョン情報</td>
+  </tr>
+  <tr>
+    <td class="sample_conf">
+      <input class="sample_btn" type="button" value="バージョン取得" onClick="Javascript:getVersion();">
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_conf">
+      <div id="versionInfo"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+

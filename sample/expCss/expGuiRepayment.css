@@ -1,0 +1,993 @@
+@charset "utf-8";
+/* 定期払戻計算パーツ */
+.expGuiRepayment {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: inherit;
+    font-family: "メイリオ", Meiryo, Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    _font-family: "メイリオ", Meiryo,"ＭＳ Ｐゴシック", Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "MS PGothic", sans-serif;
+    text-align: left;
+}
+.expGuiRepayment .exp_clear {
+    clear: both;
+    font-size: 0;
+}
+/* 汎用処理 */
+.expGuiRepayment .exp_clearfix:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: ".";
+    font-size: 0;
+}
+.expGuiRepaymentPc {
+    font-size: 0.8em;
+}
+.expGuiRepaymentPc .exp_repayment .exp_checked {
+    float: left;
+    margin: 2px 12px 13px 2px;
+    width: 31px;
+    height: 31px;
+    background: url("../expImages/pass_checkedPC.png") no-repeat scroll center center transparent;
+}
+.expGuiRepaymentPc .exp_repayment .exp_checked a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.expGuiRepaymentPc .exp_repayment .exp_checked:hover {
+    float: left;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/pass_checkedPChover.png) no-repeat center center;
+}
+.expGuiRepaymentPc .exp_repayment .exp_noCheck {
+    float: left;
+    margin: 2px 12px 13px 2px;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/pass_noCheckPC.png) no-repeat center center;
+}
+.expGuiRepaymentPc .exp_repayment .exp_noCheck a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.expGuiRepaymentPc .exp_repayment .exp_noCheck:hover {
+    float: left;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/pass_noCheckPChover.png) no-repeat center center;
+}
+.expGuiRepaymentPc .exp_repayment .exp_passive {
+    float: left;
+    margin: 2px 12px 13px 2px;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/pass_passivePC.png) no-repeat scroll center center transparent;
+}
+/* 選択時の表示 */
+.expGuiRepaymentPc .exp_repayment .exp_price {
+    white-space: nowrap;
+}
+.expGuiRepaymentPc .exp_repayment .exp_price .exp_priceDetail {
+    float: left;
+    margin-left: 30px;
+    padding-top: 12px;
+    padding-bottom: 2px;
+    color: #384556;
+    font-size: 1em;
+}
+.expGuiRepaymentPc .exp_repayment .exp_price .exp_priceDetail .exp_title {
+    padding-right: 7px;
+    font-weight: bold;
+}
+.expGuiRepaymentPc .exp_repayment .exp_price .exp_priceDetailList {
+    float: right;
+}
+.expGuiRepaymentPc .exp_repayment .exp_price .exp_summary {
+    float: right;
+    padding-top: 6px;
+    color: #384556;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.expGuiRepaymentPc .exp_repayment .exp_price .exp_summary .exp_value {
+    padding: 0 5px;
+    color: #7d0000;
+}
+/* 未選択時の表示 */
+.expGuiRepaymentPc .exp_repayment .exp_priceDisable {
+    padding-top: 6px;
+    white-space: nowrap;
+    font-weight: bold;
+}
+.expGuiRepaymentPc .exp_repayment .exp_priceDisable .exp_priceDetail {
+    float: right;
+    margin-right: 2px;
+    margin-left: 30px;
+    padding: 12px 0 2px;
+    font-weight: normal;
+}
+.expGuiRepaymentPc .exp_repayment .exp_priceDisable .exp_priceDetail .exp_title {
+    padding-right: 7px;
+    color: #939393;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.expGuiRepaymentPc .exp_repayment .exp_priceDisable .exp_priceDetail .exp_value {
+    padding: 0 5px;
+    color: #939393;
+}
+.expGuiRepaymentPc .exp_repayment .exp_priceDisable .exp_summary {
+    float: right;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.expGuiRepaymentPc .exp_repayment .exp_priceDisable .exp_summary .exp_title {
+    color: #939393;
+}
+.expGuiRepaymentPc .exp_repayment .exp_priceDisable .exp_summary .exp_value {
+    padding: 0 8px;
+    color: #939393;
+}
+/* 経路表示 */
+.expGuiRepaymentPc .exp_repayment .exp_route {
+    float: left;
+    padding-top: 6px;
+    color: #384556;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.expGuiRepaymentPc .exp_repayment .exp_route .exp_cursor {
+    float: left;
+    margin: 6px 10px;
+    width: 19px;
+    height: 11px;
+    background: url(../expImages/repayCursor.png) no-repeat center;
+}
+.expGuiRepaymentPc .exp_repayment .exp_route .exp_from {
+    float: left;
+}
+.expGuiRepaymentPc .exp_repayment .exp_route .exp_to {
+    float: left;
+}
+.expGuiRepaymentPc .exp_repayment .exp_separator {
+    clear: both;
+    width: 100%;
+    height: 1px;
+    background-color: #c1c9d1;
+    font-size: 0;
+}
+/* 払い戻し一覧 */
+.expGuiRepaymentPc .exp_repaymentList {
+    margin-top: 0.5em;
+    border: 1px solid #a0aab4;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    box-shadow: 0 1px 0 #DDDDDD inset;
+}
+.expGuiRepaymentPc .exp_repaymentList .exp_even {
+    margin: 1px 1px 1px;
+    background-color: #F2F9FF;
+}
+.expGuiRepaymentPc .exp_repaymentList .exp_odd {
+    background-color: #FFFFFF;
+}
+.expGuiRepaymentPc .exp_repaymentList .exp_repayment {
+    padding: 10px;
+}
+.expGuiRepaymentPc .exp_repaymentList .exp_repayment:nth-of-type(1) {
+    border-bottom: none;
+    border-bottom: none;
+}
+.expGuiRepaymentPc .exp_repaymentList .exp_repayment:nth-of-type(2) {
+    border-top: 1px dotted #B8BDC2;
+    border-bottom: 1px dotted #B8BDC2;
+}
+.expGuiRepaymentPc .exp_repaymentList .exp_repayment:nth-of-type(even) {
+    border-bottom: 1px dotted #B8BDC2;
+}
+.expGuiRepaymentPc .exp_repaymentList .exp_repayment:nth-of-type(odd) {
+    border-bottom: 1px dotted #B8BDC2;
+}
+/* 経路一覧 */
+.expGuiRepaymentPc .exp_routeList {
+    padding: 0 0 0 40px;
+}
+.expGuiRepaymentPc .exp_routeList .exp_section {
+    padding: 9px 12px 5px;
+    min-height: 1.6em;
+    height: auto !important;
+    height: 1.6em;
+    border-right: 1px solid #AEAEAE;
+    border-left: 1px solid #AEAEAE;
+    background-color: #FFFFFF;
+}
+.expGuiRepaymentPc .exp_routeList .exp_section .exp_cursor {
+    float: left;
+    margin: 6px 10px;
+    width: 19px;
+    height: 11px;
+    background: url(../expImages/repayCursor.png) no-repeat center;
+}
+/* 経路表示 */
+.expGuiRepaymentPc .exp_routeList .exp_section .exp_from {
+    float: left;
+}
+.expGuiRepaymentPc .exp_routeList .exp_section .exp_to {
+    float: left;
+}
+.expGuiRepaymentPc .exp_routeList .exp_section a {
+    display: block;
+    width: 100%;
+    height: 1.6em;
+    color: #384556;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.expGuiRepaymentPc .exp_routeList .exp_section_bottom_connect {
+    border-bottom: 1px dotted #AEAEAE;
+}
+.expGuiRepaymentPc .exp_routeList .exp_section_bottom_cut {
+    border-bottom: 1px solid #aeaeae;
+}
+/* 上部 */
+.expGuiRepaymentPc .exp_routeList .exp_section_top_cut {
+    margin-top: 0.5em;
+    border-top: 1px solid #aeaeae;
+}
+.expGuiRepaymentPc .exp_routeList .exp_separator {
+    position: relative;
+    float: left;
+    clear: both;
+    background-color: #FFFFFF;
+}
+.expGuiRepaymentPc .exp_routeList .exp_separator .exp_cut {
+    position: absolute;
+    margin-top: -16px;
+    margin-left: -40px;
+}
+.expGuiRepaymentPc .exp_routeList .exp_separator .exp_cut .exp_close {
+    display: block;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/icnRstTeikiRpyClosePC.png);
+}
+.expGuiRepaymentPc .exp_routeList .exp_separator .exp_cut .exp_close:hover {
+    display: block;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/icnRstTeikiRpyClosePCHover.png);
+}
+.expGuiRepaymentPc .exp_routeList .exp_separator .exp_cut .exp_closeDisable {
+    display: block;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/icnRstTeikiRpyClosePCDis.png);
+}
+.expGuiRepaymentPc .exp_routeList .exp_separator .exp_cut .exp_open {
+    display: block;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/icnRstTeikiRpyOpenPC.png);
+}
+.expGuiRepaymentPc .exp_routeList .exp_separator .exp_cut .exp_open:hover {
+    display: block;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/icnRstTeikiRpyOpenPCHover.png);
+}
+.expGuiRepaymentPc .exp_routeList .exp_separator .exp_cut .exp_openDisable {
+    display: block;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/icnRstTeikiRpyOpenPCDis.png);
+}
+.expGuiRepaymentPc .exp_routeList .exp_separator .exp_cut a {
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+.expGuiRepaymentPc .exp_section_bottom_cut {
+    box-shadow: 0px 1px 0px #ddd;
+}
+/* 払い戻し合計金額 */
+.expGuiRepaymentPc .exp_total {
+    margin: 0 1px 1px;
+    padding: 14px 0;
+    background-color: #F2F9FF;
+    font-size: 1.1em;
+}
+.expGuiRepaymentPc .exp_total .exp_caption {
+    float: left;
+    font-weight: bold;
+}
+.expGuiRepaymentPc .exp_total .exp_header {
+    display: inline-block;
+    float: left;
+    margin: 0px 16px;
+    padding-left: 30px;
+    width: 20%;
+    font-weight: bold;
+    background: url("../expImages/passiconPC.png") no-repeat scroll left center transparent;
+}
+.expGuiRepaymentPc .exp_total .exp_repay {
+    float: right;
+    padding-right: 12px;
+    color: #384556;
+    font-weight: bold;
+}
+.expGuiRepaymentPc .exp_total .exp_repay .exp_title {
+    margin-left: 1em;
+    width: auto;
+    background: none;
+}
+.expGuiRepaymentPc .exp_total .exp_repay .exp_value {
+    padding: 0 5px;
+    color: #7D0000;
+}
+.expGuiRepaymentPc .exp_total .exp_ticketCount {
+    float: right;
+    color: #384556;
+    font-weight: bold;
+}
+.expGuiRepaymentPc .exp_total .exp_ticketCount .exp_title {
+    width: auto;
+    background: none;
+    color: #384556;
+}
+.expGuiRepaymentPc .exp_total .exp_ticketCount .exp_value {
+    padding: 0 5px;
+    color: #7D0000;
+}
+.expGuiRepaymentPc .exp_total .exp_title {
+    color: #384556;
+    background: url("../expImages/passiconPC.png") no-repeat scroll left center transparent;
+}
+.expGuiRepaymentPhone {
+    font-size: 1em;
+}
+.expGuiRepaymentPhone .exp_repayment {
+    background-color: #D0DEEA;
+}
+/* 払い戻し合計金額 */
+.expGuiRepaymentPhone .exp_repayment .exp_checked {
+    float: left;
+    margin: 0.4em 0.5em;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #8a939c;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: url(../expImages/pass_checked.png)no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiRepaymentPhone .exp_repayment .exp_checked a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_noCheck {
+    float: left;
+    margin: 0.4em 0.5em;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #8a939c;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: url(../expImages/pass_noCheck.png)no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiRepaymentPhone .exp_repayment .exp_noCheck a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_passive {
+    float: left;
+    clear: both;
+    margin: 0.4em 0.5em;
+    width: 32px;
+    height: 32px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: url(../expImages/pass_passive.png)no-repeat center #f1f1f1;
+}
+/* 選択時の表示 */
+.expGuiRepaymentPhone .exp_repayment .exp_price {
+    clear: both;
+    padding-bottom: 1.8em;
+    background-color: #FFFFFF;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_price .exp_priceDetail {
+    color: #384556;
+    font-size: 1.1em;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_price .exp_priceDetail .exp_title {
+    display: inline-block;
+    padding-top: 0.3em;
+    padding-right: 0.5em;
+    padding-bottom: 0.3em;
+    padding-left: 0.8em;
+    width: 6em;
+    font-weight: bold;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_price .exp_priceDetail .exp_value {
+    padding-right: 0.5em;
+    font-weight: bold;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_price .exp_summary {
+    margin-bottom: 0.4em;
+    padding: 0.5em 0;
+    border-bottom: 1px dotted #a0aab4;
+    color: #384556;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_price .exp_summary .exp_title {
+    display: inline-block;
+    padding-left: 0.8em;
+    width: 5.4em;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_price .exp_summary .exp_value {
+    padding: 0 0.5em;
+    color: #7D0000;
+}
+/* 未選択時の表示 */
+.expGuiRepaymentPhone .exp_repayment .exp_priceDisable {
+    clear: both;
+    padding-bottom: 1.8em;
+    background: #fff;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_priceDisable .exp_priceDetail {
+    color: #939393;
+    font-size: 1.1em;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_priceDisable .exp_priceDetail .exp_title {
+    display: inline-block;
+    padding-top: 0.3em;
+    padding-right: 0.5em;
+    padding-bottom: 0.3em;
+    padding-left: 0.8em;
+    width: 6em;
+    color: #939393;
+    font-weight: bold;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_priceDisable .exp_priceDetail .exp_value {
+    padding-right: 0.5em;
+    color: #939393;
+    font-weight: bold;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_priceDisable .exp_summary {
+    margin-bottom: 0.4em;
+    padding: 0.5em 0;
+    border-bottom: 1px dotted #a0aab4;
+    color: #939393;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_priceDisable .exp_summary .exp_title {
+    display: inline-block;
+    padding-left: 0.8em;
+    width: 5.4em;
+    color: #939393;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_priceDisable .exp_summary .exp_value {
+    padding: 0 0.5em;
+    color: #939393;
+}
+/* 経路表示 */
+.expGuiRepaymentPhone .exp_repayment .exp_route {
+    float: left;
+    padding: 0.8em 0.5em 0.7em 0;
+    width: 82%;
+    color: #384556;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-shadow: 0 1px 0 #fff;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_route .exp_cursor {
+    float: left;
+    margin: 6px 10px;
+    width: 16px;
+    width: 19px;
+    height: 11px;
+    background: url(../expImages/repayCursor.png);
+}
+.expGuiRepaymentPhone .exp_repayment .exp_route .exp_from {
+    float: left;
+}
+.expGuiRepaymentPhone .exp_repayment .exp_route .exp_to {
+    float: left;
+}
+.expGuiRepaymentPhone .exp_repaymentList {
+    margin-top: 0.5em;
+}
+/* 戻るボタン */
+.expGuiRepaymentPhone .exp_return {
+    float: right;
+    margin: -2em 0.5em 0em 0.5em;
+    border: 1px solid #3A97DD;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+}
+.expGuiRepaymentPhone .exp_return a {
+    display: inline-block;
+    margin-left: 0.5em;
+    padding: 0.2em 0.5em 0.2em 1.2em;
+    color: #3A97DD;
+    text-decoration: none;
+    font-weight: bold;
+    font-weight: bold;
+    background: url(../expImages/listarrow.png) no-repeat left center;
+}
+/* 経路一覧 */
+.expGuiRepaymentPhone .exp_routeList {
+    padding: 0 0 0 40px;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_section {
+    padding: 9px 12px 5px;
+    min-height: 2em;
+    border-right: 1px solid #AEAEAE;
+    border-left: 1px solid #AEAEAE;
+    background-color: #FFFFFF;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_section .exp_cursor {
+    float: left;
+    margin: 6px 10px;
+    width: 19px;
+    height: 11px;
+    background: url(../expImages/repayCursor.png) no-repeat center;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_section .exp_from {
+    float: left;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_section .exp_to {
+    float: left;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_section a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #384556;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_section_bottom_connect {
+    border-bottom: 1px dotted #AEAEAE;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_section_bottom_cut {
+    border-bottom: 1px solid #aeaeae;
+}
+/* 上部 */
+.expGuiRepaymentPhone .exp_routeList .exp_section_top_cut {
+    margin-top: 0.5em;
+    border-top: 1px solid #aeaeae;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_separator {
+    position: relative;
+    float: left;
+    clear: both;
+    background-color: #FFFFFF;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_separator .exp_cut {
+    position: absolute;
+    margin-top: -16px;
+    margin-left: -40px;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_separator .exp_cut .exp_close {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #8a939c;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: url(../expImages/icnRstTeikiRpyClose.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiRepaymentPhone .exp_routeList .exp_separator .exp_cut .exp_closeDisable {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #b2b2b2;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: url(../expImages/icnRstTeikiRpyCloseDis.png) no-repeat center #f1f1f1;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_separator .exp_cut .exp_open {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #8a939c;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: url(../expImages/icnRstTeikiRpyOpen.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiRepaymentPhone .exp_routeList .exp_separator .exp_cut .exp_openDisable {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #b2b2b2;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: url(../expImages/icnRstTeikiRpyOpenDis.png) no-repeat center #f1f1f1;
+}
+.expGuiRepaymentPhone .exp_routeList .exp_separator .exp_cut a {
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+.expGuiRepaymentPhone .exp_total {
+    padding-bottom: 2em;
+    width: 100%;
+    background-color: #FFFFFF;
+}
+.expGuiRepaymentPhone .exp_total .exp_caption {
+    display: inline-block;
+    padding-left: 0.8em;
+    width: 5.4em;
+}
+.expGuiRepaymentPhone .exp_total .exp_header {
+    padding: 0.6em 3.0em 0.6em 3em;
+    color: #384556;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-shadow: 0 1px 0 #fff;
+    background: url(../expImages/passicon.png) no-repeat 1em center #D0DEEA;
+}
+.expGuiRepaymentPhone .exp_total .exp_repay {
+    padding: 0.5em 0;
+    color: #384556;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.expGuiRepaymentPhone .exp_total .exp_repay .exp_title {
+    display: inline-block;
+    padding-left: 0.8em;
+    width: 5.4em;
+    color: #384556;
+}
+.expGuiRepaymentPhone .exp_total .exp_repay .exp_value {
+    padding: 0 0.5em;
+    color: #7D0000;
+}
+.expGuiRepaymentPhone .exp_total .exp_ticketCount {
+    padding: 0.2em 0;
+    color: #384556;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-shadow: 0 1px 0 #fff;
+}
+.expGuiRepaymentPhone .exp_total .exp_ticketCount .exp_title {
+    display: inline-block;
+    padding-left: 0.8em;
+    width: 5.4em;
+}
+.expGuiRepaymentPhone .exp_total .exp_ticketCount .exp_value {
+    padding: 0 0.5em;
+    color: #7D0000;
+}
+.expGuiRepaymentTablet {
+    font-size: 1em;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_checked {
+    float: left;
+    margin: 2px 12px 13px 2px;
+    width: 31px;
+    height: 31px;
+    background: url("../expImages/pass_checkedPC.png") no-repeat scroll center center transparent;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_checked a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_noCheck {
+    float: left;
+    margin: 2px 12px 13px 2px;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/pass_noCheckPC.png);
+}
+.expGuiRepaymentTablet .exp_repayment .exp_noCheck a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_passive {
+    float: left;
+    margin: 2px 12px 13px 2px;
+    width: 31px;
+    height: 31px;
+    background: url(../expImages/pass_passivePC.png) no-repeat scroll center center transparent;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_price .exp_priceDetail {
+    float: left;
+    margin-left: 30px;
+    padding-top: 12px;
+    padding-bottom: 2px;
+    color: #384556;
+    font-size: 1.1em;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_price .exp_priceDetail .exp_title {
+    padding-right: 7px;
+    font-weight: bold;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_price .exp_priceDetailList {
+    float: right;
+}
+/* 選択時の表示 */
+.expGuiRepaymentTablet .exp_repayment .exp_price .exp_summary {
+    float: right;
+    padding-top: 6px;
+    color: #384556;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_price .exp_summary .exp_value {
+    padding: 0 5px;
+    color: #7d0000;
+}
+/* 未選択時の表示 */
+.expGuiRepaymentTablet .exp_repayment .exp_priceDisable {
+    padding-top: 6px;
+    font-weight: bold;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_priceDisable .exp_priceDetail {
+    float: right;
+    margin-right: 2px;
+    margin-left: 30px;
+    padding: 12px 0 2px;
+    font-weight: normal;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_priceDisable .exp_priceDetail .exp_title {
+    padding-right: 7px;
+    color: #939393;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_priceDisable .exp_priceDetail .exp_value {
+    padding: 0 5px;
+    color: #939393;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_priceDisable .exp_summary {
+    float: right;
+    color: #939393;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_priceDisable .exp_summary .exp_title {
+    color: #939393;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_priceDisable .exp_summary .exp_value {
+    padding: 0 8px;
+    color: #939393;
+}
+/* 経路表示 */
+.expGuiRepaymentTablet .exp_repayment .exp_route {
+    float: left;
+    padding-top: 6px;
+    color: #384556;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_route .exp_cursor {
+    float: left;
+    margin: 6px 10px;
+    width: 19px;
+    height: 11px;
+    background: url(../expImages/repayCursor.png);
+}
+.expGuiRepaymentTablet .exp_repayment .exp_route .exp_from {
+    float: left;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_route .exp_to {
+    float: left;
+}
+.expGuiRepaymentTablet .exp_repayment .exp_separator {
+    clear: both;
+    width: 100%;
+    height: 1px;
+}
+/* 払い戻し一覧 */
+.expGuiRepaymentTablet .exp_repaymentList {
+    margin-top: 0.5em;
+    border: 1px solid #a0aab4;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    box-shadow: 0 1px 0 #DDDDDD inset;
+}
+.expGuiRepaymentTablet .exp_repaymentList .exp_even {
+    margin: 1px 1px 1px;
+    background-color: #F2F9FF;
+}
+.expGuiRepaymentTablet .exp_repaymentList .exp_odd {
+    background-color: #FFFFFF;
+}
+.expGuiRepaymentTablet .exp_repaymentList .exp_repayment {
+    padding: 10px;
+}
+.expGuiRepaymentTablet .exp_repaymentList .exp_repayment:nth-of-type(1) {
+    border-bottom: none;
+}
+.expGuiRepaymentTablet .exp_repaymentList .exp_repayment:nth-of-type(2) {
+    border-top: 1px dotted #B8BDC2;
+    border-bottom: 1px dotted #B8BDC2;
+}
+.expGuiRepaymentTablet .exp_repaymentList .exp_repayment:nth-of-type(even) {
+    border-bottom: 1px dotted #B8BDC2;
+}
+.expGuiRepaymentTablet .exp_repaymentList .exp_repayment:nth-of-type(odd) {
+    border-bottom: 1px dotted #B8BDC2;
+}
+/* 経路一覧 */
+.expGuiRepaymentTablet .exp_routeList {
+    padding: 0 0 0 40px;
+}
+.expGuiRepaymentTablet .exp_routeList .exp_section {
+    padding: 9px 12px 5px;
+    min-height: 1.6em;
+    border-right: 1px solid #AEAEAE;
+    border-left: 1px solid #AEAEAE;
+    background-color: #FFFFFF;
+}
+.expGuiRepaymentTablet .exp_routeList .exp_section .exp_cursor {
+    float: left;
+    margin: 6px 10px;
+    width: 19px;
+    height: 11px;
+    background: url(../expImages/repayCursor.png) no-repeat center;
+}
+ /* 経路表示 */
+.expGuiRepaymentTablet .exp_routeList .exp_section .exp_from {
+    float: left;
+    float: left;
+}
+.expGuiRepaymentTablet .exp_routeList .exp_section .exp_to {
+    float: left;
+    float: left;
+}
+.expGuiRepaymentTablet .exp_routeList .exp_section a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #384556;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.expGuiRepaymentTablet .exp_routeList .exp_section_bottom_connect {
+    border-bottom: 1px dotted #AEAEAE;
+}
+.expGuiRepaymentTablet .exp_routeList .exp_section_bottom_cut {
+    border-bottom: 1px solid #aeaeae;
+}
+/* 上部 */
+.expGuiRepaymentTablet .exp_routeList .exp_section_top_cut {
+    margin-top: 0.5em;
+    border-top: 1px solid #aeaeae;
+}
+.expGuiRepaymentTablet .exp_routeList .exp_separator {
+    position: relative;
+    float: left;
+    clear: both;
+    background-color: #FFFFFF;
+}
+.expGuiRepaymentTablet .exp_routeList .exp_separator .exp_cut {
+    position: absolute;
+    margin-top: -16px;
+    margin-left: -40px;
+}
+.expGuiRepaymentTablet .exp_routeList .exp_separator .exp_cut .exp_close {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #8a939c;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: url(../expImages/icnRstTeikiRpyClose.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiRepaymentTablet .exp_routeList .exp_separator .exp_cut .exp_closeDisable {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #b2b2b2;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: url(../expImages/icnRstTeikiRpyCloseDis.png) no-repeat center #f1f1f1;
+}
+.expGuiRepaymentTablet .exp_routeList .exp_separator .exp_cut .exp_open {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #8a939c;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: url(../expImages/icnRstTeikiRpyOpen.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiRepaymentTablet .exp_routeList .exp_separator .exp_cut .exp_openDisable {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #b2b2b2;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    background: url(../expImages/icnRstTeikiRpyOpenDis.png) no-repeat center #f1f1f1;
+}
+.expGuiRepaymentTablet .exp_routeList .exp_separator .exp_cut a {
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+/* 払い戻し合計金額 */
+.expGuiRepaymentTablet .exp_total {
+    margin: 0 1px 1px;
+    padding: 14px 0;
+    background-color: #F2F9FF;
+    font-size: 1.2em;
+}
+.expGuiRepaymentTablet .exp_total .exp_caption {
+    float: left;
+    font-weight: bold;
+}
+.expGuiRepaymentTablet .exp_total .exp_header {
+    display: inline-block;
+    float: left;
+    margin: 0px 16px;
+    padding-left: 30px;
+    width: 20%;
+    font-weight: bold;
+}
+.expGuiRepaymentTablet .exp_total .exp_repay {
+    float: right;
+    padding-right: 12px;
+    color: #384556;
+    font-weight: bold;
+}
+.expGuiRepaymentTablet .exp_total .exp_repay .exp_title {
+    width: auto;
+    background: none;
+}
+.expGuiRepaymentTablet .exp_total .exp_repay .exp_value {
+    padding: 0 5px;
+    color: #7D0000;
+}
+.expGuiRepaymentTablet .exp_total .exp_ticketCount {
+    float: right;
+    padding-right: 1em;
+    color: #384556;
+    font-weight: bold;
+}
+.expGuiRepaymentTablet .exp_total .exp_ticketCount .exp_title {
+    width: auto;
+    background: none;
+    color: #384556;
+}
+.expGuiRepaymentTablet .exp_total .exp_ticketCount .exp_value {
+    padding: 0 5px;
+    color: #7D0000;
+}
+.expGuiRepaymentTablet .exp_total .exp_title {
+    color: #384556;
+    background: url("../expImages/passiconPC.png") no-repeat scroll left center transparent;
+}
+.expLoading{
+    border: 1px solid #a0aab4;
+    height: 3em;
+}
+.expLoading .expText {
+    width: 10em;
+    height:24px;
+    margin: auto;
+    margin-top: 0.6em;
+    padding-top: 3px;
+    background: url(../expImages/loading.gif) no-repeat;
+    text-align: center;
+    font-weight: bold;
+    color: #a0aab4;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiTrainTimeTable.css">
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiStationTimeTable.css">
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiTrainTimeTable.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiStationTimeTable.js?key=rnwfzKX4rvNVZYat" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var trainTimeTable;// 駅時刻表パーツ
+var stationTimetable;// 列車時刻表パーツ
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 列車時刻表
+  trainTimeTable = new expGuiTrainTimeTable(document.getElementById("trainTimetable"))
+  trainTimeTable.bind("click",setTime);
+  // 駅時刻表の出力
+  stationTimetable = new expGuiStationTimeTable(document.getElementById("stationTimetable"));
+  stationTimetable.bind("click",viewTrainTimeTable);
+  var stationName = document.getElementById("stationName").value;
+  var lineCode = 1;
+  stationTimetable.dispStationTimetable(stationName,lineCode,resultTimeTable);
+}
+
+/*
+ * 時刻表取得時のコールバック関数
+ */
+function resultTimeTable(isSuccess){
+  if(!isSuccess){
+    alert("時刻表が取得できませんでした");
+  }
+}
+
+/*
+ * 時刻表をクリックした際のイベント
+ */
+function viewTrainTimeTable(lineCode){
+  var tmpLineObject = stationTimetable.getTimeTableObject(lineCode);
+  if(typeof tmpLineObject != 'undefined'){
+    trainTimeTable.dispStationTrainTimetable(lineCode);
+  }
+}
+
+function setTime(time){
+  var tmpPointObject = trainTimeTable.getPointObject(time);
+  if(typeof tmpPointObject != 'undefined'){
+    var buffer = "";
+    buffer += "駅名:"+ tmpPointObject.name +"\n";
+    if(typeof tmpPointObject.arrivalTime != 'undefined'){
+      buffer += "着時間:"+ tmpPointObject.arrivalTime +"\n";
+    }
+    if(typeof tmpPointObject.departureTime != 'undefined'){
+      buffer += "発時間:"+ tmpPointObject.departureTime +"\n";
+    }
+    alert(buffer);
+  }
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<!-- 時刻表パーツ -->
+<table class="sample">
+  <tr>
+    <td class="sample_title">設定</td>
+    <td class="sample_title">列車時刻表</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      駅名：<input class="sample_input" type="text" id="stationName" value="高円寺" readonly="readonly"><br>
+      <div id="stationTimetable" style="width:100%;"></div>
+    </td>
+    <td class="sample_top" style="width:300px;">
+      <div id="trainTimetable"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+
