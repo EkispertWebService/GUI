@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-06-30
+ *  Version:2015-07-28
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -79,6 +79,7 @@ var expGuiCondition = function (pObject, config) {
     var def_sortType = "ekispert"; // デフォルトソート
     var def_priceType = "oneway"; // 片道運賃がデフォルト
     var def_answerCount = "5"; // 探索結果数のデフォルト
+    var checkBoxItemName = "shinkansen:shinkansenNozomi:limitedExpress:localBus:liner:midnightBus"; //チェックボックスに表示する条件
 
     var checkboxItem = new Array();
     var conditionObject = initCondition();
@@ -333,6 +334,11 @@ var expGuiCondition = function (pObject, config) {
         buffer += '</div>';
         documentObject.innerHTML = buffer;
 
+        //チェックボックスを設定した条件は非表示にする
+        for (var i = 0; i < checkboxItem.length; i++) {
+            setConditionView(checkboxItem[i], false);
+        }
+
         // イベントを設定
         addEvent(document.getElementById(baseId + ":conditionOpen"), "click", onEvent);
         var tabCount = 1;
@@ -352,6 +358,8 @@ var expGuiCondition = function (pObject, config) {
             addEvent(document.getElementById(baseId + ':' + checkboxItem[i] + ':checkbox'), "change", onEvent);
         }
         // 連動機能の追加
+        setEvent("shinkansen");
+        setEvent("shinkansenNozomi");
         setEvent("ticketSystemType");
         setEvent("preferredTicketOrder");
         // デフォルト設定
@@ -448,12 +456,10 @@ var expGuiCondition = function (pObject, config) {
         var buffer = "";
         buffer += '<div class="exp_conditionSimple exp_clearfix">';
         buffer += '<div class="exp_title">交通手段</div>';
-        buffer += outConditionCheckbox("shinkansen", "normal", "never");
-        buffer += outConditionCheckbox("shinkansenNozomi", "normal", "never");
-        buffer += outConditionCheckbox("limitedExpress", "normal", "never");
-        buffer += outConditionCheckbox("localBus", "normal", "never");
-        buffer += outConditionCheckbox("liner", "normal", "never");
-        buffer += outConditionCheckbox("midnightBus", "normal", "never");
+        var checkBoxItemList = checkBoxItemName.split(":");
+        for (var i = 0; i < checkBoxItemList.length; i++) {
+            buffer += outConditionCheckbox(checkBoxItemList[i], "normal", "never");
+        }
         buffer += '</div>';
         if (detail) {
             buffer += '<div class="exp_conditionOpen">';
@@ -558,15 +564,33 @@ var expGuiCondition = function (pObject, config) {
         // 飛行機
         buffer += outConditionRadio("plane");
         buffer += outSeparator("plane");
+        // 新幹線
+        buffer += outConditionRadio("shinkansen");
+        buffer += outSeparator("shinkansen");
+        // 新幹線のぞみ
+        buffer += outConditionRadio("shinkansenNozomi");
+        buffer += outSeparator("shinkansenNozomi");
+        // 有料特急
+        buffer += outConditionRadio("limitedExpress");
+        buffer += outSeparator("limitedExpress");
         // 寝台列車
         buffer += outConditionRadio("sleeperTrain");
         buffer += outSeparator("sleeperTrain");
+        // 有料普通列車
+        buffer += outConditionRadio("liner");
+        buffer += outSeparator("liner");
         // 高速バス
         buffer += outConditionRadio("highwayBus");
         buffer += outSeparator("highwayBus");
         // 連絡バス
         buffer += outConditionRadio("connectionBus");
         buffer += outSeparator("connectionBus");
+        // 深夜急行バス
+        buffer += outConditionRadio("midnightBus");
+        buffer += outSeparator("midnightBus");
+        // 路線バス
+        buffer += outConditionRadio("localBus");
+        buffer += outSeparator("localBus");
         // 船
         buffer += outConditionRadio("ship");
         buffer += '</div>';
@@ -601,22 +625,6 @@ var expGuiCondition = function (pObject, config) {
         buffer += '</div>';
         // 隠しタブ
         buffer += '<div style="display:none;">';
-        // 新幹線
-        buffer += outConditionRadio("shinkansen");
-        buffer += outSeparator("shinkansen");
-        // 新幹線のぞみ
-        buffer += outConditionRadio("shinkansenNozomi");
-        buffer += outSeparator("shinkansenNozomi");
-        // 有料特急
-        buffer += outConditionRadio("limitedExpress");
-        buffer += outSeparator("limitedExpress");
-        // 路線バス
-        buffer += outConditionRadio("localBus");
-        // 有料普通列車
-        buffer += outConditionRadio("liner");
-        buffer += outSeparator("liner");
-        // 深夜急行バス
-        buffer += outConditionRadio("midnightBus");
         // 路線名あいまい指定
         //  buffer += outConditionRadio("fuzzyLine");
         // 経由駅指定の継承
@@ -879,7 +887,17 @@ var expGuiCondition = function (pObject, config) {
                 }
             } else {
                 // 探索条件の変更
-                if (eventIdList[1].toLowerCase() == String("ticketSystemType").toLowerCase()) {
+                if (eventIdList[1].toLowerCase() == String("shinkansen").toLowerCase()) {
+                    // 新幹線
+                    if (getValue("shinkansen") == "never") {
+                        setValue("shinkansenNozomi", "never");
+                    }
+                } else if (eventIdList[1].toLowerCase() == String("shinkansenNozomi").toLowerCase()) {
+                    // 新幹線
+                    if (getValue("shinkansenNozomi") == "normal") {
+                        setValue("shinkansen", "normal");
+                    }
+                } else if (eventIdList[1].toLowerCase() == String("ticketSystemType").toLowerCase()) {
                     // 乗車券計算のシステム
                     if (getValue("ticketSystemType") == "normal") {
                         setValue("preferredTicketOrder", "none");
@@ -1277,36 +1295,40 @@ var expGuiCondition = function (pObject, config) {
             apiURL = value;
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
             agent = value;
+        } else if (name.toLowerCase() == String("simpleCondition").toLowerCase()) {
+            //探索条件を簡易指定にする
+            checkBoxItemName = value;
         } else if (String(value).toLowerCase() == "visible") {
-            conditionObject[name.toLowerCase()].visible = true;
             // 探索条件の表示
-            if (document.getElementById(baseId + ':' + name.toLowerCase() + ':separator')) {
-                document.getElementById(baseId + ':' + name.toLowerCase() + ':separator').style.display = "block";
-            }
-            if (document.getElementById(baseId + ':' + name.toLowerCase() + ':condition')) {
-                document.getElementById(baseId + ':' + name.toLowerCase() + ':condition').style.display = "block";
-            }
+            setConditionView(name, true);
             if (document.getElementById(baseId + ':' + name.toLowerCase() + ':simple')) {
                 document.getElementById(baseId + ':' + name.toLowerCase() + ':simple').style.display = "block";
             }
         } else if (String(value).toLowerCase() == "hidden") {
-            conditionObject[name.toLowerCase()].visible = false;
             // 探索条件の非表示
-            if (document.getElementById(baseId + ':' + name.toLowerCase() + ':separator')) {
-                document.getElementById(baseId + ':' + name.toLowerCase() + ':separator').style.display = "none";
-            }
-            if (document.getElementById(baseId + ':' + name.toLowerCase() + ':condition')) {
-                document.getElementById(baseId + ':' + name.toLowerCase() + ':condition').style.display = "none";
-            }
+            setConditionView(name, false);
             if (document.getElementById(baseId + ':' + name.toLowerCase() + ':simple')) {
                 document.getElementById(baseId + ':' + name.toLowerCase() + ':simple').style.display = "none";
             }
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
+        }
+    }
+
+    /*
+    * 探索条件の表示切り替え
+    */
+    function setConditionView(name, display) {
+        conditionObject[name.toLowerCase()].visible = display;
+        if (document.getElementById(baseId + ':' + name.toLowerCase() + ':separator')) {
+            document.getElementById(baseId + ':' + name.toLowerCase() + ':separator').style.display = display ? "block" : "none";
+        }
+        if (document.getElementById(baseId + ':' + name.toLowerCase() + ':condition')) {
+            document.getElementById(baseId + ':' + name.toLowerCase() + ':condition').style.display = display ? "block" : "none";
         }
     }
 

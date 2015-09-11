@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-06-17
+ *  Version:2015-09-11
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -912,9 +912,13 @@ var expGuiCourse = function (pObject, config) {
                             // 改行
                             buffer += '<div class="exp_return"></div>';
                         }
-                        buffer += '<li class="exp_resultTabButtonSelect' + (buttonType != "" ? " exp_" + buttonType : "") + '"><span class="exp_text">' + String(n) + '</span></li>';
+                        buffer += '<li class="exp_resultTabButtonSelect' + (buttonType != "" ? " exp_" + buttonType : "") + '">';
+                        buffer += '<a class="exp_link" id="' + baseId + ':tab:' + String(n) + '" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':tab:' + String(n) + ':text">' + String(n) + '</span></a>';
+                        buffer += '</li>';
                     } else if (agent == 2 || agent == 3) {
-                        buffer += '<li class="exp_resultTabButtonSelect' + (buttonType != "" ? " exp_" + buttonType : "") + '"><span class="exp_text">' + String(n) + '</span></li>';
+                        buffer += '<li class="exp_resultTabButtonSelect' + (buttonType != "" ? " exp_" + buttonType : "") + '">';
+                        buffer += '<a class="exp_link" id="' + baseId + ':tab:' + String(n) + '" href="Javascript:void(0);">' + String(n) + '</a>';
+                        buffer += '</li>';
                     }
                 } else {
                     if (agent == 1) {
@@ -967,10 +971,7 @@ var expGuiCourse = function (pObject, config) {
             addEvent(document.getElementById(baseId + ":resultSelect"), "change", onEvent);
             // 経路のタブ
             for (var i = 0; i < resultCount; i++) {
-                if (selectNo != (i + 1)) {
-                    // 選択中のタブ以外
-                    addEvent(document.getElementById(baseId + ":tab:" + String(i + 1)), "click", onEvent);
-                }
+                addEvent(document.getElementById(baseId + ":tab:" + String(i + 1)), "click", onEvent);
             }
         }
     }
@@ -993,7 +994,11 @@ var expGuiCourse = function (pObject, config) {
             if (typeof result.ResultSet.Course[0].Route.Point[0].Station != 'undefined') {
                 buffer += result.ResultSet.Course[0].Route.Point[0].Station.Name;
             } else if (typeof result.ResultSet.Course[0].Route.Point[0].Name != 'undefined') {
-                buffer += result.ResultSet.Course[0].Route.Point[0].Name;
+                if (result.ResultSet.Course[0].Route.Point[0].Name.split(",")[2] == "tokyo") {
+                    buffer += "座標情報";
+                } else {
+                    buffer += result.ResultSet.Course[0].Route.Point[0].Name;
+                }
             }
             buffer += '</div>';
             buffer += '<div class="exp_cursor"></div>';
@@ -1002,7 +1007,11 @@ var expGuiCourse = function (pObject, config) {
             if (typeof result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Station != 'undefined') {
                 buffer += result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Station.Name;
             } else if (typeof result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Name != 'undefined') {
-                buffer += result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Name;
+                if (result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Name.split(",")[2] == "tokyo") {
+                    buffer += "座標情報";
+                } else {
+                    buffer += result.ResultSet.Course[0].Route.Point[result.ResultSet.Course[0].Route.Point.length - 1].Name;
+                }
             }
             buffer += '</div>';
             var searchDate;
@@ -1160,6 +1169,28 @@ var expGuiCourse = function (pObject, config) {
                 if (minTransferCount == TransferCount) {
                     buffer += '<span class="exp_raku" id="' + baseId + ':list:' + String(i + 1) + ':icon:raku"></span>';
                 }
+                // 残りの情報を入れる
+                var summary_info = "";
+                if (typeof tmpResult.Route.Line.length == 'undefined') {
+                    if (getTextValue(tmpResult.Route.Line.Type) == "walk") {
+                        summary_info = "徒歩";
+                    } else {
+                        summary_info = "直通";
+                    }
+                } else {
+                    // 最初と最後の駅は除く
+                    for (var j = 1; j < tmpResult.Route.Point.length - 1; j++) {
+                        if (j > 1) { summary_info += "・"; }
+                        if (typeof tmpResult.Route.Point[j].Station != 'undefined') {
+                            summary_info += tmpResult.Route.Point[j].Station.Name;
+                        } else if (typeof point.Name != 'undefined') {
+                            summary_info += tmpResult.Route.Point[j].Name;
+                        }
+                    }
+                    summary_info += " 乗換";
+                }
+                buffer += '<span class="exp_information_' + ((tmpResult.dataType == "onTimetable" ? "dia" : "plane")) + '" id="' + baseId + ':list:' + String(i + 1) + ':information">' + summary_info + '</span>';
+
                 buffer += '</div>';
                 // ダイヤ探索のみ
                 if (tmpResult.dataType == "onTimetable") {
@@ -2329,7 +2360,11 @@ var expGuiCourse = function (pObject, config) {
         if (typeof point.Station != 'undefined') {
             buffer += point.Station.Name;
         } else if (typeof point.Name != 'undefined') {
-            buffer += point.Name;
+            if (point.Name.split(",")[2] == "tokyo") {
+                buffer += "座標情報";
+            } else {
+                buffer += point.Name;
+            }
         }
         // メニューリスト作成
         if (callBackObjectStation.length > 0) {
@@ -2483,7 +2518,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<div class="exp_no">&nbsp;</div>';
         }
         // 路線名
-        var lineName = line.Name;
+        var lineName = getTextValue(line.Name);
         // 列車番号・便名を出力するかどうか
         if (typeof line.Number != 'undefined') {
             if (type == "train") {
@@ -3211,10 +3246,13 @@ var expGuiCourse = function (pObject, config) {
     * オブジェクトの値を取得
     */
     function getTextValue(obj) {
-        if (typeof obj.text != "undefined") {
-            return obj.text;
-        } else {
+        if (typeof obj != "undefined") {
+            if (typeof obj.text != "undefined") {
+                return obj.text;
+            }
             return obj;
+        } else {
+            return "";
         }
     }
 
@@ -3733,9 +3771,9 @@ var expGuiCourse = function (pObject, config) {
         } else if (String(name).toLowerCase() == String("window").toLowerCase()) {
             windowFlag = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }
