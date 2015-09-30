@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-09-11
+ *  Version:2015-09-25
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -3280,7 +3280,7 @@ var expGuiCourse = function (pObject, config) {
     /*
     * 出発時刻を取得
     */
-    function getDepartureDate() {
+    function getDepartureDate(index) {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
             return;
@@ -3294,7 +3294,13 @@ var expGuiCourse = function (pObject, config) {
             if (typeof tmpResult.Route.Line.length == 'undefined') {
                 return convertISOtoDate(tmpResult.Route.Line.DepartureState.Datetime.text, tmpResult.Route.Line.DepartureState.Datetime.operation);
             } else {
-                return convertISOtoDate(tmpResult.Route.Line[0].DepartureState.Datetime.text, tmpResult.Route.Line[0].DepartureState.Datetime.operation);
+                if (typeof index == 'undefined') {
+                    // index未指定時
+                    return convertISOtoDate(tmpResult.Route.Line[0].DepartureState.Datetime.text, tmpResult.Route.Line[0].DepartureState.Datetime.operation);
+                } else {
+                    // index指定時
+                    return convertISOtoDate(tmpResult.Route.Line[parseInt(index) - 1].DepartureState.Datetime.text, tmpResult.Route.Line[parseInt(index) - 1].DepartureState.Datetime.operation);
+                }
             }
         } else {
             return;
@@ -3304,7 +3310,7 @@ var expGuiCourse = function (pObject, config) {
     /*
     * 到着時刻を取得
     */
-    function getArrivalDate() {
+    function getArrivalDate(index) {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
             return;
@@ -3318,7 +3324,13 @@ var expGuiCourse = function (pObject, config) {
             if (typeof tmpResult.Route.Line.length == 'undefined') {
                 return convertISOtoDate(tmpResult.Route.Line.ArrivalState.Datetime.text, tmpResult.Route.Line.ArrivalState.Datetime.operation);
             } else {
-                return convertISOtoDate(tmpResult.Route.Line[tmpResult.Route.Line.length - 1].ArrivalState.Datetime.text, tmpResult.Route.Line[tmpResult.Route.Line.length - 1].ArrivalState.Datetime.operation);
+                if (typeof index == 'undefined') {
+                    // index未指定時
+                    return convertISOtoDate(tmpResult.Route.Line[tmpResult.Route.Line.length - 1].ArrivalState.Datetime.text, tmpResult.Route.Line[tmpResult.Route.Line.length - 1].ArrivalState.Datetime.operation);
+                } else {
+                    // index指定時
+                    return convertISOtoDate(tmpResult.Route.Line[parseInt(index) - 1].ArrivalState.Datetime.text, tmpResult.Route.Line[parseInt(index) - 1].ArrivalState.Datetime.operation);
+                }
             }
         } else {
             return;
@@ -3632,6 +3644,105 @@ var expGuiCourse = function (pObject, config) {
             }
         }
         return tmp_station;
+    }
+
+    /*
+    * 乗車券のリストを出力
+    */
+    function getFareList(roundFlag) {
+        return getPriceList("Fare", roundFlag);
+    }
+
+    /*
+    * 特急券のリストを出力
+    */
+    function getChargeList(roundFlag) {
+        return getPriceList("Charge", roundFlag);
+    }
+
+    /*
+    * 運賃のリストを出力
+    */
+    function getPriceList(kind, roundFlag) {
+        var priceList = new Array();
+        if (typeof result != 'undefined') {
+            var tmpResult;
+            if (resultCount == 1) {
+                tmpResult = result.ResultSet.Course;
+            } else {
+                tmpResult = result.ResultSet.Course[(selectNo - 1)];
+            }
+            if (typeof tmpResult.Price != 'undefined') {
+                for (var i = 0; i < tmpResult.Price.length; i++) {
+                    if (tmpResult.Price[i].kind == kind && tmpResult.Price[i].selected.toLowerCase() == "true") {
+                        if (roundFlag == "round") {
+                            if (typeof tmpResult.Price[i].Round != 'undefined') {
+                                priceList.push(parseInt(getTextValue(tmpResult.Price[i].Round)));
+                            }
+                        } else {
+                            if (typeof tmpResult.Price[i].Oneway != 'undefined') {
+                                priceList.push(parseInt(getTextValue(tmpResult.Price[i].Oneway)));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (priceList.length > 0) {
+            return priceList.join(",");
+        }
+    }
+
+    /*
+    * 乗車券のオブジェクトを取得
+    */
+    function getFareObject(index) {
+        return getPriceList("Fare", index);
+    }
+
+    /*
+    * 特急券のオブジェクトを取得
+    */
+    function getChargeObject(index) {
+        return getPriceList("Charge", index);
+    }
+
+    /*
+    * 運賃のオブジェクトを取得
+    */
+    function getPriceObject(kind, index) {
+        var tmp_price;
+        if (typeof result != 'undefined') {
+            var tmpResult;
+            if (resultCount == 1) {
+                tmpResult = result.ResultSet.Course;
+            } else {
+                tmpResult = result.ResultSet.Course[(selectNo - 1)];
+            }
+            if (typeof tmpResult.Price != 'undefined') {
+                var price_index = 0;
+                for (var i = 0; i < tmpResult.Price.length; i++) {
+                    if (tmpResult.Price[i].kind == kind && tmpResult.Price[i].selected.toLowerCase() == "true") {
+                        price_index++;
+                        if (price_index == parseInt(index)) {
+                            tmp_price = new Object();
+                            tmp_price.fareRevisionStatus = tmpResult.Price[i].fareRevisionStatus;
+                            tmp_price.fromLineIndex = tmpResult.Price[i].fromLineIndex;
+                            tmp_price.toLineIndex = tmpResult.Price[i].toLineIndex;
+                            tmp_price.selected = tmpResult.Price[i].selected.toLowerCase() == "true" ? true : false;
+                            tmp_price.name = tmpResult.Price[i].Name;
+                            tmp_price.type = tmpResult.Price[i].Type;
+                            tmp_price.oneway = parseInt(getTextValue(tmpResult.Price[i].Oneway));
+                            if (typeof tmpResult.Price[i].Round != 'undefined') {
+                                tmp_price.round = parseInt(getTextValue(tmpResult.Price[i].Round));
+                            }
+                            tmp_price.rate = getTextValue(tmpResult.Price[i].Round);
+                        }
+                    }
+                }
+            }
+        }
+        return tmp_price;
     }
 
     /*
@@ -3999,6 +4110,10 @@ var expGuiCourse = function (pObject, config) {
     this.getChargePrice = getChargePrice;
     this.getTeikiPrice = getTeikiPrice;
     this.getResultCount = getResultCount;
+    this.getFareList = getFareList;
+    this.getFareObject = getFareObject;
+    this.getChargeList = getChargeList;
+    this.getChargeObject = getChargeObject;
     this.createSearchInterface = createSearchInterface;
     this.setConfigure = setConfigure;
     this.courseEdit = courseEdit;
