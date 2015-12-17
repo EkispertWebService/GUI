@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-06-17
+ *  Version:2015-12-14
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -538,6 +538,8 @@ var expGuiStationInfo = function (pObject, config) {
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (name == "corporationBind") {
             if (typeof value == "object") {
                 corporationBind = value.join(":");

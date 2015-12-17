@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-10-15
+ *  Version:2015-12-14
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -466,7 +466,7 @@ var expGuiCondition = function (pObject, config) {
             }
         }
         if (detail) {
-            buffer += '<div class="exp_conditionOpen">';
+            buffer += '<div class="exp_conditionOpen" id="' + baseId + ':conditionOpenButton">';
             if (agent == 1) {
                 buffer += '<a class="exp_conditionOpenButton" id="' + baseId + ':conditionOpen" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':conditionOpen:text">探索詳細条件を設定</span></a>';
             } else if (agent == 3) {
@@ -1212,6 +1212,13 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /*
+    * 詳細探索条件のオープン
+    */
+    function openConditionDetail() {
+        document.getElementById(baseId + ':conditionDetail').style.display = "block";
+    }
+
+    /*
     * フォームの値を取得する
     */
     function getValue(id) {
@@ -1297,8 +1304,17 @@ var expGuiCondition = function (pObject, config) {
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
             agent = value;
+        } else if (name.toLowerCase() == String("conditionDetailButton").toLowerCase()) {
+            //詳細設定ボタンを切り替え
+            if (String(value).toLowerCase() == "visible") {
+                document.getElementById(baseId + ':conditionOpenButton').style.display = "block";
+            } else if (String(value).toLowerCase() == "hidden") {
+                document.getElementById(baseId + ':conditionOpenButton').style.display = "none";
+            }
         } else if (name.toLowerCase() == String("simpleCondition").toLowerCase()) {
             //探索条件を簡易指定にする
             checkBoxItemName = value;
@@ -1367,6 +1383,7 @@ var expGuiCondition = function (pObject, config) {
     this.getCondition = getCondition;
     this.getConditionLight = getConditionLight;
     this.setCondition = setCondition;
+    this.openConditionDetail = openConditionDetail;
     this.resetCondition = resetCondition; ;
     this.setConfigure = setConfigure;
 

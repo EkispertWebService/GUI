@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-08-27
+ *  Version:2015-12-14
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -1172,13 +1172,13 @@ var expGuiMap = function (pObject, config) {
                 //マルチタッチ
                 mouseDownFlag = false;
                 multiTouchFlag = true;
-                touchObj.centerX = Math.floor(((e.touches[0].pageX - rect.left) + (e.touches[1].pageX - rect.left)) / 2);
-                touchObj.centerY = Math.floor(((e.touches[0].pageY - rect.top) + (e.touches[1].pageY - rect.top)) / 2);
-                touchObj.defScale = Math.floor(Math.sqrt(Math.pow(e.touches[0].pageX - e.touches[1].pageX, 2), Math.pow(e.touches[0].pageY - e.touches[1].pageY, 2)) / 5) / 10;
+                touchObj.centerX = Math.floor(((e.touches[0].clientX - rect.left) + (e.touches[1].clientX - rect.left)) / 2);
+                touchObj.centerY = Math.floor(((e.touches[0].clientY - rect.top) + (e.touches[1].clientY - rect.top)) / 2);
+                touchObj.defScale = Math.floor(Math.sqrt(Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2), Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)) / 5) / 10;
             } else {
                 //iPad & iPhone & Android用処理
-                mouseObj.mouseX1 = e.touches[0].pageX - rect.left;
-                mouseObj.mouseY1 = e.touches[0].pageY - rect.top;
+                mouseObj.mouseX1 = e.touches[0].clientX - rect.left;
+                mouseObj.mouseY1 = e.touches[0].clientY - rect.top;
             }
         } else {
             //PC用処理
@@ -1473,7 +1473,7 @@ var expGuiMap = function (pObject, config) {
         //縦スクロールをしない（iPad & iPhone & Android）
         e.preventDefault();
         if (multiTouchFlag) {
-            touchObj.scale = Math.floor(Math.sqrt(Math.pow(e.touches[0].pageX - e.touches[1].pageX, 2), Math.pow(e.touches[0].pageY - e.touches[1].pageY, 2)) / 5) / 10 - touchObj.defScale;
+            touchObj.scale = Math.floor(Math.sqrt(Math.pow(e.touches[0].clientX - e.touches[1].clientX, 2), Math.pow(e.touches[0].clientY - e.touches[1].clientY, 2)) / 5) / 10 - touchObj.defScale;
         } else if (mouseDownFlag) {
             //縦スクロールをしない（iPad & iPhone & Android）
             e.preventDefault();
@@ -1485,8 +1485,8 @@ var expGuiMap = function (pObject, config) {
             var rect = e.target.getBoundingClientRect();
             if (isiPad || isiPhone || isAndroid) {
                 //iPad & iPhone & Android用処理
-                mouseObj.mouseX2 = e.touches[0].pageX - rect.left;
-                mouseObj.mouseY2 = e.touches[0].pageY - rect.top;
+                mouseObj.mouseX2 = e.touches[0].clientX - rect.left;
+                mouseObj.mouseY2 = e.touches[0].clientY - rect.top;
             } else {
                 //PC用処理
                 mouseObj.mouseX2 = e.clientX - rect.left;
@@ -2207,6 +2207,8 @@ var expGuiMap = function (pObject, config) {
     function setConfigure(name, value) {
         if (String(name).toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (String(name).toLowerCase() == String("cursor").toLowerCase()) {
             viewCursor(value);
         } else if (String(name).toLowerCase() == String("scale").toLowerCase()) {

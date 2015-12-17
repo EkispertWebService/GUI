@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-09-25
+ *  Version:2015-12-14
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -139,18 +139,23 @@ var expGuiCourse = function (pObject, config) {
             // 探索結果の表示
             buffer += '<div class="exp_result" id="' + baseId + ':result"></div>';
             // 確定ボタン
-            if (typeof callBackFunctionBind['select'] == 'function') {
-                buffer += '<div class="exp_footer">';
-                buffer += '<div class="exp_resultSelect">';
-                buffer += '<a class="exp_resultSelectButton" id="' + baseId + ':courseSelect" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':courseSelect:text">経路確定</span></a>';
-                buffer += '</div>';
-                buffer += '</div>';
-            }
+            buffer += '<div class="exp_footer" id="' + baseId + ':resultSelectButton" style="display:none;">';
+            buffer += '<div class="exp_resultSelect">';
+            buffer += '<a class="exp_resultSelectButton" id="' + baseId + ':courseSelect" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':courseSelect:text">経路確定</span></a>';
+            buffer += '</div>';
+            buffer += '</div>';
+
             buffer += '</div>';
             buffer += '</div>';
         } else {
             // 探索結果の表示
             buffer += '<div class="exp_result" id="' + baseId + ':result"></div>';
+            // 確定ボタン
+            buffer += '<div class="exp_footer" id="' + baseId + ':resultSelectButton" style="display:none;">';
+            buffer += '<div class="exp_resultSelect">';
+            buffer += '<a class="exp_resultSelectButton" id="' + baseId + ':courseSelect" href="Javascript:void(0);"><span class="exp_text" id="' + baseId + ':courseSelect:text">経路確定</span></a>';
+            buffer += '</div>';
+            buffer += '</div>';
         }
 
         buffer += '</div>';
@@ -387,6 +392,7 @@ var expGuiCourse = function (pObject, config) {
             };
             resultObj.onerror = function () {
                 // エラー時の処理
+                document.getElementById(baseId + ':course').style.display = "none";
                 if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
                 }
@@ -400,6 +406,7 @@ var expGuiCourse = function (pObject, config) {
                     setResult(resultObj.responseText, callbackFunction);
                 } else if (resultObj.readyState == done && resultObj.status != ok) {
                     // エラー時の処理
+                    document.getElementById(baseId + ':course').style.display = "none";
                     if (typeof callbackFunction == 'function') {
                         callbackFunction(false);
                     }
@@ -481,15 +488,25 @@ var expGuiCourse = function (pObject, config) {
             }
             // 経路表示
             viewResult();
+            // 経路選択をオンにしていた場合は選択ボタンを表示
+            if (typeof callBackFunctionBind['select'] == 'function') {
+                document.getElementById(baseId + ':resultSelectButton').style.display = "block";
+            } else {
+                if (document.getElementById(baseId + ':resultSelectButton')) {
+                    document.getElementById(baseId + ':resultSelectButton').style.display = "none";
+                }
+            }
             // 表示する
             document.getElementById(baseId + ':course').style.display = "block";
             // 一度だけコールバックする
             if (typeof callbackFunction == 'function') {
                 if (typeof result == 'undefined') {
                     // 探索結果オブジェクトがない場合
+                    document.getElementById(baseId + ':course').style.display = "none";
                     callbackFunction(false);
                 } else if (typeof result.ResultSet.Course == 'undefined') {
                     // 探索結果が取得できていない場合
+                    document.getElementById(baseId + ':course').style.display = "none";
                     callbackFunction(false);
                 } else {
                     // 探索完了
@@ -973,6 +990,8 @@ var expGuiCourse = function (pObject, config) {
             for (var i = 0; i < resultCount; i++) {
                 addEvent(document.getElementById(baseId + ":tab:" + String(i + 1)), "click", onEvent);
             }
+            // 経路確定
+            addEvent(document.getElementById(baseId + ":courseSelect"), "click", onEvent);
         }
     }
 
@@ -1436,8 +1455,12 @@ var expGuiCourse = function (pObject, config) {
                 } else if (eventIdList[3] == "close") {
                     document.getElementById(baseId + ':fareMenu:' + eventIdList[2]).style.display = "none";
                 } else {
-                    document.getElementById(baseId + ':fare:' + (eventIdList[2])).value = eventIdList[3];
-                    changePrice();
+                    if (priceChangeFlag) {
+                        document.getElementById(baseId + ':fare:' + (eventIdList[2])).value = eventIdList[3];
+                        changePrice();
+                    } else {
+                        document.getElementById(baseId + ':fareMenu:' + eventIdList[2]).style.display = "none";
+                    }
                 }
             } else if (eventIdList[1] == "chargeMenu" && eventIdList.length >= 4) {
                 // 特急券メニュー
@@ -1450,8 +1473,12 @@ var expGuiCourse = function (pObject, config) {
                 } else if (eventIdList[3] == "close") {
                     document.getElementById(baseId + ':chargeMenu:' + eventIdList[2]).style.display = "none";
                 } else {
-                    document.getElementById(baseId + ':charge:' + (eventIdList[2])).value = eventIdList[3];
-                    changePrice();
+                    if (priceChangeFlag) {
+                        document.getElementById(baseId + ':charge:' + (eventIdList[2])).value = eventIdList[3];
+                        changePrice();
+                    } else {
+                        document.getElementById(baseId + ':chargeMenu:' + eventIdList[2]).style.display = "none";
+                    }
                 }
             } else if (eventIdList[1] == "teikiMenu" && eventIdList.length >= 4) {
                 // 定期券メニュー
@@ -1464,8 +1491,12 @@ var expGuiCourse = function (pObject, config) {
                 } else if (eventIdList[3] == "close") {
                     document.getElementById(baseId + ':teikiMenu:' + eventIdList[2]).style.display = "none";
                 } else {
-                    document.getElementById(baseId + ':teiki:' + (eventIdList[2])).value = eventIdList[3];
-                    changePrice();
+                    if (priceChangeFlag) {
+                        document.getElementById(baseId + ':teiki:' + (eventIdList[2])).value = eventIdList[3];
+                        changePrice();
+                    } else {
+                        document.getElementById(baseId + ':teikiMenu:' + eventIdList[2]).style.display = "none";
+                    }
                 }
             } else if ((eventIdList[1] == "prevDia" || eventIdList[1] == "prevDia2") && eventIdList.length >= 2) {
                 assignDia("prev");
@@ -3020,12 +3051,12 @@ var expGuiCourse = function (pObject, config) {
             return;
         }
         if (typeof tmpResult.Route.Line.length == 'undefined') {
-            if (tmpResult.Route.Line.Type != "train" && tmpResult.Route.Line.Type != "walk") {
+            if (getTextValue(tmpResult.Route.Line.Type) != "train" && getTextValue(tmpResult.Route.Line.Type) != "walk") {
                 return;
             }
         } else {
             for (var i = 0; i < (tmpResult.Route.Point.length - 1); i++) {
-                if (tmpResult.Route.Line[i].Type != "train" && tmpResult.Route.Line[i].Type != "walk") {
+                if (getTextValue(tmpResult.Route.Line[i].Type) != "train" && getTextValue(tmpResult.Route.Line[i].Type) != "walk") {
                     return;
                 }
             }
@@ -3869,6 +3900,8 @@ var expGuiCourse = function (pObject, config) {
     function setConfigure(name, value) {
         if (String(name).toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (String(name).toLowerCase() == String("PriceChangeRefresh").toLowerCase()) {
             priceChangeRefreshFlag = value;
         } else if (String(name).toLowerCase() == String("PriceChange").toLowerCase()) {

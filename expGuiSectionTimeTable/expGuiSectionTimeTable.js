@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-06-17
+ *  Version:2015-12-14
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -345,12 +345,15 @@ var expGuiSectionTimeTable = function (pObject, config) {
     */
     function outTimeTable(timeTableObject) {
         timeTable = timeTableObject;
-
         // 時刻表の出力
-        outTimeTableObj();
-
-        if (typeof callbackFunction == 'function') {
-            callbackFunction(true);
+        if (outTimeTableObj()) {
+            if (typeof callbackFunction == 'function') {
+                callbackFunction(true);
+            }
+        } else {
+            if (typeof callbackFunction == 'function') {
+                callbackFunction(false);
+            }
         }
     }
 
@@ -369,7 +372,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
                     timeTableList.push(timeTable.ResultSet.Line[i]);
                 }
             }
-        } else {
+        } else if (typeof timeTable.ResultSet.TimeTable != 'undefined') {
             if (typeof timeTable.ResultSet.TimeTable.Line.length == 'undefined') {
                 // 一便だけ
                 timeTableList.push(timeTable.ResultSet.TimeTable.Line);
@@ -378,6 +381,8 @@ var expGuiSectionTimeTable = function (pObject, config) {
                     timeTableList.push(timeTable.ResultSet.TimeTable.Line[i]);
                 }
             }
+        } else {
+            return false;
         }
         // 時刻表出力
         var buffer;
@@ -485,6 +490,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         }
         // 時間のイベント
         addEvent(document.getElementById(baseId + ":clock"), "change", onEvent);
+        return true;
     }
 
     /*
@@ -765,12 +771,14 @@ var expGuiSectionTimeTable = function (pObject, config) {
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (name.toLowerCase() == String("Agent").toLowerCase()) {
             agent = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }

@@ -3200,7 +3200,7 @@
     text-align: center;
 }
 /* 経路確定ボタン */
-.expGuiCourse .exp_resultPopup .exp_resultSelect {
+.expGuiCourse .exp_resultSelect {
     margin: 0 auto;
     width: 113px;
     height: 31px;
@@ -3209,20 +3209,20 @@
     font-size: 0.9em;
     background: url(../expImages/routeSelect.png) no-repeat;
 }
-.expGuiCourse .exp_resultPopup .exp_resultSelect .exp_resultSelectButton {
+.expGuiCourse .exp_resultSelect .exp_resultSelectButton {
     display: block;
     height: 30px;
     text-decoration: none;
 }
-.expGuiCourse .exp_resultPopup .exp_resultSelect .exp_text {
+.expGuiCourse .exp_resultSelect .exp_text {
     display: block;
     padding-top: 7px;
     color: #384556;
 }
-.expGuiCourse .exp_resultPopup .exp_resultSelect .exp_text:hover {
+.expGuiCourse .exp_resultSelect .exp_text:hover {
     color: #0082ad;
 }
-.expGuiCourse .exp_resultPopup .exp_resultSelect:hover {
+.expGuiCourse .exp_resultSelect:hover {
     width: 113px;
     height: 31px;
     text-align: center;
