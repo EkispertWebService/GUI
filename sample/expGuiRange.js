@@ -181,6 +181,8 @@ var expGuiRange = function (pObject, config) {
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (name == "transferCount") {
             transferCount = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {

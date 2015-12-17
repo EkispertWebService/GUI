@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-06-17
+ *  Version:2015-11-06
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -78,18 +78,15 @@ var expGuiStation = function (pObject, config) {
     * 変数郡
     */
     var stationList = new Array(); // インクリメンタルサーチ結果
-
     var httpObj; // インクリメンタルサーチのリクエストオブジェクト
     var oldvalue = ""; // キー監視用の文字列
-
+    var stationCorporationBind;
     var stationType;
     var stationPrefectureCode;
-
     var callBackFunction = new Object();
-
     var maxStation = 30; //最大駅数
-
     var selectStation = 0;
+    var callBackFunctionDelay = false;
 
     var stationSort = new Array(createSortObject("駅", "train"), createSortObject("空港", "plane"), createSortObject("船", "ship"), createSortObject("バス", "bus"));
     function createSortObject(name, type, sList) {
@@ -221,11 +218,20 @@ var expGuiStation = function (pObject, config) {
     * フォーカスが外れた時にイベント
     */
     function onblurEvent() {
-        setTimeout(onblurEventCallBack, 100);
+        callBackFunctionDelay = true;
+        setTimeout(onblurEventCallBack, 1000);
     }
+
+    /*
+    * 遅延処理を行った際に実行される
+    */
     function onblurEventCallBack() {
-        if (typeof callBackFunction['blur'] == 'function') {
-            callBackFunction['blur']();
+        if (callBackFunctionDelay) {
+            callBackFunctionDelay = false;
+            closeStationList();
+            if (typeof callBackFunction['blur'] == 'function') {
+                callBackFunction['blur']();
+            }
         }
     }
 
@@ -233,6 +239,7 @@ var expGuiStation = function (pObject, config) {
     * フォーカスが合った時にイベント
     */
     function onFocusEvent() {
+        callBackFunctionDelay = false;
         if (typeof callBackFunction['focus'] == 'function') {
             callBackFunction['focus']();
         }
@@ -373,7 +380,9 @@ var expGuiStation = function (pObject, config) {
         if (typeof stationPrefectureCode != 'undefined') {
             url += "&prefectureCode=" + stationPrefectureCode;
         }
-
+        if (typeof stationCorporationBind != 'undefined') {
+            url += "&corporationBind=" + encodeURIComponent(stationCorporationBind);
+        }
         var JSON_object = {};
         if (window.XDomainRequest) {
             // IE用
@@ -520,6 +529,16 @@ var expGuiStation = function (pObject, config) {
                     callBackFunction['open']();
                 }
             }
+            // リストが取得できたためコールバックする
+            if (typeof callBackFunction['callback'] == 'function') {
+                callBackFunction['callback'](true);
+                callBackFunction['callback'] = undefined;
+            }
+        } else {
+            if (typeof callBackFunction['callback'] == 'function') {
+                callBackFunction['callback'](false);
+                callBackFunction['callback'] = undefined;
+            }
         }
     }
 
@@ -614,11 +633,14 @@ var expGuiStation = function (pObject, config) {
     * イベントの振り分けを行う
     */
     function onEvent(e) {
+        callBackFunctionDelay = false;
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
         if (eventIdList.length >= 2) {
             if (eventIdList[1] == "stationRow" && eventIdList.length == 3) {
                 // 駅の選択
                 setStationNo(parseInt(eventIdList[2]));
+                callBackFunctionDelay = true;
+                onblurEventCallBack();
             } else if (eventIdList[1] == "stationView" && eventIdList.length >= 3) {
                 // 表示切替
                 stationView(parseInt(eventIdList[2]) - 1);
@@ -747,7 +769,8 @@ var expGuiStation = function (pObject, config) {
     /*
     * フォームに駅名をセットしてリストを閉じる
     */
-    function setStation(str) {
+    function setStation(str, callback) {
+        callBackFunction['callback'] = callback;
         if (agent == 1 || agent == 3) {
             document.getElementById(baseId + ':stationInput').value = str;
             // チェックはしない
@@ -764,6 +787,10 @@ var expGuiStation = function (pObject, config) {
             if (stationList.length > 0) {
                 for (var i = 0; i < stationList.length; i++) {
                     if (stationList[i].name == str) {
+                        if (typeof callBackFunction['callback'] == 'function') {
+                            callBackFunction['callback'](true);
+                            callBackFunction['callback'] = undefined;
+                        }
                         return;
                     }
                 }
@@ -779,11 +806,19 @@ var expGuiStation = function (pObject, config) {
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (name.toLowerCase() == "type") {
             if (typeof value == "object") {
                 stationType = value.join(":");
             } else {
                 stationType = value;
+            }
+        } else if (name.toLowerCase() == String("corporationBind").toLowerCase()) {
+            if (typeof value == "object") {
+                stationCorporationBind = value.join(":");
+            } else {
+                stationCorporationBind = value;
             }
         } else if (name.toLowerCase() == String("prefectureCode").toLowerCase()) {
             if (typeof value == "object") {
@@ -793,12 +828,14 @@ var expGuiStation = function (pObject, config) {
             }
         } else if (name.toLowerCase() == String("maxStation").toLowerCase()) {
             maxStation = value;
+        } else if (name.toLowerCase() == String("maxStation").toLowerCase()) {
+            maxStation = value;
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
             agent = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }

@@ -187,6 +187,8 @@ var expGuiTools = function (pObject, config) {
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
             if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
                 apiURL = apiURL.replace('http://', 'https://');

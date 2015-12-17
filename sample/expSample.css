@@ -1,0 +1,87 @@
+@charset "utf-8";
+.exp_sample_title {
+    font-weight: bold;
+    padding: 3px 5px;
+    border-color: #0B0099;
+    border-width: 0 0 1px 7px;
+    border-style: solid;
+    background: #F8F8F8;
+}
+.exp_sample_teiki {
+    width: 100%;
+    border: 1px solid #a0aab4;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height: 30px;
+    box-shadow: inset #ececec 0 2px;
+    -moz-box-shadow: inset #ececec 0 2px;
+    background-color: #EAEAEA;
+}
+.exp_sample_btn_area {
+    width: 100%;
+    text-align: center;
+    margin: 1em 0;
+}
+.exp_sample_btn {
+    font-weight: bold;
+    padding: 10px 30px;
+    color: #fff;
+    border-style: none;
+    box-shadow: 2px 2px 3px 1px #666;
+    -moz-box-shadow: 2px 2px 3px 1px #666;
+    -webkit-box-shadow: 2px 2px 3px 1px #666;
+    text-shadow: 1px 1px 2px #000;
+    background-color: #0B0099;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.exp_sample_btn:hover {
+    opacity: 0.8;
+}
+.exp_sample_simple_btn {
+    font-weight: bold;
+    padding: 5px 10px;
+    color: #fff;
+    border-style: none;
+    text-shadow: 1px 1px 2px #000;
+    background-color: #0B0099;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.exp_sample_simple_btn:hover {
+    opacity: 0.8;
+}
+.exp_sample_header {
+    position: relative;
+    margin: 0 0 1.5em;
+    padding: 0.5em;
+    background: #001cc1;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+}
+.exp_sample_header:after {
+    position: absolute;
+    bottom: -15px;
+    left: 5%;
+    margin-left: -15px;
+    border-top: 15px solid #001cc1;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 0;
+    content: "";
+}
+.exp_select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #999;
+    background: #eee;
+    background: -webkit-linear-gradient(top, #fff 0%,#efebe1 100%);
+    background: linear-gradient(to bottom, #fff 0%,#efebe1 100%);
+    background-size: 20px, 100%;
+}

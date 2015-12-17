@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-06-17
+ *  Version:2015-08-27
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -675,6 +675,7 @@ var expGuiDateTime = function (pObject, config) {
         if (month == 12 && day == 23) { syuku = '天皇誕生日'; }     // 12月23日
         if (year < 2003 && month == 7 && day == 20) { syuku = '海の日'; }   // 7月20日(～2002)
         if (year < 2003 && month == 9 && day == 15) { syuku = '敬老の日'; } //  9月15日(～2002)
+        if (month == 8 && day == 11 && year >= 2016) { syuku = '山の日'; } //  8月11日(2016年から)
 
         // 振替休日
         // (2007年から)「国民の祝日」が日曜日に当たるときは、その日後においてその日に最も近い「国民の祝日」でない日を休日とする。
@@ -932,6 +933,8 @@ var expGuiDateTime = function (pObject, config) {
     function setConfigure(name, value) {
         if (name.toLowerCase() == String("apiURL").toLowerCase()) {
             apiURL = value;
+        } else if (name.toLowerCase() == String("key").toLowerCase()) {
+            key = value;
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
             agent = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
