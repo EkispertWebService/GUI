@@ -4,7 +4,7 @@
  *  サンプルコード
  *  http://webui.ekispert.com/doc/
  *  
- *  Version:2015-12-14
+ *  Version:2015-12-18
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -1850,7 +1850,11 @@ var expGuiCourse = function (pObject, config) {
                                 }
                             }
                             buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
-                            buffer += num2String(parseInt(getTextValue(teiki1List[j].Oneway))) + '円';
+                            if (getTextValue(teiki1List[j].Name) != "") {
+                                buffer += getTextValue(teiki1List[j].Name);
+                            } else {
+                                buffer += num2String(parseInt(getTextValue(teiki1List[j].Oneway))) + '円';
+                            }
                             buffer += '</span>';
                         } else {
                             buffer += '------円';
@@ -1866,7 +1870,11 @@ var expGuiCourse = function (pObject, config) {
                                 }
                             }
                             buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
-                            buffer += num2String(parseInt(getTextValue(teiki3List[j].Oneway))) + '円';
+                            if (getTextValue(teiki3List[j].Name) != "") {
+                                buffer += getTextValue(teiki3List[j].Name);
+                            } else {
+                                buffer += num2String(parseInt(getTextValue(teiki3List[j].Oneway))) + '円';
+                            }
                             buffer += '</span>';
                         } else {
                             buffer += '------円';
@@ -1882,7 +1890,11 @@ var expGuiCourse = function (pObject, config) {
                                 }
                             }
                             buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
-                            buffer += num2String(parseInt(getTextValue(teiki6List[j].Oneway))) + '円';
+                            if (getTextValue(teiki6List[j].Name) != "") {
+                                buffer += getTextValue(teiki6List[j].Name);
+                            } else {
+                                buffer += num2String(parseInt(getTextValue(teiki6List[j].Oneway))) + '円';
+                            }
                             buffer += '</span>';
                         } else {
                             buffer += '------円';
