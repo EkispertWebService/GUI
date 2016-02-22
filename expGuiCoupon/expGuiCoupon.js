@@ -2,9 +2,9 @@
  *  駅すぱあと Web サービス
  *  回数券情報パーツ
  *  サンプルコード
- *  http://webui.ekispert.com/doc/
+ *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2015-12-14
+ *  Version:2016-02-22
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/

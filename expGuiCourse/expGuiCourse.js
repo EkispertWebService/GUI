@@ -2,9 +2,9 @@
  *  駅すぱあと Web サービス
  *  経路表示パーツ
  *  サンプルコード
- *  http://webui.ekispert.com/doc/
+ *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2015-12-18
+ *  Version:2016-02-22
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -2658,7 +2658,7 @@ var expGuiCourse = function (pObject, config) {
                         buffer += '<a href="Javascript:void(0);" id="' + baseId + ':chargeMenu:' + String(index + 1) + ':' + String(chargeList[k].index) + '">';
                         // 金額
                         buffer += '<span class="exp_costList" id="' + baseId + ':chargeMenu:' + String(index + 1) + ':' + String(chargeList[k].index) + ':cost">';
-                        buffer += '<span class="exp_cost">';
+                        buffer += '<span class="exp_cost" id="' + baseId + ':chargeMenu:' + String(index + 1) + ':' + String(chargeList[k].index) + ':cost:text">';
                         if (priceViewFlag == "oneway") {
                             buffer += num2String(parseInt(getTextValue(chargeList[k].Oneway))) + '円';
                         } else if (priceViewFlag == "round") {

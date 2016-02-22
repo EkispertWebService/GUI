@@ -2,9 +2,9 @@
  *  駅すぱあと Web サービス
  *  駅名入力パーツ
  *  サンプルコード
- *  http://webui.ekispert.com/doc/
+ *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2015-12-14
+ *  Version:2016-02-22
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -228,7 +228,6 @@ var expGuiStation = function (pObject, config) {
     function onblurEventCallBack() {
         if (callBackFunctionDelay) {
             callBackFunctionDelay = false;
-            closeStationList();
             if (typeof callBackFunction['blur'] == 'function') {
                 callBackFunction['blur']();
             }
@@ -284,15 +283,17 @@ var expGuiStation = function (pObject, config) {
                 setStationNo(selectStation);
             } else {
                 // エンターキーのみ
-                var tmp_stationList = new Array();
-                for (var n = 0; n < stationSort.length; n++) {
-                    if (stationSort[n].visible) {
-                        for (var i = 0; i < stationSort[n].stationList.length; i++) {
-                            tmp_stationList.push(stationSort[n].stationList[i] + 1);
+                if (iStation != "") {
+                    var tmp_stationList = new Array();
+                    for (var n = 0; n < stationSort.length; n++) {
+                        if (stationSort[n].visible) {
+                            for (var i = 0; i < stationSort[n].stationList.length; i++) {
+                                tmp_stationList.push(stationSort[n].stationList[i] + 1);
+                            }
                         }
                     }
+                    setStationNo(tmp_stationList[0]);
                 }
-                setStationNo(tmp_stationList[0]);
             }
             // エンターキー
             if (typeof callBackFunction['enter'] == 'function') {
@@ -826,8 +827,6 @@ var expGuiStation = function (pObject, config) {
             } else {
                 stationPrefectureCode = value;
             }
-        } else if (name.toLowerCase() == String("maxStation").toLowerCase()) {
-            maxStation = value;
         } else if (name.toLowerCase() == String("maxStation").toLowerCase()) {
             maxStation = value;
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {

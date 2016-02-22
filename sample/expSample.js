@@ -1,3 +1,13 @@
+/**
+ *  駅すぱあと Web サービス
+ *  サンプルコード
+ *  https://github.com/EkispertWebService/GUI
+ *  
+ *  Version:2016-02-22
+ *  
+ *  Copyright (C) Val Laboratory Corporation. All rights reserved.
+ **/
+
 var dateTimeApp;// 日付入力パーツ
 var stationApp1;// 駅名入力パーツ#1
 var stationApp2;// 駅名入力パーツ#2
