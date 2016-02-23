@@ -2,9 +2,9 @@
  *  駅すぱあと Web サービス
  *  路線情報パーツ
  *  サンプルコード
- *  http://webui.ekispert.com/doc/
+ *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2015-06-17
+ *  Version:2016-02-22
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -207,6 +207,20 @@ var expGuiRail = function (pObject, config) {
     }
 
     /*
+    * 旧路線名の検索
+    */
+    function getRailOldName(oldName, callback) {
+        var url = apiURL + "v1/json/rail?key=" + key;
+        // 駅名
+        url += "&oldName=" + encodeURIComponent(oldName);
+        callbackFunction = callback;
+        railList = new Array();
+        tmpUrl = url;
+        // 通信
+        request(tmpUrl, setRailList);
+    }
+
+    /*
     * 路線一覧の解析
     */
     function setRailList(json) {
@@ -245,17 +259,19 @@ var expGuiRail = function (pObject, config) {
     function getRailObject(railObj) {
         var tmp_rail = new Object();
         tmp_rail.name = railObj.Name;
-        if (typeof railObj.Type.text != 'undefined') {
-            if (typeof railObj.Type.detail != 'undefined') {
-                tmp_rail.type = railObj.Type.text;
+        if (typeof railObj.Type != 'undefined') {
+            if (typeof railObj.Type.text != 'undefined') {
                 if (typeof railObj.Type.detail != 'undefined') {
-                    tmp_rail.type_detail = railObj.Type.text + "." + railObj.Type.detail;
+                    tmp_rail.type = railObj.Type.text;
+                    if (typeof railObj.Type.detail != 'undefined') {
+                        tmp_rail.type_detail = railObj.Type.text + "." + railObj.Type.detail;
+                    }
+                } else {
+                    tmp_rail.type = railObj.Type.text;
                 }
             } else {
-                tmp_rail.type = railObj.Type.text;
+                tmp_rail.type = railObj.Type;
             }
-        } else {
-            tmp_rail.type = railObj.Type;
         }
         tmp_rail.color = railObj.Color;
         return tmp_rail;
@@ -430,9 +446,9 @@ var expGuiRail = function (pObject, config) {
                 prefectureCode = value;
             }
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }
@@ -445,6 +461,7 @@ var expGuiRail = function (pObject, config) {
     this.getCorporationList = getCorporationList;
     this.searchRail = searchRail;
     this.getRailList = getRailList;
+    this.getRailOldName = getRailOldName;
     this.searchStation = searchStation;
     this.getStationList = getStationList;
     this.getPointObject = getPointObject;

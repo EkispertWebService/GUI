@@ -2,9 +2,9 @@
  *  駅すぱあと Web サービス
  *  ランドマークパーツ
  *  サンプルコード
- *  http://webui.ekispert.com/doc/
+ *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2015-06-17
+ *  Version:2016-02-22
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
