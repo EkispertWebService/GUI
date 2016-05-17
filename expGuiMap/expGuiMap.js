@@ -124,13 +124,13 @@ var expGuiMap = function (pObject, config) {
     var frame = (1000 / 60);
     window.requestAnimFrame = (function () {
         return window.requestAnimationFrame ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame ||
-          window.oRequestAnimationFrame ||
-          window.msRequestAnimationFrame ||
-          function (/* function */callback, /* DOMElement */element) {
-              window.setTimeout(callback, frame);
-          };
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function (/* function */callback, /* DOMElement */element) {
+                window.setTimeout(callback, frame);
+            };
     })();
 
     /*
@@ -871,9 +871,9 @@ var expGuiMap = function (pObject, config) {
             for (var i = 0; i < Math.ceil(obj.mapWidth / tileSize); i++) {
                 for (var j = 0; j < Math.ceil(obj.mapHeight / tileSize); j++) {
                     if (((obj.x + obj.moveX) + i * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
-           ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
-           ((obj.x + obj.moveX) + i * tileSize) * getScale() <= obj.cW + cacheSize &&
-           ((obj.y + obj.moveY) + j * tileSize) * getScale() <= obj.cH + cacheSize) {
+                        ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
+                        ((obj.x + obj.moveX) + i * tileSize) * getScale() <= obj.cW + cacheSize &&
+                        ((obj.y + obj.moveY) + j * tileSize) * getScale() <= obj.cH + cacheSize) {
                         //画像ファイルをロードしていない場合
                         if (imgArray[(i + j * Math.ceil(obj.mapWidth / tileSize))].src == "") {
                             //画像をロード
@@ -920,9 +920,9 @@ var expGuiMap = function (pObject, config) {
                 if (typeof stationMarkList[i].stationNameType != 'undefined' && (stationMarkType != 0 || typeof stationMarkList[i].stationIconType == 'undefined')) {
                     //駅名
                     if ((obj.x + obj.moveX) * -1 <= (stationMarkList[i].stationName_x + stationMarkList[i].stationName_w) &&
-           (obj.y + obj.moveY) * -1 <= (stationMarkList[i].stationName_y + stationMarkList[i].stationName_h) &&
-           (obj.x + obj.moveX) * -1 + obj.cW * getScale() >= stationMarkList[i].stationName_x &&
-           (obj.y + obj.moveY) * -1 + obj.cH * getScale() >= stationMarkList[i].stationName_y) {
+                        (obj.y + obj.moveY) * -1 <= (stationMarkList[i].stationName_y + stationMarkList[i].stationName_h) &&
+                        (obj.x + obj.moveX) * -1 + obj.cW * getScale() >= stationMarkList[i].stationName_x &&
+                        (obj.y + obj.moveY) * -1 + obj.cH * getScale() >= stationMarkList[i].stationName_y) {
                         if (typeof stationMarkList[i].stationIconType == 'undefined') {
                             //塗りつぶす
                             ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
@@ -936,9 +936,9 @@ var expGuiMap = function (pObject, config) {
                 if (typeof stationMarkList[i].stationIconType != 'undefined' && stationMarkType != 1) {
                     //駅のアイコン
                     if ((obj.x + obj.moveX) * -1 <= (stationMarkList[i].stationIcon_x + stationMarkList[i].stationIcon_w) &&
-           (obj.y + obj.moveY) * -1 <= (stationMarkList[i].stationIcon_y + stationMarkList[i].stationIcon_h) &&
-           (obj.x + obj.moveX) * -1 + obj.cW * getScale() >= stationMarkList[i].stationIcon_x &&
-           (obj.y + obj.moveY) * -1 + obj.cH * getScale() >= stationMarkList[i].stationIcon_y) {
+                        (obj.y + obj.moveY) * -1 <= (stationMarkList[i].stationIcon_y + stationMarkList[i].stationIcon_h) &&
+                        (obj.x + obj.moveX) * -1 + obj.cW * getScale() >= stationMarkList[i].stationIcon_x &&
+                        (obj.y + obj.moveY) * -1 + obj.cH * getScale() >= stationMarkList[i].stationIcon_y) {
                         if (stationMarkList[i].stationIconType == 2) {
                             //円
                             ctx.beginPath();
@@ -1414,9 +1414,9 @@ var expGuiMap = function (pObject, config) {
         //概観図1のクリックチェック
         if (miniMapObj) {
             if (x >= miniMapObj.x &&
-       y >= miniMapObj.y &&
-       x <= (miniMapObj.x + miniMapObj.w) &&
-       y <= (miniMapObj.y + miniMapObj.h)) {
+                y >= miniMapObj.y &&
+                x <= (miniMapObj.x + miniMapObj.w) &&
+                y <= (miniMapObj.y + miniMapObj.h)) {
                 var center_x = Math.round(((x - miniMapObj.x) / miniMapObj.w) * obj.mapWidth);
                 var center_y = Math.round(((y - miniMapObj.y) / miniMapObj.h) * obj.mapHeight);
                 setCenter(center_x, center_y);
@@ -1426,9 +1426,9 @@ var expGuiMap = function (pObject, config) {
         //概観図2のクリックチェック
         if (miniMapSubObj) {
             if (x >= miniMapSubObj.x &&
-       y >= miniMapSubObj.y &&
-       x <= (miniMapSubObj.x + miniMapObj.w) &&
-       y <= (miniMapSubObj.y + miniMapSubObj.h)) {
+                y >= miniMapSubObj.y &&
+                x <= (miniMapSubObj.x + miniMapObj.w) &&
+                y <= (miniMapSubObj.y + miniMapSubObj.h)) {
                 var center_x = Math.round(((x - miniMapSubObj.x + miniMapSubObj.pos) / miniMapSubObj.w) * obj.mapWidth);
                 var center_y = Math.round(((y - miniMapSubObj.y) / miniMapSubObj.h) * obj.mapHeight);
                 setCenter(center_x, center_y);
@@ -1753,9 +1753,9 @@ var expGuiMap = function (pObject, config) {
             for (var i = 0; i < Math.ceil(obj.mapWidth / tileSize); i++) {
                 for (var j = 0; j < Math.ceil(obj.mapHeight / tileSize); j++) {
                     if (((obj.x + obj.moveX) + i * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
-           ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
-           ((obj.x + obj.moveX) + i * tileSize) * getScale() <= obj.cW + cacheSize &&
-           ((obj.y + obj.moveY) + j * tileSize) * getScale() <= obj.cH + cacheSize) {
+                        ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
+                        ((obj.x + obj.moveX) + i * tileSize) * getScale() <= obj.cW + cacheSize &&
+                        ((obj.y + obj.moveY) + j * tileSize) * getScale() <= obj.cH + cacheSize) {
                         if (!stationListLoaded[(i + j * Math.ceil(obj.mapWidth / tileSize))]) {
                             stationListLoaded[(i + j * Math.ceil(obj.mapWidth / tileSize))] = true;
                             //リスト読み込み
@@ -1785,27 +1785,27 @@ var expGuiMap = function (pObject, config) {
                 var mapNo = (i + j * Math.ceil(obj.mapWidth / tileSize));
                 if (typeof stationListArea[mapNo] != 'undefined') {
                     if (x >= stationListArea[mapNo]["min_x"] + i * tileSize &&
-           y >= stationListArea[mapNo]["min_x"] + j * tileSize &&
-           x <= stationListArea[mapNo]["max_x"] + i * tileSize &&
-           y <= stationListArea[mapNo]["max_y"] + j * tileSize) {
+                        y >= stationListArea[mapNo]["min_x"] + j * tileSize &&
+                        x <= stationListArea[mapNo]["max_x"] + i * tileSize &&
+                        y <= stationListArea[mapNo]["max_y"] + j * tileSize) {
                         var n = 0;
                         while (typeof stationList[mapNo][n] != 'undefined') {
                             for (var k = 0; k < stationList[mapNo][n]["mark"].length; k++) {
                                 if (stationList[mapNo][n]["mark"][k]["markType"] == 2) {
                                     //丸
                                     if (x - i * tileSize >= stationList[mapNo][n]["mark"][k]["mark_x"] - stationList[mapNo][n]["mark"][k]["mark_size"] &&
-                   y - j * tileSize >= stationList[mapNo][n]["mark"][k]["mark_y"] - stationList[mapNo][n]["mark"][k]["mark_size"] &&
-                   x - i * tileSize <= stationList[mapNo][n]["mark"][k]["mark_x"] + stationList[mapNo][n]["mark"][k]["mark_size"] &&
-                   y - j * tileSize <= stationList[mapNo][n]["mark"][k]["mark_y"] + stationList[mapNo][n]["mark"][k]["mark_size"]) {
+                                        y - j * tileSize >= stationList[mapNo][n]["mark"][k]["mark_y"] - stationList[mapNo][n]["mark"][k]["mark_size"] &&
+                                        x - i * tileSize <= stationList[mapNo][n]["mark"][k]["mark_x"] + stationList[mapNo][n]["mark"][k]["mark_size"] &&
+                                        y - j * tileSize <= stationList[mapNo][n]["mark"][k]["mark_y"] + stationList[mapNo][n]["mark"][k]["mark_size"]) {
                                         selectStation(stationList[mapNo][n]);
                                         return true;
                                     }
                                 } else {
                                     //四角
                                     if (x - i * tileSize >= stationList[mapNo][n]["mark"][k]["mark_x"] &&
-                   y - j * tileSize >= stationList[mapNo][n]["mark"][k]["mark_y"] &&
-                   x - i * tileSize <= stationList[mapNo][n]["mark"][k]["mark_w"] &&
-                   y - j * tileSize <= stationList[mapNo][n]["mark"][k]["mark_h"]) {
+                                        y - j * tileSize >= stationList[mapNo][n]["mark"][k]["mark_y"] &&
+                                        x - i * tileSize <= stationList[mapNo][n]["mark"][k]["mark_w"] &&
+                                        y - j * tileSize <= stationList[mapNo][n]["mark"][k]["mark_h"]) {
                                         selectStation(stationList[mapNo][n]);
                                         return true;
                                     }
@@ -1829,9 +1829,9 @@ var expGuiMap = function (pObject, config) {
                 var mapNo = (i + j * Math.ceil(obj.mapWidth / tileSize));
                 if (typeof stationList[mapNo] != 'undefined') {
                     if (((obj.x + obj.moveX) + i * tileSize + tileSize) * getScale() >= 0 &&
-           ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= 0 &&
-           ((obj.x + obj.moveX) + i * tileSize - tileSize) * getScale() <= obj.cW &&
-           ((obj.y + obj.moveY) + j * tileSize - tileSize) * getScale() <= obj.cH) {
+                        ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= 0 &&
+                        ((obj.x + obj.moveX) + i * tileSize - tileSize) * getScale() <= obj.cW &&
+                        ((obj.y + obj.moveY) + j * tileSize - tileSize) * getScale() <= obj.cH) {
                         var n = 0;
                         while (typeof stationList[mapNo][n] != 'undefined') {
                             for (var k = 0; k < stationMarkList.length; k++) {

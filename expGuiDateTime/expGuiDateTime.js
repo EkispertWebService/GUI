@@ -626,7 +626,7 @@ var expGuiDateTime = function (pObject, config) {
 
         // ハッピーマンデーと振替休日
         if (week == 1) {
-            if (!ck) ++moncnt;
+            if (!ck)++moncnt;
             // 振替休日
             // (2006年まで)「国民の祝日」が日曜日にあたるときは、その翌日を休日とする。
             if (furi == 1 && year <= 2006) {
@@ -826,7 +826,7 @@ var expGuiDateTime = function (pObject, config) {
                 }
             }
             var refrech = false;
-            var check = false; ;
+            var check = false;
             for (var i = 0; i < document.getElementById(baseId + ':date:mm').options.length; i++) {
                 if (document.getElementById(baseId + ':date:mm').options.item(i).value == String(yyyy) + "/" + String(mm)) {
                     check = true;
@@ -915,7 +915,7 @@ var expGuiDateTime = function (pObject, config) {
         if (tmpTime.length == 3 && tmpTime.indexOf(":") == -1) {
             document.getElementById(baseId + ':timeHH').selectedIndex = parseInt(tmpTime.substr(0, 1), 10);
             document.getElementById(baseId + ':timeMM').selectedIndex = parseInt(tmpTime.substr(1, 2), 10);
-        }else if (tmpTime.length == 4 && tmpTime.indexOf(":") == -1) {
+        } else if (tmpTime.length == 4 && tmpTime.indexOf(":") == -1) {
             document.getElementById(baseId + ':timeHH').selectedIndex = parseInt(tmpTime.substr(0, 2), 10);
             document.getElementById(baseId + ':timeMM').selectedIndex = parseInt(tmpTime.substr(2, 2), 10);
         } else if (tmpTime.indexOf(":") != -1) {
@@ -938,9 +938,9 @@ var expGuiDateTime = function (pObject, config) {
         } else if (name.toLowerCase() == String("agent").toLowerCase()) {
             agent = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }

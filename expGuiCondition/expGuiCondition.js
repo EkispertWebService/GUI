@@ -1384,7 +1384,7 @@ var expGuiCondition = function (pObject, config) {
     this.getConditionLight = getConditionLight;
     this.setCondition = setCondition;
     this.openConditionDetail = openConditionDetail;
-    this.resetCondition = resetCondition; ;
+    this.resetCondition = resetCondition;
     this.setConfigure = setConfigure;
 
     /*
