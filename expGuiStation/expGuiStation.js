@@ -4,26 +4,20 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiStation = function (pObject, config) {
-    /*
-    * ドキュメントのオブジェクトを格納
-    */
+    // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
     var baseId = pObject.id;
 
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -43,9 +37,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
-    * AGENTのチェック
-    */
+    // AGENTのチェック
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
     var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
@@ -59,7 +51,7 @@ var expGuiStation = function (pObject, config) {
         agent = 3;
     }
 
-    /*
+    /**
     * イベントの設定(IE対応版)
     */
     function addEvent(element, eventName, func) {
@@ -74,9 +66,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var stationList = new Array(); // インクリメンタルサーチ結果
     var httpObj; // インクリメンタルサーチのリクエストオブジェクト
     var oldvalue = ""; // キー監視用の文字列
@@ -98,7 +88,7 @@ var expGuiStation = function (pObject, config) {
         return tmpObj;
     }
 
-    /*
+    /**
     * 駅名入力の設置
     */
     function dispStation() {
@@ -172,7 +162,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * スマートフォン用入力画面を開く
     */
     function openStationInput() {
@@ -186,7 +176,7 @@ var expGuiStation = function (pObject, config) {
         inputCheck();
     }
 
-    /*
+    /**
     * スマートフォン用入力画面を閉じる
     */
     function closeStationInput() {
@@ -214,7 +204,7 @@ var expGuiStation = function (pObject, config) {
         document.getElementById(baseId + ':stationOutput').focus();
     }
 
-    /*
+    /**
     * フォーカスが外れた時にイベント
     */
     function onblurEvent() {
@@ -222,7 +212,7 @@ var expGuiStation = function (pObject, config) {
         setTimeout(onblurEventCallBack, 1000);
     }
 
-    /*
+    /**
     * 遅延処理を行った際に実行される
     */
     function onblurEventCallBack() {
@@ -234,7 +224,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * フォーカスが合った時にイベント
     */
     function onFocusEvent() {
@@ -255,7 +245,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 文字の入力中でもチェックする
     */
     var inputCheck = function () {
@@ -268,7 +258,7 @@ var expGuiStation = function (pObject, config) {
         }
     };
 
-    /*
+    /**
     * フォームのイベント処理
     */
     function inputStation(event) {
@@ -302,7 +292,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * カーソルによる駅指定
     */
     function selectStationChange(event) {
@@ -350,7 +340,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅名の検索
     */
     function searchStation(openFlag, str) {
@@ -406,7 +396,7 @@ var expGuiStation = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 駅名をセットする
     */
     function setStationNo(n) {
@@ -434,7 +424,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅のアイコンを設定
     */
     function getStationIconType(type) {
@@ -458,7 +448,7 @@ var expGuiStation = function (pObject, config) {
         return '';
     }
 
-    /*
+    /**
     * 検索した駅リストの出力
     */
     function outStationList(openFlag, tmp_stationList) {
@@ -543,7 +533,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 表示切替
     */
     function stationView(n) {
@@ -551,7 +541,7 @@ var expGuiStation = function (pObject, config) {
         outStationList(true);
     }
 
-    /*
+    /**
     * 地点オブジェクトの作成
     */
     function setStationObject(stationObj) {
@@ -595,14 +585,14 @@ var expGuiStation = function (pObject, config) {
                 }
             }
         }
-        //県コード
+        // 県コード
         if (typeof stationObj.Prefecture != 'undefined') {
             tmp_station.kenCode = parseInt(stationObj.Prefecture.code);
         }
         return tmp_station;
     }
 
-    /*
+    /**
     * 駅のリストを出力
     */
     function getStationListItem(n, stationItem) {
@@ -620,7 +610,7 @@ var expGuiStation = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * IE用に配列の検索機能を実装
     */
     function checkArray(arr, target) {
@@ -630,8 +620,8 @@ var expGuiStation = function (pObject, config) {
         return -1;
     }
 
-    /*
-    * イベントの振り分けを行う
+    /**
+    * イベントの振り分け
     */
     function onEvent(e) {
         callBackFunctionDelay = false;
@@ -651,7 +641,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * フォームの駅名を返す
     */
     function getStation() {
@@ -662,7 +652,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 検索した駅名リストを返す
     */
     function getStationList() {
@@ -673,7 +663,7 @@ var expGuiStation = function (pObject, config) {
         return stationArray.join(",");
     }
 
-    /*
+    /**
     * 選択中の駅名を返す
     */
     function getStationName() {
@@ -693,7 +683,7 @@ var expGuiStation = function (pObject, config) {
         return "";
     }
 
-    /*
+    /**
     * 選択中の駅コードを返す
     */
     function getStationCode() {
@@ -714,7 +704,7 @@ var expGuiStation = function (pObject, config) {
     }
 
 
-    /*
+    /**
     * 駅情報の取得
     */
     function getPointObject(station) {
@@ -735,7 +725,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 検索した駅名リストを閉じる
     */
     function closeStationList() {
@@ -749,7 +739,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅リストを開いているかどうかのチェック
     */
     function checkStationList() {
@@ -767,7 +757,7 @@ var expGuiStation = function (pObject, config) {
         selectStation = 0;
     }
 
-    /*
+    /**
     * フォームに駅名をセットしてリストを閉じる
     */
     function setStation(str, callback) {
@@ -801,7 +791,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -840,7 +830,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * コールバック関数の定義
     */
     function bind(type, func) {
@@ -859,7 +849,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * コールバック関数の解除
     */
     function unbind(type) {
@@ -868,9 +858,7 @@ var expGuiStation = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.dispStation = dispStation;
     this.getStation = getStation;
     this.setStation = setStation;
@@ -884,9 +872,7 @@ var expGuiStation = function (pObject, config) {
     this.bind = bind;
     this.unbind = unbind;
 
-    /*
-    * 定義
-    */
+    // 定数リスト
     this.TYPE_TRAIN = "train";
     this.TYPE_PLANE = "plane";
     this.TYPE_SHIP = "ship";

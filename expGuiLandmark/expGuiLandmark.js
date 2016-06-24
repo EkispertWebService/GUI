@@ -4,20 +4,16 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiLandmark = function (pObject, config) {
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
 
     var apiURL = "http://api.ekispert.jp/";
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -37,14 +33,12 @@ var expGuiLandmark = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var httpObj;
     var callbackFunction; // コールバック関数の設定
     var serializeData;
 
-    /*
+    /**
     * 地点の生成
     */
     function createLandmark(landmarkObject, callBack) {
@@ -92,7 +86,7 @@ var expGuiLandmark = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * ランドマーク情報を返却
     */
     function setLandmarkData(json) {
@@ -111,14 +105,14 @@ var expGuiLandmark = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 地点インターフェースの生成
     */
     function createLandmarkInterface(name) {
         return new landmarkInterface(name);
     }
 
-    /*
+    /**
     * 地点インターフェース
     */
     function landmarkInterface(tmp_name) {
@@ -263,14 +257,14 @@ var expGuiLandmark = function (pObject, config) {
         this.getParam = getParam;
     }
 
-    /*
+    /**
     * 駅インターフェースの生成
     */
     function createLandmarkStationInterface(station) {
         return new landmarkStationInterface(station);
     }
 
-    /*
+    /**
     * 駅インターフェース
     */
     function landmarkStationInterface(tmp_station) {
@@ -324,7 +318,7 @@ var expGuiLandmark = function (pObject, config) {
         this.getTeiki6 = getTeiki6;
     }
 
-    /*
+    /**
     * 地点のシリアライズデータを取得
     */
     function getSerializeData() {
@@ -335,7 +329,7 @@ var expGuiLandmark = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -352,9 +346,7 @@ var expGuiLandmark = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.createLandmark = createLandmark;
     this.createLandmarkInterface = createLandmarkInterface;
     this.createLandmarkStationInterface = createLandmarkStationInterface;

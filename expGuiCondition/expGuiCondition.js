@@ -4,26 +4,20 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiCondition = function (pObject, config) {
-    /*
-    * ドキュメントのオブジェクトを格納
-    */
+    // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
     var baseId = pObject.id;
 
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -43,9 +37,7 @@ var expGuiCondition = function (pObject, config) {
         }
     }
 
-    /*
-    * AGENTのチェック
-    */
+    // AGENTのチェック
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
     var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
@@ -54,7 +46,7 @@ var expGuiCondition = function (pObject, config) {
     if (isiPhone || isAndroid_phone) { agent = 2; }
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
-    /*
+    /**
     * イベントの設定(IE対応版)
     */
     function addEvent(element, eventName, func) {
@@ -69,9 +61,7 @@ var expGuiCondition = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     // デフォルト探索条件
     var def_condition_t = "T3221233232319";
     var def_condition_f = "F3321122120";
@@ -80,10 +70,12 @@ var expGuiCondition = function (pObject, config) {
     var def_priceType = "oneway"; // 片道運賃がデフォルト
     var def_answerCount = "5"; // 探索結果数のデフォルト
     var checkBoxItemName = "shinkansen:shinkansenNozomi:limitedExpress:localBus:liner:midnightBus"; //チェックボックスに表示する条件
-
     var checkboxItem = new Array();
     var conditionObject = initCondition();
 
+    /**
+     * 探索条件のオブジェクトの初期化
+     */
     function initCondition() {
         // 探索条件のオブジェクトを作成
         var tmp_conditionObject = new Object();
@@ -291,8 +283,8 @@ var expGuiCondition = function (pObject, config) {
         return tmp_conditionObject;
     }
 
-    /*
-    * 探索条件オブジェクト
+    /**
+    * 探索条件オブジェクト追加
     */
     function addCondition(name, option, value) {
         var tmpCondition = new Object();
@@ -308,7 +300,7 @@ var expGuiCondition = function (pObject, config) {
         return tmpCondition;
     }
 
-    /*
+    /**
     * 探索条件の設置
     */
     function dispCondition() {
@@ -368,7 +360,7 @@ var expGuiCondition = function (pObject, config) {
         setSimpleCondition();
     }
 
-    /*
+    /**
     * 探索条件の設置
     */
     function setEvent(id) {
@@ -382,8 +374,8 @@ var expGuiCondition = function (pObject, config) {
         }
     }
 
-    /*
-    * 探索条件の設置
+    /**
+    * 簡易版探索条件の設置
     */
     function dispConditionSimple() {
         // HTML本体
@@ -410,6 +402,9 @@ var expGuiCondition = function (pObject, config) {
         setSimpleCondition();
     }
 
+    /**
+     * 無償版用探索条件の設置
+     */
     function dispConditionLight() {
         // HTML本体
         var buffer;
@@ -440,7 +435,8 @@ var expGuiCondition = function (pObject, config) {
         // 簡易設定のデフォルトも設定
         setSimpleCondition();
     }
-    /*
+    
+    /**
     * 簡易設定のデフォルト設定
     */
     function setSimpleCondition() {
@@ -449,7 +445,7 @@ var expGuiCondition = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 探索条件簡易
     */
     function viewConditionSimple(detail) {
@@ -477,7 +473,7 @@ var expGuiCondition = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 探索条件詳細
     */
     function viewConditionDetail() {
@@ -648,7 +644,7 @@ var expGuiCondition = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * スマートフォン用探索条件
     */
     function viewConditionPhone() {
@@ -830,8 +826,8 @@ var expGuiCondition = function (pObject, config) {
         return buffer;
     }
 
-    /*
-    * イベントの振り分けを行う
+    /**
+    * イベントの振り分け
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
@@ -916,7 +912,7 @@ var expGuiCondition = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * セパレータを出力
     */
     function outSeparator(id) {
@@ -926,7 +922,7 @@ var expGuiCondition = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 探索条件の項目出力
     */
     function outConditionSelect(id, classType) {
@@ -951,7 +947,7 @@ var expGuiCondition = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 探索条件の項目出力
     */
     function outConditionRadio(id, classType) {
@@ -992,7 +988,7 @@ var expGuiCondition = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 探索条件の項目出力
     */
     function outConditionCheckbox(id, value, none, label) {
@@ -1009,35 +1005,35 @@ var expGuiCondition = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * ソート順の取得
     */
     function getSortType() {
         return getValue("sortType");
     }
 
-    /*
+    /**
     * 探索結果数の取得
     */
     function getAnswerCount() {
         return getValue("answerCount");
     }
 
-    /*
+    /**
     * 探索条件文字列の取得
     */
     function getConditionDetail() {
         return fixCondition();
     }
 
-    /*
+    /**
     * 片道・往復・定期のフラグ取得
     */
     function getPriceType() {
         return getValue("priceType");
     }
 
-    /*
+    /**
     * 探索条件をフォームにセットする
     */
     function setCondition(param1, param2, priceType, condition) {
@@ -1101,7 +1097,7 @@ var expGuiCondition = function (pObject, config) {
         setSimpleCondition();
     }
 
-    /*
+    /**
     * フォームに値をセットする
     */
     function setValue(id, value) {
@@ -1129,13 +1125,13 @@ var expGuiCondition = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * ラジオボタンをインデックスで指定する
     */
     function setRadioIndex(name, value) {
         document.getElementsByName(baseId + ':' + name)[(document.getElementsByName(baseId + ':' + name).length - value)].checked = true;
     }
-    /*
+    /**
     * ラジオボタンを値で指定する
     */
     function setRadio(name, value) {
@@ -1146,14 +1142,14 @@ var expGuiCondition = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * セレクトボックスをインデックスで指定する
     */
     function setSelectIndex(name, value) {
         document.getElementById(baseId + ':' + name).selectedIndex = (document.getElementById(baseId + ':' + name).options.length - value);
     }
 
-    /*
+    /**
     * セレクトボックスを値で指定する
     */
     function setSelect(name, value) {
@@ -1164,7 +1160,7 @@ var expGuiCondition = function (pObject, config) {
             }
         }
     }
-    /*
+    /**
     * 探索条件の確定
     */
     function fixCondition() {
@@ -1211,14 +1207,14 @@ var expGuiCondition = function (pObject, config) {
         return tmpCondition;
     }
 
-    /*
+    /**
     * 詳細探索条件のオープン
     */
     function openConditionDetail() {
         document.getElementById(baseId + ':conditionDetail').style.display = "block";
     }
 
-    /*
+    /**
     * フォームの値を取得する
     */
     function getValue(id) {
@@ -1236,7 +1232,7 @@ var expGuiCondition = function (pObject, config) {
             return getRadio(name);
         }
     }
-    /*
+    /**
     * ラジオボタンの値を取得
     */
     function getRadio(name) {
@@ -1247,14 +1243,14 @@ var expGuiCondition = function (pObject, config) {
         }
         return null;
     }
-    /*
+    /**
     * セレクトボックスの値を取得
     */
     function getSelect(name) {
         return document.getElementById(baseId + ':' + name).options.item(document.getElementById(baseId + ':' + name).selectedIndex).value;
     }
 
-    /*
+    /**
     * フォームのインデックスを取得する
     */
     function getValueIndex(id) {
@@ -1272,7 +1268,7 @@ var expGuiCondition = function (pObject, config) {
             return getRadioIndex(name);
         }
     }
-    /*
+    /**
     * ラジオボタンのインデックスを取得
     */
     function getRadioIndex(name) {
@@ -1283,14 +1279,14 @@ var expGuiCondition = function (pObject, config) {
             }
         }
     }
-    /*
+    /**
     * セレクトボックスのインデックスを取得
     */
     function getSelectIndex(name) {
         return (document.getElementById(baseId + ':' + name).options.length - document.getElementById(baseId + ':' + name).selectedIndex)
     }
 
-    /*
+    /**
     * デフォルトを設定
     */
     function resetCondition() {
@@ -1298,7 +1294,7 @@ var expGuiCondition = function (pObject, config) {
         setCondition(def_answerCount, def_sortType, def_priceType, def_condition);
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -1339,7 +1335,7 @@ var expGuiCondition = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 探索条件の表示切り替え
     */
     function setConditionView(name, display) {
@@ -1352,14 +1348,14 @@ var expGuiCondition = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 探索条件を取得
     */
     function getCondition(id) {
         return getValue(id.toLowerCase());
     }
 
-    /*
+    /**
     * 簡易探索条件を取得
     */
     function getConditionLight(id) {
@@ -1370,9 +1366,7 @@ var expGuiCondition = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.dispCondition = dispCondition;
     this.dispConditionSimple = dispConditionSimple;
     this.dispConditionLight = dispConditionLight;
@@ -1387,9 +1381,7 @@ var expGuiCondition = function (pObject, config) {
     this.resetCondition = resetCondition;
     this.setConfigure = setConfigure;
 
-    /*
-    * 定数リスト
-    */
+    // 定数リスト
     this.SORT_EKISPERT = "ekispert";
     this.SORT_PRICE = "price";
     this.SORT_TIME = "time";

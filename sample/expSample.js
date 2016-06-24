@@ -3,7 +3,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -235,7 +235,7 @@ function lineTimeTable(index) {
 }
 
 /**
-*路線図を開く
+* 路線図を開く
 */
 function openMap(index) {
     var station = "";
@@ -276,7 +276,7 @@ function openMap(index) {
 }
 
 /**
-*路線図内の駅を選択
+* 路線図内の駅を選択
 */
 function setMapStation(index, stationName) {
     if (index == 1) {
@@ -757,7 +757,7 @@ function result(isSuccess) {
 }
 
 /**
-*入力内容のクッキーへの保存
+* 入力内容のクッキーへの保存
 */
 function setCookie() {
     if (typeof dateTimeApp != 'undefined') {
@@ -793,7 +793,7 @@ function setCookie() {
 }
 
 /**
-*指定のクッキーを取得する
+* 指定のクッキーを取得する
 */
 function getCookie(name) {
     var result = "";

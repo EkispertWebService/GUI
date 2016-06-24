@@ -4,26 +4,20 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiSectionTimeTable = function (pObject, config) {
-    /*
-    * ドキュメントのオブジェクトを格納
-    */
+    // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
     var baseId = pObject.id;
 
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -43,9 +37,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         }
     }
 
-    /*
-    * AGENTのチェック
-    */
+    // AGENTのチェック
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
     var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
@@ -54,7 +46,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
     if (isiPhone || isAndroid_phone) { agent = 2; }
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
-    /*
+    /**
     * イベントの設定(IE対応版)
     */
     function addEvent(element, eventName, func) {
@@ -69,9 +61,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var httpObj;
     var sectionList;
     var timeTable;
@@ -79,7 +69,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
     var callbackFunction; // コールバック関数の設定
     var timeTableClickFunction;
 
-    /*
+    /**
     * 空路時刻表の設置
     */
     function dispPlaneTimetable(railName, direction, param1, param2) {
@@ -145,7 +135,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * バスの時刻表を表示
     */
     function dispBusTimetable(from, to, param1, param2) {
@@ -210,7 +200,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 海路の時刻表を表示
     */
     function dispShipTimetable(railName, direction, param1, param2) {
@@ -276,7 +266,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 路線の時刻表
     */
     function dispRailTimetable(serializeData, sectionIndex, callback) {
@@ -328,7 +318,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * ISOの日時を文字列に変換
     */
     function convertISOtoTime(str, type) {
@@ -340,7 +330,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         return String(hour) + ":" + tmp_time[1];
     }
 
-    /*
+    /**
     * 時刻表の出力
     */
     function outTimeTable(timeTableObject) {
@@ -357,7 +347,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 時刻表の表示
     */
     function outTimeTableObj() {
@@ -493,7 +483,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         return true;
     }
 
-    /*
+    /**
     * 名称を短くする
     */
     function convertName(stationName) {
@@ -504,7 +494,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 区間のデータを出力
     */
     function outLineTimeTable(lineObject, lineNo) {
@@ -570,7 +560,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 区間のデータを出力(スマホ用)
     */
     function outLineTimeTablePhone(lineObject, lineNo) {
@@ -634,8 +624,8 @@ var expGuiSectionTimeTable = function (pObject, config) {
         return buffer;
     }
 
-    /*
-    * イベントの振り分けを行う
+    /**
+    * イベントの振り分け
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
@@ -663,7 +653,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * lineオブジェクトを作成
     */
     function convertLineObject(lineObject) {
@@ -732,7 +722,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         return tmpLineObject;
     }
 
-    /*
+    /**
     * インデックスから路線オブジェクトを取得
     */
     function getLineObject(code) {
@@ -765,7 +755,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -784,7 +774,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * コールバック関数の定義
     */
     function bind(type, func) {
@@ -793,7 +783,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * コールバック関数の解除
     */
     function unbind(type) {
@@ -802,9 +792,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.dispPlaneTimetable = dispPlaneTimetable;
     this.dispBusTimetable = dispBusTimetable;
     this.dispShipTimetable = dispShipTimetable;
@@ -814,9 +802,7 @@ var expGuiSectionTimeTable = function (pObject, config) {
     this.bind = bind;
     this.unbind = unbind;
 
-    /*
-    * 定義
-    */
+    // 定数リスト
     this.TYPE_TRAIN = "train";
     this.TYPE_PLANE = "plane";
     this.TYPE_SHIP = "ship";

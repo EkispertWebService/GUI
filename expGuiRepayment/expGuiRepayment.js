@@ -4,26 +4,20 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiRepayment = function (pObject, config) {
-    /*
-    * ドキュメントのオブジェクトを格納
-    */
+    // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
     var baseId = pObject.id;
 
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -43,9 +37,7 @@ var expGuiRepayment = function (pObject, config) {
         }
     }
 
-    /*
-    * AGENTのチェック
-    */
+    // AGENTのチェック
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
     var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
@@ -54,7 +46,7 @@ var expGuiRepayment = function (pObject, config) {
     if (isiPhone || isAndroid_phone) { agent = 2; }
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
-    /*
+    /**
     * イベントの設定(IE対応版)
     */
     function addEvent(element, eventName, func) {
@@ -69,9 +61,7 @@ var expGuiRepayment = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var repaymentData;
     var routeList;
     var repaymentList; // 定期払い戻し計算結果
@@ -83,7 +73,7 @@ var expGuiRepayment = function (pObject, config) {
     var callBackFunction;
     var callBackFunctionAction;
 
-    /*
+    /**
     * 払い戻し計算の設置
     */
     function dispRepayment(param, callback) {
@@ -107,7 +97,7 @@ var expGuiRepayment = function (pObject, config) {
         calcRepayment(true);
     }
 
-    /*
+    /**
     * 計算開始処理（再計算も含む）
     */
     function calcRepayment(initFlag) {
@@ -195,7 +185,7 @@ var expGuiRepayment = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 定期券払い戻し計算のオブジェクトを作成
     */
     function setRepaymentObject(buyDate, repaymentDate, startDate, tmpRepayment) {
@@ -217,7 +207,7 @@ var expGuiRepayment = function (pObject, config) {
         return tmpRepaymentObject;
     }
 
-    /*
+    /**
     * 払い戻しデータのインデックスを取得
     */
     function getRepaymentIndex(index) {
@@ -241,7 +231,7 @@ var expGuiRepayment = function (pObject, config) {
         return -1;
     }
 
-    /*
+    /**
     * 表示のための定期券の払い戻しデータを取得
     */
     function getRepaymentObject(index) {
@@ -266,7 +256,7 @@ var expGuiRepayment = function (pObject, config) {
         return -1;
     }
 
-    /*
+    /**
     * 区間情報
     */
     function setRouteSection(tmpTeikiRouteSection) {
@@ -278,7 +268,7 @@ var expGuiRepayment = function (pObject, config) {
         return tmpRoute;
     }
 
-    /*
+    /**
     * 地点オブジェクトを取得
     */
     function setPointObject(tmpPoint) {
@@ -301,7 +291,7 @@ var expGuiRepayment = function (pObject, config) {
         return tmp_station;
     }
 
-    /*
+    /**
     * 払い戻し計算の出力
     */
     function outRepayment(json) {
@@ -363,7 +353,7 @@ var expGuiRepayment = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 払い戻しテーブルの出力
     */
     function viewRepayment() {
@@ -450,7 +440,7 @@ var expGuiRepayment = function (pObject, config) {
         addEvent(document.getElementById(baseId + ":routeList:total"), "click", onEvent);
     }
 
-    /*
+    /**
     * 経路リストの出力
     */
     function getRoute(index, routeObject, top, bottom) {
@@ -465,7 +455,7 @@ var expGuiRepayment = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 払戻金額をintで取得
     */
     function getRepayPrice() {
@@ -483,7 +473,7 @@ var expGuiRepayment = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 払戻枚数をintで取得
     */
     function getRepayCount() {
@@ -501,7 +491,7 @@ var expGuiRepayment = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 払い戻し計算の詳細取得
     */
     function getRepayObject(index) {
@@ -528,7 +518,7 @@ var expGuiRepayment = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅情報の取得
     */
     function getPointObject(station) {
@@ -557,7 +547,7 @@ var expGuiRepayment = function (pObject, config) {
         }
     }
 
-    /*outRepaymentPrice
+    /**outRepaymentPrice
     * 払戻金額のテーブル出力
     */
     function outRepaymentPrice(n, tmpRepayment, calculateTarget) {
@@ -622,7 +612,7 @@ var expGuiRepayment = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * カンマ区切りの数値を出力
     */
     function num2String(str) {
@@ -631,8 +621,8 @@ var expGuiRepayment = function (pObject, config) {
         return num;
     }
 
-    /*
-    * イベントの振り分けを行う
+    /**
+    * イベントの振り分け
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
@@ -660,7 +650,7 @@ var expGuiRepayment = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * コールバック関数の定義
     */
     function bind(type, func) {
@@ -669,7 +659,7 @@ var expGuiRepayment = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * コールバック関数の解除
     */
     function unbind(type) {
@@ -678,7 +668,7 @@ var expGuiRepayment = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 定期払い戻しオブジェクト作成
     */
     function createRepaymentInterface() {
@@ -686,7 +676,7 @@ var expGuiRepayment = function (pObject, config) {
         return tmp_repaymentInterface;
     };
 
-    /*
+    /**
     * 定期払い戻しインターフェース
     */
     function repaymentInterface() {
@@ -730,7 +720,7 @@ var expGuiRepayment = function (pObject, config) {
         this.getChangeSection = getChangeSection;
     };
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -749,9 +739,7 @@ var expGuiRepayment = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.dispRepayment = dispRepayment;
     this.getRepayPrice = getRepayPrice;
     this.getRepayCount = getRepayCount;
@@ -762,7 +750,7 @@ var expGuiRepayment = function (pObject, config) {
     this.bind = bind;
     this.unbind = unbind;
 
-    //定義
+    // 定数リスト
     this.TEIKI1 = 1;
     this.TEIKI3 = 3;
     this.TEIKI6 = 6;

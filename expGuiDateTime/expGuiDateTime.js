@@ -4,26 +4,20 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiDateTime = function (pObject, config) {
-    /*
-    * ドキュメントのオブジェクトを格納
-    */
+    // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
     var baseId = pObject.id;
 
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -43,9 +37,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
-    * AGENTのチェック
-    */
+    // AGENTのチェック
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
     var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
@@ -54,7 +46,7 @@ var expGuiDateTime = function (pObject, config) {
     if (isiPhone || isAndroid_phone) { agent = 2; }
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
-    /*
+    /**
     * イベントの設定(IE対応版)
     */
     function addEvent(element, eventName, func) {
@@ -69,15 +61,13 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     // カレンダー連携用変数
     var c_year;
     var c_month;
     var c_date;
 
-    /*
+    /**
     * 日時入力の設置
     */
     function dispDateTime(type) {
@@ -195,7 +185,7 @@ var expGuiDateTime = function (pObject, config) {
         setNow();
     }
 
-    /*
+    /**
     * 現在日時をフォームに設定
     */
     function setNow() {
@@ -206,7 +196,7 @@ var expGuiDateTime = function (pObject, config) {
         document.getElementById(baseId + ':timeMM').selectedIndex = now.getMinutes();
     }
 
-    /*
+    /**
     * 年月を変更する
     */
     function changeDate() {
@@ -216,7 +206,7 @@ var expGuiDateTime = function (pObject, config) {
         setDate(tmp_date.join("/"));
     }
 
-    /*
+    /**
     * 日付設定を取得する
     */
     function getDate() {
@@ -243,7 +233,7 @@ var expGuiDateTime = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 時間設定を取得する
     */
     function getTime() {
@@ -262,7 +252,7 @@ var expGuiDateTime = function (pObject, config) {
         return String(hh) + String(mi);
     }
 
-    /*
+    /**
     * 日付の正当性チェック
     */
     function checkDate() {
@@ -281,7 +271,7 @@ var expGuiDateTime = function (pObject, config) {
         return true;
     }
 
-    /*
+    /**
     * 探索種別を取得
     */
     function getSearchType() {
@@ -297,7 +287,7 @@ var expGuiDateTime = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * 探索種別によって時間指定の有無を設定
     */
     function changeSearchType() {
@@ -310,7 +300,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * カレンダーで本日を設定
     */
     function today() {
@@ -320,7 +310,7 @@ var expGuiDateTime = function (pObject, config) {
         document.getElementById(baseId + ':calendar').style.display = "none";
     }
 
-    /*
+    /**
     * カレンダーの月を変更する
     */
     function changeMonth(type) {
@@ -343,7 +333,7 @@ var expGuiDateTime = function (pObject, config) {
         setFunction();
     }
 
-    /*
+    /**
     * カレンダーボタンを押した時の動作
     */
     function changeCalendar() {
@@ -354,7 +344,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * カレンダーを閉じる
     */
     function closeCalendar() {
@@ -362,7 +352,7 @@ var expGuiDateTime = function (pObject, config) {
         document.getElementById(baseId + ':calendar').style.display = "none";
     }
 
-    /*
+    /**
     * カレンダーを表示する
     */
     function openCalendar() {
@@ -399,7 +389,7 @@ var expGuiDateTime = function (pObject, config) {
         setFunction();
     }
 
-    /*
+    /**
     * カレンダーの各イベントを設定
     */
     function setFunction() {
@@ -424,8 +414,8 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
-    * イベントの振り分けを行う
+    /**
+    * イベントの振り分け
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
@@ -443,7 +433,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * カレンダーで日付を選んだ時の動作
     */
     function selectDate(dd) {
@@ -475,7 +465,7 @@ var expGuiDateTime = function (pObject, config) {
         document.getElementById(baseId + ':calendar').style.display = "none";
     }
 
-    /*
+    /**
     * 月の最終日を判定し、カレンダーに反映する
     */
     function getLastDate(yyyy, mm) {
@@ -492,7 +482,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * カレンダーをテーブルとして取得
     */
     function getCalendarTable(yyyy, mm, dd) {
@@ -585,7 +575,7 @@ var expGuiDateTime = function (pObject, config) {
         }
         doc += '</tr>';
         // 本日ボタン
-        /*
+        /**
         doc+='<tr>';
         doc+='<td colspan="7">';
         doc+='<a class="exp_cal_today" id="'+ baseId +':cal_today" href="javascript:void(0);"></a>';
@@ -596,7 +586,7 @@ var expGuiDateTime = function (pObject, config) {
         return doc;
     }
 
-    /*
+    /**
     * カレンダー内の文字の色を取得
     */
     function getDateColor(yyyy, mm, i, dayOfWeek) {
@@ -611,7 +601,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 祭日の取得
     */
     var moncnt = 0;
@@ -709,7 +699,7 @@ var expGuiDateTime = function (pObject, config) {
         return syuku;
     }
 
-    /*
+    /**
     * 探索種別を外部から制御
     */
     function setSearchType(str) {
@@ -751,7 +741,7 @@ var expGuiDateTime = function (pObject, config) {
         changeSearchType();
     }
 
-    /*
+    /**
     * 日付を外部から設定
     */
     function setDate(date) {
@@ -784,7 +774,7 @@ var expGuiDateTime = function (pObject, config) {
                 // 日の指定が間違っています。
                 return false;
             }
-            /*
+            /**
             if(mm == 4 || mm == 6 || mm == 9 || mm == 11){
             if(dd<1 || dd>30){
             // 日の指定が間違っています。\n"+mm+"月は1日～30日の間で指定してください。
@@ -889,7 +879,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 日付のリストを修正
     */
     function setDateList(yyyy, mm) {
@@ -907,7 +897,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 時間を外部から設定
     */
     function setTime(time) {
@@ -927,7 +917,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -946,9 +936,7 @@ var expGuiDateTime = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.dispDateTime = dispDateTime;
     this.checkDate = checkDate;
     this.getDate = getDate;
@@ -961,9 +949,7 @@ var expGuiDateTime = function (pObject, config) {
     this.closeCalendar = closeCalendar;
     this.setConfigure = setConfigure;
 
-    /*
-    * 定数リスト
-    */
+    // 定数リスト
     this.SEARCHTYPE_DEPARTURE = "departure";
     this.SEARCHTYPE_ARRIVAL = "arrival";
     this.SEARCHTYPE_FIRSTTRAIN = "firstTrain";

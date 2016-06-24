@@ -4,20 +4,16 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiRange = function (pObject, config) {
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -37,16 +33,14 @@ var expGuiRange = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var stationList = new Array();
     var httpObj;
     // 設定
     var transferCount;
     var callbackFunction; // コールバック関数の設定
 
-    /*
+    /**
     * 駅名の検索
     */
     function searchStation(station, upperLimit, callback) {
@@ -104,7 +98,7 @@ var expGuiRange = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * JSONを解析してリストをセット
     */
     function splitStation(pointObject) {
@@ -130,7 +124,7 @@ var expGuiRange = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅データのオブジェクトを作成
     */
     function createStationObject(stationObj) {
@@ -155,7 +149,7 @@ var expGuiRange = function (pObject, config) {
     }
 
 
-    /*
+    /**
     * 駅一覧の取得
     */
     function getStationList() {
@@ -166,7 +160,7 @@ var expGuiRange = function (pObject, config) {
         return tmpStationName.join(",");
     }
 
-    /*
+    /**
     * 時間から地点オブジェクトを取得
     */
     function getPointObject(name) {
@@ -193,17 +187,13 @@ var expGuiRange = function (pObject, config) {
             }
         }
     }
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.searchStation = searchStation;
     this.getStationList = getStationList;
     this.getPointObject = getPointObject;
     this.setConfigure = setConfigure;
 
-    /*
-    * 定数リスト
-    */
+    // 定数リスト
     this.TDFK_HOKKAIDO = 1;
     this.TDFK_AOMORI = 2;
     this.TDFK_IWATE = 3;

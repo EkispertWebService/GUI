@@ -4,20 +4,16 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiTools = function (pObject, config) {
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -37,14 +33,12 @@ var expGuiTools = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var httpObj;
     // 設定
     var callbackFunction; // コールバック関数の設定
 
-    /*
+    /**
     * XMLをオブジェクトに変換
     */
     function xml2object(xml) {
@@ -60,7 +54,7 @@ var expGuiTools = function (pObject, config) {
         return dom2object(dom);
     }
 
-    /*
+    /**
     * XMLをオブジェクトに変換(内部用)
     */
     function dom2object(xml) {
@@ -104,7 +98,7 @@ var expGuiTools = function (pObject, config) {
         return tmp_object;
     }
 
-    /*
+    /**
     * オブジェクトをXMLに変換
     */
     function object2xml(obj, key, index) {
@@ -145,10 +139,10 @@ var expGuiTools = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * オブジェクトをJSONの文字列に変換
     */
-    /*
+    /**
     function object2json(obj) {
         var n = 0, buffer = "";
         for (var name in obj) {
@@ -181,7 +175,7 @@ var expGuiTools = function (pObject, config) {
         return object2xml(JSON.parse(json));
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -198,9 +192,7 @@ var expGuiTools = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     //this.object2xml = object2xml;
     //this.xml2object = xml2object;
     this.xml2json = xml2json;

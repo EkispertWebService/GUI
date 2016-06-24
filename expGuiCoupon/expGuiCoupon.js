@@ -4,20 +4,16 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiCoupon = function (pObject, config) {
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -37,16 +33,14 @@ var expGuiCoupon = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var couponList = new Array();
     var couponDetailList = new Object();
     var httpObj;
     // 設定
     var callbackFunction; // コールバック関数の設定
 
-    /*
+    /**
     * 回数券の検索
     */
     function searchCoupon(param1, param2) {
@@ -102,7 +96,7 @@ var expGuiCoupon = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 回数券一覧を解析
     */
     function setCoupon(json) {
@@ -129,14 +123,14 @@ var expGuiCoupon = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 回数券の一覧を取得
     */
     function getCouponList() {
         return couponList.join(",");
     }
 
-    /*
+    /**
     * 回数券情報の詳細を取得
     */
     function searchCouponDetail(name, callback) {
@@ -180,7 +174,7 @@ var expGuiCoupon = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 探索結果を利用して回数券を取得
     */
     function searchCourseCoupon(serializeData, callback) {
@@ -224,7 +218,7 @@ var expGuiCoupon = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 回数券の詳細情報
     */
     function setCouponDetail(json) {
@@ -251,7 +245,7 @@ var expGuiCoupon = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 回数券オブジェクトの作成
     */
     function setCouponObject(couponObject) {
@@ -267,7 +261,7 @@ var expGuiCoupon = function (pObject, config) {
         return tmp_coupon;
     }
 
-    /*
+    /**
     * 回数券の詳細一覧取得
     */
     function getCouponDetailList() {
@@ -279,7 +273,7 @@ var expGuiCoupon = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 回数券情報の取得
     */
     function getCouponObject(name) {
@@ -295,7 +289,7 @@ var expGuiCoupon = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -312,9 +306,7 @@ var expGuiCoupon = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.searchCoupon = searchCoupon;
     this.getCouponList = getCouponList;
     this.searchCouponDetail = searchCouponDetail;
@@ -323,9 +315,7 @@ var expGuiCoupon = function (pObject, config) {
     this.searchCourseCoupon = searchCourseCoupon;
     this.setConfigure = setConfigure;
 
-    /*
-    * 定数リスト
-    */
+    // 定数リスト
     this.DIRECTION_BOTH = "Both";
     this.DIRECTION_DEFINE = "Define";
 };

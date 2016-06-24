@@ -4,20 +4,16 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiDivided = function (pObject, config) {
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -37,16 +33,14 @@ var expGuiDivided = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var ticketList;
     var PriceType;
     var httpObj;
     // 設定
     var callbackFunction; // コールバック関数の設定
 
-    /*
+    /**
     * 定期券の分割計算
     */
     function searchTeikiDivided(serializeData, callback) {
@@ -54,7 +48,7 @@ var expGuiDivided = function (pObject, config) {
         searchDivided(serializeData, callback);
     }
 
-    /*
+    /**
     * 定期券の分割計算
     */
     function searchFareDivided(serializeData, callback) {
@@ -62,7 +56,7 @@ var expGuiDivided = function (pObject, config) {
         searchDivided(serializeData, callback);
     }
 
-    /*
+    /**
     * 分割計算の実行
     */
     function searchDivided(serializeData, callback) {
@@ -106,7 +100,7 @@ var expGuiDivided = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 分割計算一覧を解析
     */
     function setDivided(json) {
@@ -134,7 +128,7 @@ var expGuiDivided = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * オブジェクトの値を取得
     */
     function getTextValue(obj) {
@@ -145,7 +139,7 @@ var expGuiDivided = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * チケット要素
     */
     function setTicket(tmpTicketPart) {
@@ -162,7 +156,7 @@ var expGuiDivided = function (pObject, config) {
         return tmp_partList;
     }
 
-    /*
+    /**
     * 分割部分要素
     */
     function setTicketPart(tmpTicketPart, type) {
@@ -174,7 +168,7 @@ var expGuiDivided = function (pObject, config) {
         return tmp_ticket;
     }
 
-    /*
+    /**
     * 地点オブジェクトを取得
     */
     function setPointObject(tmpPoint) {
@@ -197,7 +191,7 @@ var expGuiDivided = function (pObject, config) {
         return tmp_station;
     }
 
-    /*
+    /**
     * 分割計算の詳細一覧取得
     */
     function getDividedObject(index) {
@@ -213,7 +207,7 @@ var expGuiDivided = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅情報の取得
     */
     function getPointObject(station) {
@@ -242,7 +236,7 @@ var expGuiDivided = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 分割計算金額取得
     */
     function getPrice(type) {
@@ -264,7 +258,7 @@ var expGuiDivided = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 分割枚数をintで取得
     */
     function getDividedCount() {
@@ -273,7 +267,7 @@ var expGuiDivided = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -290,9 +284,7 @@ var expGuiDivided = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.searchTeikiDivided = searchTeikiDivided;
     this.searchFareDivided = searchFareDivided;
     this.getPrice = getPrice;
@@ -301,9 +293,7 @@ var expGuiDivided = function (pObject, config) {
     this.getPointObject = getPointObject;
     this.setConfigure = setConfigure;
 
-    /*
-    * 定数リスト
-    */
+    // 定数リスト
     this.PRICE_ONEWAY = "oneway";
     this.PRICE_ROUND = "round";
     this.PRICE_TEIKI = "teiki";

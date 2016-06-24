@@ -4,20 +4,16 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiRail = function (pObject, config) {
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -37,9 +33,7 @@ var expGuiRail = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var corporationList = new Array();
     var railList = new Array();
     var stationList = new Array();
@@ -52,7 +46,7 @@ var expGuiRail = function (pObject, config) {
     var prefectureCode;
     var callbackFunction; // コールバック関数の設定
 
-    /*
+    /**
     * 会社の検索
     */
     function searchCorporation(param1, param2) {
@@ -85,7 +79,7 @@ var expGuiRail = function (pObject, config) {
         request(tmpUrl, setCorporationList);
     }
 
-    /*
+    /**
     * 指定されたURLをコールする関数
     */
     function request(url, callBack) {
@@ -122,7 +116,7 @@ var expGuiRail = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 会社一覧を解析
     */
     function setCorporationList(json) {
@@ -155,7 +149,7 @@ var expGuiRail = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 会社データのオブジェクトを作成
     */
     function getCorporationObject(corpObj) {
@@ -165,7 +159,7 @@ var expGuiRail = function (pObject, config) {
         return tmp_corporation;
     }
 
-    /*
+    /**
     * 会社一覧の取得
     */
     function getCorporationList() {
@@ -176,7 +170,7 @@ var expGuiRail = function (pObject, config) {
         return tmpCorporationList.join(",");
     }
 
-    /*
+    /**
     * 路線の検索
     */
     function searchRail(param1, param2) {
@@ -206,7 +200,7 @@ var expGuiRail = function (pObject, config) {
         request(tmpUrl, setRailList);
     }
 
-    /*
+    /**
     * 旧路線名の検索
     */
     function getRailOldName(oldName, callback) {
@@ -220,7 +214,7 @@ var expGuiRail = function (pObject, config) {
         request(tmpUrl, setRailList);
     }
 
-    /*
+    /**
     * 路線一覧の解析
     */
     function setRailList(json) {
@@ -253,7 +247,7 @@ var expGuiRail = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線オブジェクトの作成
     */
     function getRailObject(railObj) {
@@ -277,7 +271,7 @@ var expGuiRail = function (pObject, config) {
         return tmp_rail;
     }
 
-    /*
+    /**
     * 路線一覧の取得
     */
     function getRailList() {
@@ -288,7 +282,7 @@ var expGuiRail = function (pObject, config) {
         return tmpRailList.join(",");
     }
 
-    /*
+    /**
     * 駅の検索
     */
     function searchStation(railName, direction, callBack) {
@@ -308,7 +302,7 @@ var expGuiRail = function (pObject, config) {
         request(tmpUrl, setStationList);
     }
 
-    /*
+    /**
     * 駅一覧の解析
     */
     function setStationList(json) {
@@ -341,7 +335,7 @@ var expGuiRail = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅データオブジェクトの作成
     */
     function getStationObject(stationObj) {
@@ -387,7 +381,7 @@ var expGuiRail = function (pObject, config) {
         return tmp_station;
     }
 
-    /*
+    /**
     * 駅情報の取得
     */
     function getPointObject(name) {
@@ -403,7 +397,7 @@ var expGuiRail = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅リストの取得
     */
     function getStationList() {
@@ -414,7 +408,7 @@ var expGuiRail = function (pObject, config) {
         return tmpStationList.join(",");
     }
 
-    /*
+    /**
     * 駅一覧に設定された方向の取得
     */
     function getDirection() {
@@ -425,7 +419,7 @@ var expGuiRail = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -454,9 +448,7 @@ var expGuiRail = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.searchCorporation = searchCorporation;
     this.getCorporationList = getCorporationList;
     this.searchRail = searchRail;
@@ -468,9 +460,7 @@ var expGuiRail = function (pObject, config) {
     this.getDirection = getDirection;
     this.setConfigure = setConfigure;
 
-    /*
-    * 定数リスト
-    */
+    // 定数リスト
     this.DIRECTION_UP = "up";
     this.DIRECTION_DOWN = "down";
     this.DIRECTION_NONE = "none";

@@ -4,26 +4,20 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiStationTimeTable = function (pObject, config) {
-    /*
-    * ドキュメントのオブジェクトを格納
-    */
+    // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
     var baseId = pObject.id;
 
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -43,9 +37,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
     }
 
-    /*
-    * AGENTのチェック
-    */
+    // AGENTのチェック
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
     var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
@@ -54,7 +46,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     if (isiPhone || isAndroid_phone) { agent = 2; }
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
-    /*
+    /**
     * イベントの設定(IE対応版)
     */
     function addEvent(element, eventName, func) {
@@ -69,18 +61,15 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var lineList;
     var httpObj;
     var timeTable;
 
     var callbackFunction; // コールバック関数の設定
-
     var timeTableClickFunction;
 
-    /*
+    /**
     * 駅時刻表の設置
     */
     function dispStationTimetable(str, code, param1, param2) {
@@ -145,7 +134,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 経路の時刻表の設置
     */
     function dispCourseTimetable(serializeData, sectionIndex, callback) {
@@ -195,7 +184,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * ISOの日時をDateオブジェクトに変換
     */
     function convertISOtoDate(str) {
@@ -210,7 +199,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         return tmp_date;
     }
 
-    /*
+    /**
     * 時刻表の出力開始
     */
     function outTimeTable(timeTableObject) {
@@ -222,7 +211,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 時刻表の出力
     */
     function outTimeTableObj() {
@@ -354,7 +343,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * イベントを設定する
     */
     function addTimeTableEvent(minuteTableObject) {
@@ -366,8 +355,8 @@ var expGuiStationTimeTable = function (pObject, config) {
         //  addEvent(document.getElementById(baseId+":destination:"+ String(minuteTableObject.Stop.lineCode)) , "click", onEvent);
     }
 
-    /*
-    * イベントの振り分けを行う
+    /**
+    * イベントの振り分け
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
@@ -397,7 +386,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * マークの種別を出力
     */
     function getOutMark(mark) {
@@ -413,7 +402,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 時間ごとの時刻表を出力
     */
     function getHourTable(hourTableObject, lineNo) {
@@ -493,7 +482,7 @@ var expGuiStationTimeTable = function (pObject, config) {
     }
 
 
-    /*
+    /**
     * 時間の出力
     */
     function getMinuteTable(minuteObject, hour) {
@@ -504,7 +493,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線の種別マークを取得
     */
     function getLineKindMark(minuteObject) {
@@ -530,7 +519,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         return '';
     }
 
-    /*
+    /**
     * 路線の方向マークを取得
     */
     function getLineDestinationMark(minuteObject) {
@@ -556,7 +545,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         return '';
     }
 
-    /*
+    /**
     * 路線の検索
     */
     function searchLine(str, param1, param2) {
@@ -612,7 +601,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 路線一覧ををセットする
     */
     function splitLine(lineObject) {
@@ -622,7 +611,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線オブジェクトリストを取得
     */
     function getLineObjectList() {
@@ -639,7 +628,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         return lineArray;
     }
 
-    /*
+    /**
     * 路線オブジェクトを作成
     */
     function createLineObject(code, name, direction) {
@@ -650,7 +639,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         return line;
     }
 
-    /*
+    /**
     * 路線の種別を取得
     */
     function getLineKind(code) {
@@ -668,7 +657,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * 路線の方向を取得
     */
     function getLineDestination(code) {
@@ -686,7 +675,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         return '';
     }
 
-    /*
+    /**
     * 路線名を取得
     */
     function getLineName(code) {
@@ -704,7 +693,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         return '';
     }
 
-    /*
+    /**
     * lineオブジェクトを取得する
     */
     function getTimeTableObject(lineCode) {
@@ -774,7 +763,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -793,7 +782,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * コールバック関数の定義
     */
     function bind(type, func) {
@@ -802,7 +791,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * コールバック関数の解除
     */
     function unbind(type) {
@@ -811,9 +800,7 @@ var expGuiStationTimeTable = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.dispStationTimetable = dispStationTimetable;
     this.dispCourseTimetable = dispCourseTimetable;
     this.searchLine = searchLine;

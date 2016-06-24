@@ -4,26 +4,20 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiCourse = function (pObject, config) {
-    /*
-    * ドキュメントのオブジェクトを格納
-    */
+    // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
     var baseId = pObject.id;
 
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -44,9 +38,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
-    * AGENTのチェック
-    */
+    // AGENTのチェック
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
     var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
@@ -55,7 +47,7 @@ var expGuiCourse = function (pObject, config) {
     if (isiPhone || isAndroid_phone) { agent = 2; }
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
-    /*
+    /**
     * イベントの設定(IE対応版)
     */
     function addEvent(element, eventName, func) {
@@ -70,9 +62,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var searchObj; // 探索条件のオブジェクト
     var resultObj; // 探索結果のリクエストオブジェクト
     var result; // 探索結果オブジェクト
@@ -88,9 +78,7 @@ var expGuiCourse = function (pObject, config) {
     var callBackFunctionBind = new Object();
     var windowFlag = false; //ウィンドウ表示フラグ
 
-    /*
-    * 最適経路の変数
-    */
+    // 最適経路の変数
     var minTimeSummary;
     var minTransferCount;
     var minPriceSummary;
@@ -101,18 +89,21 @@ var expGuiCourse = function (pObject, config) {
     var minTeiki6Summary;
     var minExhaustCO2;
 
-    /*
+    /**
     * メニューのコールバック
     */
     var callBackObjectStation = new Array;
     var callBackObjectLine = new Array;
 
+    /**
+     * 探索結果ウィンドウの表示
+     */
     function dispCourseWindow() {
         windowFlag = true;
         dispCourse();
     }
 
-    /*
+    /**
     * 探索結果の設置
     */
     function dispCourse() {
@@ -166,7 +157,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * IE用に配列の検索機能を実装
     */
     function checkArray(arr, target) {
@@ -176,7 +167,7 @@ var expGuiCourse = function (pObject, config) {
         return -1;
     }
 
-    /*
+    /**
     * 探索実行
     */
     function search(searchObject, param1, param2) {
@@ -341,7 +332,7 @@ var expGuiCourse = function (pObject, config) {
         searchRun(url, searchObj.getPriceType());
     }
 
-    /*
+    /**
     * 探索結果の編集
     */
     function courseEdit(param, callback) {
@@ -362,7 +353,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 探索実行本体
     */
     function searchRun(url, tmpPriceFlag) {
@@ -417,7 +408,7 @@ var expGuiCourse = function (pObject, config) {
         resultObj.send(null);
     }
 
-    /*
+    /**
     * シリアライズデータを探索結果に復元
     */
     function setSerializeData(serialize, tmpPriceFlag, callback) {
@@ -426,7 +417,7 @@ var expGuiCourse = function (pObject, config) {
         searchRun(url, tmpPriceFlag);
     }
 
-    /*
+    /**
     * 前後のダイヤ探索
     */
     function assignDia(type) {
@@ -450,7 +441,7 @@ var expGuiCourse = function (pObject, config) {
         reSearch(url, selectNo);
     }
 
-    /*
+    /**
     * JSONを解析して探索結果を出力
     */
     function setResult(resultObject, param1, param2) {
@@ -517,7 +508,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 料金種別の変更
     */
     function setPriceType(tmpPriceFlag) {
@@ -526,7 +517,7 @@ var expGuiCourse = function (pObject, config) {
         changeCourse(resultNo);
     }
 
-    /*
+    /**
     * 探索結果出力部分
     */
     function viewResult() {
@@ -562,7 +553,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 表示している経路を変更
     */
     function changeCourse(n, callback) {
@@ -589,7 +580,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 最適経路のフラグをチェックする
     */
     function checkCourseList() {
@@ -728,7 +719,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 経路一覧の表示・非表示設定
     */
     function changeCourseList() {
@@ -737,7 +728,7 @@ var expGuiCourse = function (pObject, config) {
         viewResultList();
     }
 
-    /*
+    /**
     * 探索結果のタブを出力し、選択されている経路も出力
     */
     function viewResultList() {
@@ -882,7 +873,7 @@ var expGuiCourse = function (pObject, config) {
         document.getElementById(baseId + ':result').style.display = "block";
     }
 
-    /*
+    /**
     * 探索結果のタブを出力
     */
     function viewResultTab() {
@@ -959,7 +950,7 @@ var expGuiCourse = function (pObject, config) {
             }
             buffer += '</ul>';
         } else if (agent == 2) {
-            /*
+            /**
             buffer += '<div class="exp_resultChangeButton">';
             buffer += '<div class="exp_button">';
             buffer += '<span class="exp_text" id="' + baseId + ':result:change:text">他の経路</span>';
@@ -995,7 +986,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 経路の出力文字列を作成
     */
     function viewCourseList() {
@@ -1370,8 +1361,8 @@ var expGuiCourse = function (pObject, config) {
         return buffer;
     }
 
-    /*
-    * イベントの振り分けを行う
+    /**
+    * イベントの振り分け
     */
     function onEvent(e) {
         var eventIdList;
@@ -1506,7 +1497,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 分を時+分表記に変更する
     */
     function fun2ji(num) {
@@ -1523,7 +1514,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅のマーク種別を取得する
     */
     function getStationType(tmpStationType) {
@@ -1537,7 +1528,7 @@ var expGuiCourse = function (pObject, config) {
         return 2; // 通常
     }
 
-    /*
+    /**
     * コースオブジェクトを経路に展開
     */
     function viewResultRoute(courseObj, noFlag) {
@@ -2023,7 +2014,7 @@ var expGuiCourse = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * サマリーを出力
     */
     function outSummary(courseObj, noFlag) {
@@ -2306,7 +2297,7 @@ var expGuiCourse = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 駅を出力
     */
     function outStation(index, point, arrLine, depLine, dataType, stationType) {
@@ -2437,7 +2428,7 @@ var expGuiCourse = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 路線を出力
     */
     function outLine(index, line, chargeList) {
@@ -2743,7 +2734,7 @@ var expGuiCourse = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * ISOの日時をDateオブジェクトに変換
     */
     function convertISOtoDate(str) {
@@ -2758,7 +2749,7 @@ var expGuiCourse = function (pObject, config) {
         return tmp_date;
     }
 
-    /*
+    /**
     * ISOの日時を文字列に変換
     */
     function convertISOtoTime(str, type) {
@@ -2774,7 +2765,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線の発着時刻を判定し、出力
     */
     function convertDate2TimeString(date, type) {
@@ -2799,7 +2790,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * カンマ区切りの数値を出力
     */
     function num2String(str) {
@@ -2808,7 +2799,7 @@ var expGuiCourse = function (pObject, config) {
         return num;
     }
 
-    /*
+    /**
     * 料金変更時の処理
     */
     function changePrice() {
@@ -2948,7 +2939,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 運賃変更時の最短作処理
     */
     function reSearch(url, no) {
@@ -2975,7 +2966,7 @@ var expGuiCourse = function (pObject, config) {
         resultObj.send(null);
     }
 
-    /*
+    /**
     * 探索結果オブジェクト内の1経路だけ入れ替え
     */
     function setResultSingle(resultObject, no) {
@@ -2989,7 +2980,7 @@ var expGuiCourse = function (pObject, config) {
         changeCourse(no);
     }
 
-    /*
+    /**
     * 表示している探索結果のシリアライズデータを取得
     */
     function getSerializeData() {
@@ -3006,7 +2997,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 表示している探索結果すべてののシリアライズデータを取得
     */
     function getSerializeDataAll() {
@@ -3025,7 +3016,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 表示している探索結果の定期控除のための文字列を取得
     */
     function getTeiki() {
@@ -3108,7 +3099,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 二区間定期の控除用インデックスリストの取得
     */
     function getNikukanteikiIndex() {
@@ -3146,7 +3137,7 @@ var expGuiCourse = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * 車両のインデックスリストの取得
     */
     function getVehicleIndex() {
@@ -3184,7 +3175,7 @@ var expGuiCourse = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * 定期の状態を取得
     */
     function getPassStatusObject(index) {
@@ -3228,7 +3219,7 @@ var expGuiCourse = function (pObject, config) {
         return tmpPassStatusObject;
     }
 
-    /*
+    /**
     * 探索結果すべての経路オブジェクトを取得
     */
     function getResultAll() {
@@ -3239,7 +3230,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 表示している経路オブジェクトの番号を取得
     */
     function getResultNo() {
@@ -3253,7 +3244,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 表示している経路オブジェクトを取得
     */
     function getResult() {
@@ -3274,7 +3265,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 探索結果すべての経路オブジェクトをJSONに変換して取得
     */
     function getResultStringAll() {
@@ -3285,7 +3276,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * オブジェクトの値を取得
     */
     function getTextValue(obj) {
@@ -3299,7 +3290,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 表示している経路オブジェクトをJSONに変換して取得
     */
     function getResultString() {
@@ -3320,7 +3311,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 出発時刻を取得
     */
     function getDepartureDate(index) {
@@ -3350,7 +3341,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 到着時刻を取得
     */
     function getArrivalDate(index) {
@@ -3380,7 +3371,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 最適経路のチェック
     */
     function checkBestCourse(type) {
@@ -3480,7 +3471,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 定期券利用のチェック
     */
     function checkWithTeiki() {
@@ -3508,7 +3499,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 区間名のリストを取得
     */
     function getLineList() {
@@ -3536,7 +3527,7 @@ var expGuiCourse = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 区間オブジェクトを取得
     */
     function getLineObject(index) {
@@ -3608,7 +3599,7 @@ var expGuiCourse = function (pObject, config) {
         return tmpLineObject;
     }
 
-    /*
+    /**
     * 地点名のリストを取得
     */
     function getPointList() {
@@ -3640,7 +3631,7 @@ var expGuiCourse = function (pObject, config) {
         return buffer;
     }
 
-    /*
+    /**
     * 地点オブジェクトを取得
     */
     function getPointObject(index) {
@@ -3689,21 +3680,21 @@ var expGuiCourse = function (pObject, config) {
         return tmp_station;
     }
 
-    /*
+    /**
     * 乗車券のリストを出力
     */
     function getFareList(roundFlag) {
         return getPriceList("Fare", roundFlag);
     }
 
-    /*
+    /**
     * 特急券のリストを出力
     */
     function getChargeList(roundFlag) {
         return getPriceList("Charge", roundFlag);
     }
 
-    /*
+    /**
     * 運賃のリストを出力
     */
     function getPriceList(kind, roundFlag) {
@@ -3736,21 +3727,21 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 乗車券のオブジェクトを取得
     */
     function getFareObject(index) {
         return getPriceList("Fare", index);
     }
 
-    /*
+    /**
     * 特急券のオブジェクトを取得
     */
     function getChargeObject(index) {
         return getPriceList("Charge", index);
     }
 
-    /*
+    /**
     * 運賃のオブジェクトを取得
     */
     function getPriceObject(kind, index) {
@@ -3788,7 +3779,7 @@ var expGuiCourse = function (pObject, config) {
         return tmp_price;
     }
 
-    /*
+    /**
     * 運賃を取得
     */
     function getPrice(roundFlag) {
@@ -3799,7 +3790,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 乗車券を取得
     */
     function getFarePrice(roundFlag) {
@@ -3810,7 +3801,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 特急券を取得
     */
     function getChargePrice(roundFlag) {
@@ -3821,7 +3812,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 定期券を取得
     */
     function getTeikiPrice(month) {
@@ -3834,7 +3825,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 金額の計算
     */
     function getPriceSummary(type, round) {
@@ -3899,14 +3890,14 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 探索結果数を取得
     */
     function getResultCount() {
         return resultCount;
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -3935,14 +3926,14 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 探索オブジェクトのインターフェースを返す
     */
     function createSearchInterface() {
         return new searchInterface();
     };
 
-    /*
+    /**
     * 探索インターフェースオブジェクト
     */
     function searchInterface() {
@@ -4071,7 +4062,7 @@ var expGuiCourse = function (pObject, config) {
         this.getBringAssignmentError = getBringAssignmentError;
     };
 
-    /*
+    /**
     * コールバック関数の設定
     */
     function bind(type, func) {
@@ -4086,7 +4077,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * コールバック関数の解除
     */
     function unbind(type) {
@@ -4095,7 +4086,7 @@ var expGuiCourse = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * メニューオブジェクト作成
     */
     var menu = function (p_text, p_callBack, mask) {
@@ -4108,23 +4099,21 @@ var expGuiCourse = function (pObject, config) {
         this.mask = mask;
     };
 
-    /*
+    /**
     * 路線メニューを追加
     */
     function addLineMenu(obj) {
         callBackObjectLine.push(obj);
     };
 
-    /*
+    /**
     * 駅メニューを追加
     */
     function addPointMenu(obj) {
         callBackObjectStation.push(obj);
     };
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.dispCourse = dispCourse;
     this.search = search;
     this.changeCourse = changeCourse;
@@ -4168,9 +4157,7 @@ var expGuiCourse = function (pObject, config) {
     this.addLineMenu = addLineMenu;
     this.addPointMenu = addPointMenu;
 
-    /*
-    * 定数リスト
-    */
+    // 定数リスト
     this.SORT_EKISPERT = "ekispert";
     this.SORT_PRICE = "price";
     this.SORT_TIME = "time";
