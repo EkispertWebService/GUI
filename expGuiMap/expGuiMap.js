@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-06-20
+ *  Version:2017-03-16
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -520,7 +520,12 @@ var expGuiMap = function (pObject, config) {
             loadMap();
         } else {
             if (typeof obj.centerStation == 'undefined') {
-                initMap(mapObj.defaultStation);
+                if (typeof mapObj.defaultStation != 'undefined') {
+                    initMap(mapObj.defaultStation);
+                } else {
+                    //中心駅が無い場合の処理
+                    setInitMapCenter(Math.floor(mapObj.width / 2), Math.floor(mapObj.height / 2));
+                }
             } else {
                 if (mapObj.defaultStation != obj.centerStation) {
                     initMap(obj.centerStation);
@@ -569,8 +574,10 @@ var expGuiMap = function (pObject, config) {
             mapData.width = json.width;
             mapData.height = json.height;
         }
-        mapData.defaultStation = json.Point.Station.code;
-        mapData.type = json.Point.Station.Type;
+        if (typeof json.Point != 'undefined') {
+            mapData.defaultStation = json.Point.Station.code;
+            mapData.type = json.Point.Station.Type;
+        }    
         if (mapData.prefix == "jpnx1" || mapData.prefix == "jpnx2" || mapData.prefix == "jpnx4") {
             mapData.minimap = "jp_small.png";
             if (mapData.prefix == "jpnx2" || mapData.prefix == "jpnx4") {
@@ -1036,8 +1043,9 @@ var expGuiMap = function (pObject, config) {
                     miniMap = new Image();
                     miniMap.src = apiURL + naviURL + obj.miniMapFile;
                     miniMapObj = new Object();
+                    miniMapObj.loaded = false;
                 }
-                if (miniMap.complete) {
+                if (miniMap.complete && miniMapObj.loaded) {
                     ctx.drawImage(miniMap, miniMapObj.x, miniMapObj.y);
                 } else {
                     reload = true;
@@ -1048,8 +1056,9 @@ var expGuiMap = function (pObject, config) {
                         miniMapSub = new Image();
                         miniMapSub.src = apiURL + naviURL + obj.miniMapSubFile;
                         miniMapSubObj = new Object();
+                        miniMapSubObj.loaded = false;
                     }
-                    if (miniMapSub.complete) {
+                    if (miniMapSub.complete && miniMapSubObj.loaded) {
                         ctx.drawImage(miniMapSub, miniMapSubObj.pos, 0, miniMapObj.w, miniMapSubObj.h, miniMapSubObj.x, miniMapSubObj.y, miniMapObj.w, miniMapSubObj.h);
                     } else {
                         reload = true;
@@ -1100,6 +1109,7 @@ var expGuiMap = function (pObject, config) {
                     if (lineHeight > miniMapObj.h) { lineHeight = miniMapObj.h; } //画面サイズ以下の場合
                     //線の描画
                     ctx.strokeRect(miniMapObj.x + Math.round(m_x * miniMapObj.w), miniMapObj.y + Math.round(m_y * miniMapObj.h), lineWidth, lineHeight);
+                    miniMapObj.loaded = true;
                     if (obj.miniMapSubFile.length > 0) {
                         if (miniMapSub.complete) {
                             //概観図の位置を設定
@@ -1121,6 +1131,7 @@ var expGuiMap = function (pObject, config) {
                             if (lineHeight2 > miniMapSubObj.h) { lineHeight2 = miniMapSubObj.h; } //画面サイズ以下の場合
                             //線の描画
                             ctx.strokeRect(miniMapSubObj.x + Math.round(m_x * miniMapSubObj.w) - miniMapSubObj.pos, miniMapSubObj.y + Math.round(m_y * miniMapSubObj.h), lineWidth2 / getScale(), lineHeight2 / getScale());
+                            miniMapSubObj.loaded = true;
                         }
                     }
                 }
@@ -2044,9 +2055,11 @@ var expGuiMap = function (pObject, config) {
         mapData.groupIndex = parseInt(json.groupIndex);
         mapData.width = parseInt(json.width);
         mapData.height = parseInt(json.height);
-        mapData.kenCode = parseInt(json.Point.Prefecture.code);
-        mapData.defaultStation = parseInt(json.Point.Station.code);
-        mapData.type = json.Point.Station.Type;
+        if (typeof json.Point != 'undefined') {
+            mapData.kenCode = parseInt(json.Point.Prefecture.code);
+            mapData.defaultStation = parseInt(json.Point.Station.code);
+            mapData.type = json.Point.Station.Type;
+        }    
         if (mapData.prefix == "jpnx1" || mapData.prefix == "jpnx2" || mapData.prefix == "jpnx4") {
             mapData.navi = "jp_small.png";
             if (mapData.prefix == "jpnx2" || mapData.prefix == "jpnx4") {
