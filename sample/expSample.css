@@ -20,7 +20,6 @@
 .exp_sample_btn_area {
     width: 100%;
     text-align: center;
-    margin: 1em 0;
 }
 .exp_sample_btn {
     font-weight: bold;
@@ -84,4 +83,10 @@
     background: -webkit-linear-gradient(top, #fff 0%,#efebe1 100%);
     background: linear-gradient(to bottom, #fff 0%,#efebe1 100%);
     background-size: 20px, 100%;
+}
+.exp_sample_conf {
+    border: 1px solid #EAEAEA;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
 }
