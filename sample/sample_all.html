@@ -23,38 +23,65 @@
     var key = "rnwfzKX4rvNVZYat";
 
     /**
-    * 探索結果の初期化部分
-    */
+     * 探索結果の初期化部分
+     */
     function initResult(){
         resultApp.setConfigure("PriceChange", true); // 変更を許可
         resultApp.setConfigure("PriceChangeRefresh", true); // 再読み込みをオン
         resultApp.setConfigure("AssignDia", true);
         resultApp.setConfigure("window", true);
-
-        //駅メニュー追加
-        var stationTimeTableMenu = new resultApp.menu("駅時刻表", stationTimeTable);
-        resultApp.addPointMenu(stationTimeTableMenu);
-        //路線メニュー追加
-        var railTimeTableMenu = new resultApp.menu("区間時刻表", lineTimeTable);
-        resultApp.addLineMenu(railTimeTableMenu);
     }
 
     /**
-    * 定期券の選択
-    */
-    function selectPassRoute(){
+     * 定期券の選択
+     */
+    function selectPassRoute() {
         document.getElementById("passRoute").value = document.getElementById("teiki").options.item(document.getElementById("teiki").selectedIndex).value;
     }
 
     /**
-    * 定期文字列を登録
-    */
+     * 定期文字列を登録
+     */
     function selectCourse() {
         var passRoute = resultApp.getTeiki();
         if (typeof passRoute != 'undefined') {
             document.getElementById("passRoute").value = passRoute;
         }
     }
+
+    /**
+     * 探索実行時の動作
+     */
+    function searchDemo() {
+        // 実際に動作確認する際は駅名チェックを外してください
+        // ここから
+        if (stationApp1.getStation() != "高円寺") {
+            if (window.confirm('出発地には、\n\n高円寺を指定する必要があります。\n高円寺に変更してもよろしいですか？')) {
+                stationApp1.setStation("高円寺");
+            } else {
+                return false;
+            }
+        }
+        // ここまで
+        search();
+    }
+
+    /**
+     * 定期券探索時の動作
+     */
+     function searchTeikiDemo(callBack) {
+        // 実際に動作確認する際は駅名チェックを外してください
+        // ここから
+        if (stationApp1.getStation() != "高円寺") {
+            if (window.confirm('出発地には、\n\n高円寺を指定する必要があります。\n高円寺に変更してもよろしいですか？')) {
+                stationApp1.setStation("高円寺");
+            } else {
+                return false;
+            }
+        }
+        // ここまで
+         searchTeiki(callBack);
+     }
 // -->
 </script>
 </head>
@@ -72,20 +99,16 @@
     <h3 class="exp_sample_header">地点情報</h3>
     <div class="exp_sample_title">
         出発地
-        <input class="exp_sample_simple_btn" type="button" value="路線図" onClick="Javascript:openMap(1);">
     </div>
     <div id="station1" style="width:100%;"></div>
     <div class="exp_sample_title">
         目的地
-        <input class="exp_sample_simple_btn" type="button" value="路線図" onClick="Javascript:openMap(2);">
-    </div>
-    <div id="station2" style="width:100%;"></div>
-    <div class="exp_sample_title">
-        経由地
-        <input class="exp_sample_simple_btn" type="button" value="路線図" onClick="Javascript:openMap(3);">
     </div>
     <div id="station3" style="width:100%;"></div>
-
+    <div class="exp_sample_title">
+        経由地
+    </div>
+    <div id="station2" style="width:100%;"></div>
     <br>
 
     <!-- 定期券の設定 -->
@@ -101,15 +124,14 @@
 
     <!-- 定期設定 -->
     <h3 class="exp_sample_header">定期経路</h3>
-    <input class="exp_sample_teiki" type="text" id="passRoute" value="">
+    <input class="exp_sample_teiki" type="text" id="passRoute" value="" readonly>
 
     <br><br>
 
     <!-- 探索実行ボタン -->
     <div class="exp_sample_btn_area">
-        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:search();">
-        <input class="exp_sample_btn" type="button" value="定期券を探索" onClick="Javascript:searchTeiki(selectCourse);">
-        <input class="exp_sample_btn" type="button" value="継続更新" onClick="Javascript:routeRefresh();">
+        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:searchDemo();">
+        <input class="exp_sample_btn" type="button" value="定期券を探索" onClick="Javascript:searchTeikiDemo(selectCourse);">
         <input class="exp_sample_btn" type="button" value="定期券の払い戻し計算" onClick="Javascript:restoreTeikiRoute();">
     </div>
 
