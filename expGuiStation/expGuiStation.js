@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-06-20
+ *  Version:2016-08-03
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -27,8 +27,8 @@ var expGuiStation = function (pObject, config) {
         if (s.src && s.src.match(/expGuiStation\.js(\?.*)?/)) {
             var params = s.src.replace(/.+\?/, '');
             params = params.split("&");
-            for (var i = 0; i < params.length; i++) {
-                var tmp = params[i].split("=");
+            for (var j = 0; j < params.length; j++) {
+                var tmp = params[j].split("=");
                 if (tmp[0] == "key") {
                     key = unescape(tmp[1]);
                 }
@@ -273,6 +273,7 @@ var expGuiStation = function (pObject, config) {
                 setStationNo(selectStation);
             } else {
                 // エンターキーのみ
+                /*
                 if (iStation != "") {
                     var tmp_stationList = new Array();
                     for (var n = 0; n < stationSort.length; n++) {
@@ -284,6 +285,7 @@ var expGuiStation = function (pObject, config) {
                     }
                     setStationNo(tmp_stationList[0]);
                 }
+                */
             }
             // エンターキー
             if (typeof callBackFunction['enter'] == 'function') {
@@ -469,6 +471,7 @@ var expGuiStation = function (pObject, config) {
         // 駅名を出力
         if (stationList.length > 0) {
             // リストを出力
+            var viewStationType = (typeof stationType != 'undefined') ? stationType : "";
             var buffer = "";
             buffer += '<ul class="exp_stationTable">';
             for (var n = 0; n < stationSort.length; n++) {
@@ -479,27 +482,29 @@ var expGuiStation = function (pObject, config) {
                     }
                 }
                 if (agent == 1) {
-                    buffer += '<li>';
-                    if (stationSort[n].visible) {
-                        buffer += '<a class="exp_stationTitle" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
-                    } else {
-                        buffer += '<a class="exp_stationTitleClose" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
+                    if (viewStationType.indexOf(stationSort[n].type) != -1 || viewStationType == "") {
+                        buffer += '<li>';
+                        if (stationSort[n].visible) {
+                            buffer += '<a class="exp_stationTitle" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
+                        } else {
+                            buffer += '<a class="exp_stationTitleClose" id="' + baseId + ':stationView:' + String(n + 1) + '" href="Javascript:void(0);">';
+                        }
+                        buffer += '<div class="exp_stationCount">' + stationSort[n].stationList.length + '件</div>';
+                        buffer += '<div class="exp_stationIcon">';
+                        buffer += '<span class="exp_' + stationSort[n].type + '" id="' + baseId + ':stationView:' + String(n + 1) + ':icon"></span>';
+                        buffer += '</div>';
+                        buffer += '<div class="exp_stationType" id="' + baseId + ':stationView:' + String(n + 1) + ':type">';
+                        buffer += stationSort[n].name;
+                        buffer += '</div>';
+                        buffer += '</a>';
+                        buffer += '</li>';
                     }
-                    buffer += '<div class="exp_stationCount">' + stationSort[n].stationList.length + '件</div>';
-                    buffer += '<div class="exp_stationIcon">';
-                    buffer += '<span class="exp_' + stationSort[n].type + '" id="' + baseId + ':stationView:' + String(n + 1) + ':icon"></span>';
-                    buffer += '</div>';
-                    buffer += '<div class="exp_stationType" id="' + baseId + ':stationView:' + String(n + 1) + ':type">';
-                    buffer += stationSort[n].name;
-                    buffer += '</div>';
-                    buffer += '</a>';
-                    buffer += '</li>';
-                }
-                if (stationSort[n].visible) {
-                    // リストの出力
-                    for (var i = 0; i < stationList.length; i++) {
-                        if (stationList[i].type.split(":")[0] == stationSort[n].type) {
-                            buffer += getStationListItem(i + 1, stationList[i]);
+                    if (stationSort[n].visible) {
+                        // リストの出力
+                        for (var i = 0; i < stationList.length; i++) {
+                            if (stationList[i].type.split(":")[0] == stationSort[n].type) {
+                                buffer += getStationListItem(i + 1, stationList[i]);
+                            }
                         }
                     }
                 }
@@ -510,8 +515,10 @@ var expGuiStation = function (pObject, config) {
             for (var i = 0; i < stationList.length; i++) {
                 addEvent(document.getElementById(baseId + ":stationRow:" + String(i + 1)), "click", onEvent);
             }
-            for (var i = 0; i < stationSort.length; i++) {
-                addEvent(document.getElementById(baseId + ":stationView:" + String(i + 1)), "click", onEvent);
+            if (viewStationType.split(":").length >= 2 || viewStationType == "") {
+                for (var i = 0; i < stationSort.length; i++) {
+                    addEvent(document.getElementById(baseId + ":stationView:" + String(i + 1)), "click", onEvent);
+                }
             }
             if (document.getElementById(baseId + ':stationList').style.display == "none" && openFlag) {
                 document.getElementById(baseId + ':stationList').style.display = "block";

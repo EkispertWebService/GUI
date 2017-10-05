@@ -170,16 +170,10 @@
 /* 汎用処理 */
 .expGuiDateTime .exp_clearfix:after {
     display: block;
-    display: block;
-    visibility: hidden;
     visibility: hidden;
     clear: both;
-    clear: both;
-    height: 0;
     height: 0;
     content: ".";
-    content: ".";
-    font-size: 0;
     font-size: 0;
 }
 /* 日付設定 */

@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-06-20
+ *  Version:2016-08-04
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -27,8 +27,8 @@ var expGuiDateTime = function (pObject, config) {
         if (s.src && s.src.match(/expGuiDateTime\.js(\?.*)?/)) {
             var params = s.src.replace(/.+\?/, '');
             params = params.split("&");
-            for (var i = 0; i < params.length; i++) {
-                var tmp = params[i].split("=");
+            for (var j = 0; j < params.length; j++) {
+                var tmp = params[j].split("=");
                 if (tmp[0] == "key") {
                     key = unescape(tmp[1]);
                 }
@@ -161,7 +161,7 @@ var expGuiDateTime = function (pObject, config) {
         // 表示設定
         if (typeof type != 'undefined') {
             if (type == "dia") {
-                //ルウト用の設定
+                // 駅すぱあと for Web用の設定
                 document.getElementById(baseId + ":searchType:average").style.display = "none";
             } else if (type == "plain") {
                 document.getElementById(baseId + ":searchTypeList").style.display = "none";
@@ -487,7 +487,6 @@ var expGuiDateTime = function (pObject, config) {
     */
     function getCalendarTable(yyyy, mm, dd) {
         // 祝日チェック用の変数初期化
-        moncnt = 0;
         furi = 0;
         ck = 0;
         // 現在日
@@ -604,7 +603,6 @@ var expGuiDateTime = function (pObject, config) {
     /**
     * 祭日の取得
     */
-    var moncnt = 0;
     var furi = 0;
     var ck = 0;
     var Syunbunpar1 = new Array(19.8277, 20.8357, 20.8431, 21.8510);  // 春分・秋分の日付計算用1980-2099
@@ -612,11 +610,9 @@ var expGuiDateTime = function (pObject, config) {
     function getNationalHoliday(year, month, day, week) {
         // 変数の初期化
         syuku = '';
-        if (day == 1 && moncnt > 0 && !ck) moncnt = 0;
-
         // ハッピーマンデーと振替休日
         if (week == 1) {
-            if (!ck)++moncnt;
+            var moncnt = Math.floor(day / 7) + 1;
             // 振替休日
             // (2006年まで)「国民の祝日」が日曜日にあたるときは、その翌日を休日とする。
             if (furi == 1 && year <= 2006) {
@@ -918,6 +914,24 @@ var expGuiDateTime = function (pObject, config) {
     }
 
     /**
+     * 平日に補正
+     */
+    function setWeekday() {
+        var tmp_Date = getDate();
+        var check_date = new Date(parseInt(tmp_Date.substr(0, 4), 10), parseInt(tmp_Date.substr(4, 2), 10) - 1, parseInt(tmp_Date.substr(6, 4), 10));
+        for (var i = 0; i < 31; i++) {
+            if (check_date.getDay() > 0 && check_date.getDay() < 6) {
+                // 祝日判定
+                if (getNationalHoliday(check_date.getFullYear(), check_date.getMonth() + 1, check_date.getDate(), check_date.getDay()) == '') {
+                    break;
+                }
+            }
+            check_date.setDate(check_date.getDate() + 1);
+        }
+        setDate(check_date.getFullYear() + "/" + (check_date.getMonth() + 1) + "/" + check_date.getDate());
+    }
+
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -948,6 +962,7 @@ var expGuiDateTime = function (pObject, config) {
     this.openCalendar = openCalendar;
     this.closeCalendar = closeCalendar;
     this.setConfigure = setConfigure;
+    this.setWeekday = setWeekday;
 
     // 定数リスト
     this.SEARCHTYPE_DEPARTURE = "departure";

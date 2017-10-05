@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2017-03-16
+ *  Version:2017-03-29
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -27,8 +27,8 @@ var expGuiMap = function (pObject, config) {
         if (s.src && s.src.match(/expGuiMap\.js(\?.*)?/)) {
             var params = s.src.replace(/.+\?/, '');
             params = params.split("&");
-            for (var i = 0; i < params.length; i++) {
-                var tmp = params[i].split("=");
+            for (var j = 0; j < params.length; j++) {
+                var tmp = params[j].split("=");
                 if (tmp[0] == "key") {
                     key = unescape(tmp[1]);
                 }
@@ -354,7 +354,7 @@ var expGuiMap = function (pObject, config) {
             }
             return true;
         }
-    };
+    }
 
     /**
     * コールバック関数の定義
@@ -741,22 +741,31 @@ var expGuiMap = function (pObject, config) {
                 if (Math.abs(obj.cursorMoveX) < 10) {
                     obj.x -= obj.cursorMoveX;
                     obj.cursorMoveX = 0;
-                } else if (obj.cursorMoveX > 10) {
+                } else if (obj.cursorMoveX > 0) {
                     obj.x -= 10;
                     obj.cursorMoveX -= 10;
-                } else if (obj.cursorMoveX < 10) {
+                } else if (obj.cursorMoveX < 0) {
                     obj.x += 10;
                     obj.cursorMoveX += 10;
                 }
                 if (Math.abs(obj.cursorMoveY) < 10) {
                     obj.x -= obj.cursorMoveY;
                     obj.cursorMoveY = 0;
-                } else if (obj.cursorMoveY > 10) {
+                } else if (obj.cursorMoveY > 0) {
                     obj.y -= 10;
                     obj.cursorMoveY -= 10;
-                } else if (obj.cursorMoveY < 10) {
+                } else if (obj.cursorMoveY < 0) {
                     obj.y += 10;
                     obj.cursorMoveY += 10;
+                }
+                //座標チェック
+                if (obj.x > 0) { obj.x = 0; }
+                if (obj.y > 0) { obj.y = 0; }
+                if (obj.x < obj.mapWidth * -1 + obj.cW / getScale()) {
+                    obj.x = (obj.mapWidth - obj.cW / getScale()) * -1;
+                }
+                if (obj.y < obj.mapHeight * -1 + obj.cH / getScale()) {
+                    obj.y = (obj.mapHeight - obj.cH / getScale()) * -1;
                 }
                 drawMap(0, 0);
             } else if (scaleObj.frame >= 1) {

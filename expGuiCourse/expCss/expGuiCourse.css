@@ -39,6 +39,9 @@
     -moz-box-shadow: inset 0 1px 0 0 #ffffff , 0 1px 0 0 #e5e5e5;
     box-shadow: inset 0 1px 0 0 #ffffff , 0 1px 0 0 #e5e5e5;
 }
+.expGuiCourse .exp_resultList .exp_selectedRoute {
+    background-color: #fef6a1;
+}
 /* 経路のリンク */
 .expGuiCourse .exp_resultList .exp_link {
     display: block;
@@ -130,8 +133,14 @@
 }
 /* サマリー用情報出力欄 */
 .expGuiCourse .exp_resultList .exp_summary .exp_information_plane,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_dia {
-    width: 30%;
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plane1,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plane2,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plane3,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_dia,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_dia1,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_dia2,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_dia3 {
+    width: 446px;
     padding: 2px 8px;
     overflow: hidden;
     position: absolute;
@@ -139,8 +148,23 @@
     font-weight: bold;
     white-space: nowrap;
 }
+/* いずれか1個のマークがついた時 */
+.expGuiCourse .exp_resultList .exp_summary .exp_information_dia1 {
+    width: 418px;
+}
+/* いずれか2個のマークがついた時 */
+.expGuiCourse .exp_resultList .exp_summary .exp_information_dia2 {
+    width: 390px;
+}
+/* 3個のマークがついた時 */
+.expGuiCourse .exp_resultList .exp_summary .exp_information_dia3 {
+    width: 362px;
+}
 /* サマリー用情報出力欄(平均用) */
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane {
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plane,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plane1,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plane2,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plane3 {
     width: 40%;
 }
 /* サマリーの分割 */
@@ -186,6 +210,7 @@
 /* 経路本体 */
 .expGuiCourse .exp_route {
     width: 100%;
+    position: relative;
 }
 /* スマートフォン・タブレット用料金変更 */
 .expGuiCourse .exp_route .exp_chargeSelect {
@@ -802,8 +827,8 @@
 .expGuiCoursePc .exp_resultHeader .exp_resultTab .exp_resultTabButtonNoSelect {
     border-left: 1px solid #A0AAB4;
 }
-.expGuiCoursePc .exp_resultHeader .exp_resultTab .exp_Low {
-    border-top: 1px solid #A0AAB4;
+.expGuiCoursePc .exp_resultHeader .exp_resultTab .exp_buttom {
+    border-bottom: 1px solid #A0AAB4;
 }
 .expGuiCoursePc .exp_resultHeader .exp_resultTab .exp_return {
     clear: both;
@@ -949,7 +974,7 @@
 }
 /* 出発地 */
 .expGuiCoursePc .exp_resultList .exp_resultListTitle .exp_from {
-    background-color: #0077ee;
+    background-color: #09a2e1;
     color: #FFFFFF;
 }
 /* 出発地&目的地 */
@@ -965,7 +990,7 @@
 }
 /* 目的地 */
 .expGuiCoursePc .exp_resultList .exp_resultListTitle .exp_to {
-    background-color: #0077ee;
+    background-color: #09a2e1;
     color: #FFFFFF;
 }
 /* 経路のサマリー */
@@ -1001,6 +1026,7 @@
     width: 700px;
     color: #384556;
     font-weight: normal;
+    position: relative;
 }
 .expGuiCoursePc .exp_route .exp_detail .exp_chargeDetail a:hover {
     color: #0077ee;
@@ -1190,7 +1216,7 @@
 }
 .expGuiCoursePc .exp_route .exp_summary .exp_date,
 .expGuiCourseTablet .exp_route .exp_summary .exp_date {
-    display: inline-block;
+    display: block;
     float: left;
     margin-top: 0.6em;
     padding: 3px;
@@ -3129,6 +3155,72 @@
     color: #C7433F;
     padding: 0 5px;
 }
+/* 経路のソート */
+.expGuiCourse .exp_resultList .exp_sortTab {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+.expGuiCourse .exp_resultList .exp_sortTab .exp_sortButton {
+    width:12em;
+    display: block;
+    padding: 5px;
+    margin-right: 0.5em;
+    float: left;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+.expGuiCourse .exp_resultList .exp_sortTab .exp_hayaiButton,
+.expGuiCourse .exp_resultList .exp_sortTab .exp_yasuiButton,
+.expGuiCourse .exp_resultList .exp_sortTab .exp_rakuButton {
+    background-color: #8598ab;
+}
+.expGuiCourse .exp_resultList .exp_sortTab .exp_hayaiButtonSelected,
+.expGuiCourse .exp_resultList .exp_sortTab .exp_hayaiButton:hover {
+    background-color: #3a97dd;
+}
+.expGuiCourse .exp_resultList .exp_sortTab .exp_yasuiButtonSelected,
+.expGuiCourse .exp_resultList .exp_sortTab .exp_yasuiButton:hover {
+    background-color: #21be28;
+}
+.expGuiCourse .exp_resultList .exp_sortTab .exp_rakuButtonSelected,
+.expGuiCourse .exp_resultList .exp_sortTab .exp_rakuButton:hover {
+    background-color: #f79c30;
+}
+.expGuiCourse .exp_resultList .exp_sortTab .exp_sortButton .exp_text {
+    display: block;
+    margin-top: 0.2em;
+    color: #ffffff;
+    font-size: 1.3em;
+}
+/* 早いマーク */
+.expGuiCourse .exp_resultList .exp_sortTab .exp_sortButton .exp_hayai {
+    display: block;
+    float: left;
+    padding-left: 0.2em;
+    width: 28px;
+    height: 28px;
+    background: url(../expImages/hayai.png) no-repeat;
+}
+/* 乗換回数少ないマーク */
+.expGuiCourse .exp_resultList .exp_sortTab .exp_sortButton .exp_raku {
+    display: block;
+    float: left;
+    padding-left: 0.2em;
+    width: 28px;
+    height: 28px;
+    background: url(../expImages/raku.png) no-repeat center;
+}
+/* 安いマーク */
+.expGuiCourse .exp_resultList .exp_sortTab .exp_sortButton .exp_yasui {
+    display: block;
+    float: left;
+    padding-left: 0.2em;
+    width: 28px;
+    height: 28px;
+    background: url(../expImages/yasui.png) no-repeat;
+}
 /* 探索結果ポップアップ */
 .expGuiCourse .exp_resultPopup {
     position: fixed;
@@ -3195,13 +3287,11 @@
     padding-top: 0.5em;
     width: 100%;
     height: 3em;
-    border-top: 1px solid #a3aeb8;
-    box-shadow: inset 1px 1px #d5d9db;
     text-align: center;
 }
 /* 経路確定ボタン */
 .expGuiCourse .exp_resultSelect {
-    margin: 0 auto;
+    margin: 0.5em auto 0;
     width: 113px;
     height: 31px;
     text-align: center;
@@ -3229,4 +3319,24 @@
 }
 .expGuiCourse .exp_resultPopup .exp_result {
     border-top: 1px solid #a3aeb8;
+}
+/* 経路のリンク */
+.expGuiCourse .exp_resultTopLink {
+    display: block;
+    width: 700px;
+    margin: 15px auto 0;
+    color: #000000;
+    text-decoration: none;
+}
+.expGuiCourse .exp_resultTopLink .exp_resultTopLinkArea {
+    display: block;
+    text-decoration: none;
+    background: url(../expImages/topLink.png) no-repeat;
+    margin-top: 0.5em;
+    padding-left: 30px;
+}
+.expGuiCourse .exp_resultTopLink .exp_resultTopLinkArea .exp_text {
+    color: #384556;
+    font-weight: bold;
+    font-size: 1.1em;
 }
