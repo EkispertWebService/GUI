@@ -40,48 +40,14 @@
     }
 
     /**
-     * 定期文字列を登録
-     */
+    * 定期文字列を登録
+    */
     function selectCourse() {
         var passRoute = resultApp.getTeiki();
         if (typeof passRoute != 'undefined') {
             document.getElementById("passRoute").value = passRoute;
         }
     }
-
-    /**
-     * 探索実行時の動作
-     */
-    function searchDemo() {
-        // 実際に動作確認する際は駅名チェックを外してください
-        // ここから
-        if (stationApp1.getStation() != "高円寺") {
-            if (window.confirm('出発地には、\n\n高円寺を指定する必要があります。\n高円寺に変更してもよろしいですか？')) {
-                stationApp1.setStation("高円寺");
-            } else {
-                return false;
-            }
-        }
-        // ここまで
-        search();
-    }
-
-    /**
-     * 定期券探索時の動作
-     */
-     function searchTeikiDemo(callBack) {
-        // 実際に動作確認する際は駅名チェックを外してください
-        // ここから
-        if (stationApp1.getStation() != "高円寺") {
-            if (window.confirm('出発地には、\n\n高円寺を指定する必要があります。\n高円寺に変更してもよろしいですか？')) {
-                stationApp1.setStation("高円寺");
-            } else {
-                return false;
-            }
-        }
-        // ここまで
-         searchTeiki(callBack);
-     }
 // -->
 </script>
 </head>
@@ -130,8 +96,8 @@
 
     <!-- 探索実行ボタン -->
     <div class="exp_sample_btn_area">
-        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:searchDemo();">
-        <input class="exp_sample_btn" type="button" value="定期券を探索" onClick="Javascript:searchTeikiDemo(selectCourse);">
+        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:search();">
+        <input class="exp_sample_btn" type="button" value="定期券を探索" onClick="Javascript:searchTeiki(selectCourse);">
         <input class="exp_sample_btn" type="button" value="定期券の払い戻し計算" onClick="Javascript:restoreTeikiRoute();">
     </div>
 

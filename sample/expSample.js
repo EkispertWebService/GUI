@@ -184,6 +184,8 @@ function init() {
             initRepayment();
         }
     }
+    // デモ用のコード
+    stationApp1.setStation("高円寺");
 
     stationInfoApp = new expGuiStationInfo();
     if (typeof apiURL != 'undefined') {
@@ -371,6 +373,8 @@ function checkData() {
 */
 function search(callBack) {
     setCookie();
+    // デモ用のコード
+    stationApp1.setStation("高円寺");
     // 入力チェック後に動作
     if (checkData()) {
         var searchWord = "";
@@ -465,6 +469,8 @@ function search(callBack) {
 */
 function searchTeiki(callBack) {
     setCookie();
+    // デモ用のコード
+    stationApp1.setStation("高円寺");
     // 入力チェック後に動作
     if (checkData()) {
         var searchWord = "";
