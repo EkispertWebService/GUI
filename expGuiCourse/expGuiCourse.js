@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2017-10-04
+ *  Version:2018-02-22
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -97,6 +97,7 @@ var expGuiCourse = function (pObject, config) {
     var minTeiki1Summary;
     var minTeiki3Summary;
     var minTeiki6Summary;
+    var minTeiki12Summary;
     var minExhaustCO2;
 
     /**
@@ -601,6 +602,7 @@ var expGuiCourse = function (pObject, config) {
         minTeiki1Summary = undefined;
         minTeiki3Summary = undefined;
         minTeiki6Summary = undefined;
+        minTeiki12Summary = undefined;
         minExhaustCO2 = undefined;
         // 探索結果が2以上の場合にチェックする
         if (resultCount >= 2) {
@@ -646,6 +648,7 @@ var expGuiCourse = function (pObject, config) {
                 var Teiki1Summary = undefined;
                 var Teiki3Summary = undefined;
                 var Teiki6Summary = undefined;
+                var Teiki12Summary = undefined;
                 if (typeof tmpResult.Price != 'undefined') {
                     for (var j = 0; j < tmpResult.Price.length; j++) {
                         if (tmpResult.Price[j].kind == "FareSummary") {
@@ -673,6 +676,10 @@ var expGuiCourse = function (pObject, config) {
                         } else if (tmpResult.Price[j].kind == "Teiki6Summary") {
                             if (typeof tmpResult.Price[j].Oneway != 'undefined') {
                                 Teiki6Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
+                            }
+                        } else if (tmpResult.Price[j].kind == "Teiki12Summary") {
+                            if (typeof tmpResult.Price[j].Oneway != 'undefined') {
+                                Teiki12Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
                             }
                         }
                     }
@@ -1077,12 +1084,14 @@ var expGuiCourse = function (pObject, config) {
             var Teiki1Summary = undefined;
             var Teiki3Summary = undefined;
             var Teiki6Summary = undefined;
+            var Teiki12Summary = undefined;
             // 運賃改定未対応
             var FareSummarySalesTaxRateIsNotSupported = false;
             var ChargeSummarySalesTaxRateIsNotSupported = false;
             var Teiki1SummarySalesTaxRateIsNotSupported = false;
             var Teiki3SummarySalesTaxRateIsNotSupported = false;
             var Teiki6SummarySalesTaxRateIsNotSupported = false;
+            var Teiki12SummarySalesTaxRateIsNotSupported = false;
             // 料金の計算
             if (typeof tmpResult.Price != 'undefined') {
                 for (var j = 0; j < tmpResult.Price.length; j++) {
@@ -1112,6 +1121,10 @@ var expGuiCourse = function (pObject, config) {
                         if (typeof tmpResult.Price[j].Oneway != 'undefined') {
                             Teiki6Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
                         }
+                    } else if (tmpResult.Price[j].kind == "Teiki12Summary") {
+                        if (typeof tmpResult.Price[j].Oneway != 'undefined') {
+                            Teiki12Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
+                        }
                     } else {
                         // 運賃改定未対応チェック
                         if (typeof tmpResult.Price[j].fareRevisionStatus != 'undefined') {
@@ -1126,6 +1139,8 @@ var expGuiCourse = function (pObject, config) {
                                     Teiki3SummarySalesTaxRateIsNotSupported = true;
                                 } else if (tmpResult.Price[j].kind == "Teiki6") {
                                     Teiki6SummarySalesTaxRateIsNotSupported = true;
+                                } else if (tmpResult.Price[j].kind == "Teiki12") {
+                                    Teiki12SummarySalesTaxRateIsNotSupported = true;
                                 }
                             }
                         }
@@ -1297,6 +1312,16 @@ var expGuiCourse = function (pObject, config) {
                     } else {
                         buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------円</span>';
                     }
+                    buffer += '<span class="exp_titleTeiki12" id="' + baseId + ':list:' + String(i + 1) + ':price">定期券12ヶ月</span>';
+                    if (typeof Teiki12Summary != 'undefined') {
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">';
+                        buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:support">' : '';
+                        buffer += num2String(Teiki12Summary) + '円';
+                        buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '</span>' : '';
+                        buffer += '</span>';
+                    } else {
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------円</span>';
+                    }
                 }
                 // 乗り換え回数
                 if (priceViewFlag == "oneway" || priceViewFlag == "round") {
@@ -1349,6 +1374,15 @@ var expGuiCourse = function (pObject, config) {
                         buffer += '\\' + num2String(Teiki6Summary);
                         buffer += Teiki6SummarySalesTaxRateIsNotSupported ? '</span>' : '';
                         buffer += '(6ヵ月)</span>';
+                    } else {
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------</span>';
+                    }
+                    if (typeof Teiki12Summary != 'undefined') {
+                        buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price">';
+                        buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported" id="' + baseId + ':list:' + String(i + 1) + ':price:text">' : '';
+                        buffer += '\\' + num2String(Teiki12Summary);
+                        buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '</span>' : '';
+                        buffer += '(12ヵ月)</span>';
                     } else {
                         buffer += '<span class="exp_value" id="' + baseId + ':list:' + String(i + 1) + ':price:text">------</span>';
                     }
@@ -1709,6 +1743,7 @@ var expGuiCourse = function (pObject, config) {
         var teiki1 = new Array();
         var teiki3 = new Array();
         var teiki6 = new Array();
+        var teiki12 = new Array();
         var teiki = new Array();
         if (typeof courseObj.Price != 'undefined') {
             for (var i = 0; i < courseObj.Price.length; i++) {
@@ -1727,6 +1762,9 @@ var expGuiCourse = function (pObject, config) {
                 } else if (courseObj.Price[i].kind == "Teiki6") {
                     // 定期券のリスト作成
                     teiki6.push(courseObj.Price[i]);
+                } else if (courseObj.Price[i].kind == "Teiki12") {
+                    // 定期券のリスト作成
+                    teiki12.push(courseObj.Price[i]);
                 }
             }
         }
@@ -1881,6 +1919,7 @@ var expGuiCourse = function (pObject, config) {
                 var teiki1List = new Array();
                 var teiki3List = new Array();
                 var teiki6List = new Array();
+                var teiki12List = new Array();
                 // 対象となる定期券をセット
                 for (var j = 0; j < teiki1.length; j++) {
                     if (parseInt(teiki1[j].fromLineIndex) == (i + 1)) {
@@ -1897,7 +1936,12 @@ var expGuiCourse = function (pObject, config) {
                         teiki6List.push(teiki6[j]);
                     }
                 }
-                if (teiki1List.length > 0 || teiki3List.length > 0 || teiki6List.length > 0) {
+                for (var j = 0; j < teiki12.length; j++) {
+                    if (parseInt(teiki12[j].fromLineIndex) == (i + 1)) {
+                        teiki12List.push(teiki12[j]);
+                    }
+                }
+                if (teiki1List.length > 0 || teiki3List.length > 0 || teiki6List.length > 0 || teiki12List.length > 0) {
                     // 1つだけ表示
                     for (var j = 0; j < teiki1List.length; j++) {
                         // 定期のチェック
@@ -2006,6 +2050,26 @@ var expGuiCourse = function (pObject, config) {
                             buffer += '------円';
                         }
                         buffer += '</div>';
+                        buffer += '<div class="exp_teiki12">' + (agent != 2 ? '12ヵ月' : '');
+                        if (typeof teiki12List[j] != 'undefined') {
+                            // 運賃改定未対応
+                            var salesTaxRateIsNotSupported = false;
+                            if (typeof teiki12List[j].fareRevisionStatus != 'undefined') {
+                                if (teiki12List[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
+                                    salesTaxRateIsNotSupported = true;
+                                }
+                            }
+                            buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
+                            if (getTextValue(teiki12List[j].Name) != "") {
+                                buffer += getTextValue(teiki12List[j].Name);
+                            } else {
+                                buffer += num2String(parseInt(getTextValue(teiki12List[j].Oneway))) + '円';
+                            }
+                            buffer += '</span>';
+                        } else {
+                            buffer += '------円';
+                        }
+                        buffer += '</div>';
                         //          buffer += '<div class="exp_top"></div>';
                         buffer += '</div>';
                         buffer += '</div>';
@@ -2065,7 +2129,7 @@ var expGuiCourse = function (pObject, config) {
                     buffer += '</div>';
                 }
             } else if (priceViewFlag == "teiki") {
-                if (teiki1List.length > 0 || teiki3List.length > 0 || teiki6List.length > 0) {
+                if (teiki1List.length > 0 || teiki3List.length > 0 || teiki6List.length > 0 || teiki12List.length > 0) {
                     buffer += '<div class="exp_priceSection">';
                     buffer += '<div class="exp_priceData">';
                     buffer += '<div class="exp_teiki">';
@@ -2167,12 +2231,14 @@ var expGuiCourse = function (pObject, config) {
         var Teiki1Summary;
         var Teiki3Summary;
         var Teiki6Summary;
+        var Teiki12Summary;
         // 運賃改定未対応
         var FareSummarySalesTaxRateIsNotSupported = false;
         var ChargeSummarySalesTaxRateIsNotSupported = false;
         var Teiki1SummarySalesTaxRateIsNotSupported = false;
         var Teiki3SummarySalesTaxRateIsNotSupported = false;
         var Teiki6SummarySalesTaxRateIsNotSupported = false;
+        var Teiki12SummarySalesTaxRateIsNotSupported = false;
         if (typeof courseObj.Price != 'undefined') {
             for (var j = 0; j < courseObj.Price.length; j++) {
                 if (courseObj.Price[j].kind == "FareSummary") {
@@ -2201,6 +2267,10 @@ var expGuiCourse = function (pObject, config) {
                     if (typeof courseObj.Price[j].Oneway != 'undefined') {
                         Teiki6Summary = parseInt(getTextValue(courseObj.Price[j].Oneway));
                     }
+                } else if (courseObj.Price[j].kind == "Teiki12Summary") {
+                    if (typeof courseObj.Price[j].Oneway != 'undefined') {
+                        Teiki12Summary = parseInt(getTextValue(courseObj.Price[j].Oneway));
+                    }
                 } else {
                     if (typeof courseObj.Price[j].fareRevisionStatus != 'undefined') {
                         if (courseObj.Price[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
@@ -2214,6 +2284,8 @@ var expGuiCourse = function (pObject, config) {
                                 Teiki3SummarySalesTaxRateIsNotSupported = true;
                             } else if (courseObj.Price[j].kind == "Teiki6") {
                                 Teiki6SummarySalesTaxRateIsNotSupported = true;
+                            } else if (courseObj.Price[j].kind == "Teiki12") {
+                                Teiki12SummarySalesTaxRateIsNotSupported = true;
                             }
                         }
                     }
@@ -2395,6 +2467,16 @@ var expGuiCourse = function (pObject, config) {
                 buffer += '------円';
             }
             buffer += '</span>';
+            buffer += '<span class="exp_titleTeiki12">定期12ヵ月</span>';
+            buffer += '<span class="exp_value">';
+            if (typeof Teiki12Summary != 'undefined') {
+                buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
+                buffer += num2String(Teiki12Summary) + '円';
+                buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '</span>' : '';
+            } else {
+                buffer += '------円';
+            }
+            buffer += '</span>';
         }
         if (priceViewFlag == "oneway" || priceViewFlag == "round") {
             buffer += '<span class="exp_title">乗り換え</span>';
@@ -2417,7 +2499,7 @@ var expGuiCourse = function (pObject, config) {
                 buffer += '</div>';
             }
         } else if (priceViewFlag == "teiki") {
-            if (Teiki1SummarySalesTaxRateIsNotSupported || Teiki3SummarySalesTaxRateIsNotSupported || Teiki6SummarySalesTaxRateIsNotSupported) {
+            if (Teiki1SummarySalesTaxRateIsNotSupported || Teiki3SummarySalesTaxRateIsNotSupported || Teiki6SummarySalesTaxRateIsNotSupported || Teiki12SummarySalesTaxRateIsNotSupported) {
                 buffer += '<div class="exp_fareRevisionStatus exp_clearfix">';
                 buffer += '赤色の金額は消費税率変更に未対応です';
                 buffer += '</div>';
@@ -3184,6 +3266,7 @@ var expGuiCourse = function (pObject, config) {
         var Teiki1Summary;
         var Teiki3Summary;
         var Teiki6Summary;
+        var Teiki12Summary;
         if (typeof tmpResult.Price != 'undefined') {
             for (var j = 0; j < tmpResult.Price.length; j++) {
                 if (tmpResult.Price[j].kind == "Teiki1Summary") {
@@ -3198,10 +3281,14 @@ var expGuiCourse = function (pObject, config) {
                     if (typeof tmpResult.Price[j].Oneway != 'undefined') {
                         Teiki6Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
                     }
+                } else if (tmpResult.Price[j].kind == "Teiki12Summary") {
+                    if (typeof tmpResult.Price[j].Oneway != 'undefined') {
+                        Teiki12Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
+                    }
                 }
             }
         }
-        if (typeof Teiki1Summary == 'undefined' && typeof Teiki3Summary == 'undefined' && typeof Teiki6Summary == 'undefined') {
+        if (typeof Teiki1Summary == 'undefined' && typeof Teiki3Summary == 'undefined' && typeof Teiki6Summary == 'undefined' && Teiki12Summary == 'undefined') {
             return;
         }
         if (typeof tmpResult.Route.Line.length == 'undefined') {
@@ -3993,6 +4080,8 @@ var expGuiCourse = function (pObject, config) {
             return getPriceSummary("teiki3");
         } else if (String(month) == "6") {
             return getPriceSummary("teiki6");
+        } else if (String(month) == "12") {
+            return getPriceSummary("teiki12");
         }
     }
 
@@ -4014,6 +4103,7 @@ var expGuiCourse = function (pObject, config) {
             var Teiki1Summary;
             var Teiki3Summary;
             var Teiki6Summary;
+            var Teiki12Summary;
             if (typeof tmpResult.Price != 'undefined') {
                 for (var j = 0; j < tmpResult.Price.length; j++) {
                     if (tmpResult.Price[j].kind == "FareSummary") {
@@ -4042,6 +4132,10 @@ var expGuiCourse = function (pObject, config) {
                         if (typeof tmpResult.Price[j].Oneway != 'undefined') {
                             Teiki6Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
                         }
+                    } else if (tmpResult.Price[j].kind == "Teiki12Summary") {
+                        if (typeof tmpResult.Price[j].Oneway != 'undefined') {
+                            Teiki12Summary = parseInt(getTextValue(tmpResult.Price[j].Oneway));
+                        }
                     }
                 }
             }
@@ -4057,6 +4151,8 @@ var expGuiCourse = function (pObject, config) {
                 return Teiki3Summary;
             } else if (type == "teiki6") {
                 return Teiki6Summary;
+            } else if (type == "teiki12") {
+                return Teiki12Summary;
             }
         }
     }
