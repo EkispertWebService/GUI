@@ -621,7 +621,8 @@
 }
 .expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki1,
 .expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki3,
-.expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki6 {
+.expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki6,
+.expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki12 {
     padding-bottom: 0.3em;
 }
 /* スマートフォン・タブレット用料金変更 */
@@ -1002,7 +1003,8 @@
 }
 .expGuiCoursePc .exp_resultList .exp_summary .exp_titleTeiki1,
 .expGuiCoursePc .exp_resultList .exp_summary .exp_titleTeiki3,
-.expGuiCoursePc .exp_resultList .exp_summary .exp_titleTeiki6 {
+.expGuiCoursePc .exp_resultList .exp_summary .exp_titleTeiki6,
+.expGuiCoursePc .exp_resultList .exp_summary .exp_titleTeiki12 {
     float: left;
     padding: 2px 8px;
     border-radius: 3px;
@@ -1185,9 +1187,10 @@
 }
 .expGuiCoursePc .exp_route .exp_row .exp_titleTeiki1,
 .expGuiCoursePc .exp_route .exp_row .exp_titleTeiki3,
-.expGuiCoursePc .exp_route .exp_row .exp_titleTeiki6 {
+.expGuiCoursePc .exp_route .exp_row .exp_titleTeiki6,
+.expGuiCoursePc .exp_route .exp_row .exp_titleTeiki12 {
     float: left;
-    margin: 0.6em 0.7em 0;
+    margin: 0.6em 0.5em 0;
     padding: 3px 5px 3px 26px;
     border-radius: 6px;
     color: #FFFFFF;
@@ -1684,7 +1687,8 @@
 }
 .expGuiCoursePhone .exp_resultList .exp_summary .exp_titleTeiki1,
 .expGuiCoursePhone .exp_resultList .exp_summary .exp_titleTeiki3,
-.expGuiCoursePhone .exp_resultList .exp_summary .exp_titleTeiki6 {
+.expGuiCoursePhone .exp_resultList .exp_summary .exp_titleTeiki6,
+.expGuiCoursePhone .exp_resultList .exp_summary .exp_titleTeiki12 {
     float: left;
     clear: both;
     padding: 2px 8px;
@@ -2254,7 +2258,8 @@
 }
 .expGuiCoursePhone .exp_route .exp_summary .exp_row .exp_titleTeiki1,
 .expGuiCoursePhone .exp_route .exp_summary .exp_row .exp_titleTeiki3,
-.expGuiCoursePhone .exp_route .exp_summary .exp_row .exp_titleTeiki6 {
+.expGuiCoursePhone .exp_route .exp_summary .exp_row .exp_titleTeiki6,
+.expGuiCoursePhone .exp_route .exp_summary .exp_row .exp_titleTeiki12 {
     float: left;
     clear: both;
     margin: 0.3em 0.7em 0 0.2em;
@@ -2431,7 +2436,8 @@
 }
 .expGuiCourseTablet .exp_resultList .exp_summary .exp_titleTeiki1,
 .expGuiCourseTablet .exp_resultList .exp_summary .exp_titleTeiki3,
-.expGuiCourseTablet .exp_resultList .exp_summary .exp_titleTeiki6 {
+.expGuiCourseTablet .exp_resultList .exp_summary .exp_titleTeiki6,
+.expGuiCourseTablet .exp_resultList .exp_summary .exp_titleTeiki12 {
     float: left;
     padding: 2px 8px;
     border-radius: 3px;
@@ -2988,7 +2994,8 @@
 }
 .expGuiCourseTablet .exp_route .exp_summary .exp_row .exp_titleTeiki1,
 .expGuiCourseTablet .exp_route .exp_summary .exp_row .exp_titleTeiki3,
-.expGuiCourseTablet .exp_route .exp_summary .exp_row .exp_titleTeiki6 {
+.expGuiCourseTablet .exp_route .exp_summary .exp_row .exp_titleTeiki6,
+.expGuiCourseTablet .exp_route .exp_summary .exp_row .exp_titleTeiki12 {
     float: left;
     margin: 0.3em 0.7em 0 0.7em;
     padding: 3px 16px;
@@ -3053,7 +3060,8 @@
 /* 定期券のアイコン */
 .expGuiCourseTablet .exp_route .exp_summary .exp_titleTeiki1,
 .expGuiCourseTablet .exp_route .exp_summary .exp_titleTeiki3,
-.expGuiCourseTablet .exp_route .exp_summary .exp_titleTeiki6 {
+.expGuiCourseTablet .exp_route .exp_summary .exp_titleTeiki6,
+.expGuiCourseTablet .exp_route .exp_summary .exp_titleTeiki12 {
     float: left;
     margin: 0.3em 0.7em 0 0.7em;
     padding: 3px;
