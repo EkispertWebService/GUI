@@ -119,11 +119,11 @@ function searchRun(teikiFlag){
     stationApp3.closeStationList();
     // 発着地リストを作成
     var viaList="";
-    viaList += stationApp1.getStation();
+    viaList += stationApp1.getStationCode();
     if(stationApp3.getStation() != ""){
-      viaList += ":"+ stationApp3.getStation();
+      viaList += ":"+ stationApp3.getStationCode();
     }
-    viaList += ":"+ stationApp2.getStation();
+    viaList += ":"+ stationApp2.getStationCode();
     // 経路表示パーツ#1の場合
     searchWord +="viaList="+viaList;
     // 探索種別
@@ -172,11 +172,11 @@ function searchTeiki(){
     stationApp3.closeStationList();
     // 発着地リストを作成
     var viaList="";
-    viaList += stationApp1.getStation();
+    viaList += stationApp1.getStationCode();
     if(stationApp3.getStation() != ""){
-      viaList += ":"+ stationApp3.getStation();
+      viaList += ":"+ stationApp3.getStationCode();
     }
-    viaList += ":"+ stationApp2.getStation();
+    viaList += ":"+ stationApp2.getStationCode();
     // 経路表示パーツ#1の場合
     searchWord +="viaList="+viaList;
     // 探索種別
@@ -286,4 +286,3 @@ function result(isSuccess){
 
 </body>
 </html>
-
