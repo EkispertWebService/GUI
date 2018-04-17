@@ -86,6 +86,8 @@ function search(){
   var from = fromLandmark.getSerializeData();
   var to = toLandmark.getSerializeData();
   searchObject.setViaList(from +":"+ to);
+  // 探索種別を設定
+  searchObject.setSearchType("plain");
   // 探索実行
   resultApp.search(searchObject,setResult);
 }
