@@ -97,8 +97,8 @@
 /* ヘッダ */
 .expGuiConditionPc .exp_conditionDetail .exp_conditionTable .exp_conditionItemList .exp_conditionHeader {
     float: left;
-    padding-top: 10px;
-    padding-bottom: 8px;
+    padding-top: 8px;
+    padding-bottom: 10px;
     padding-left: 11px;
     width: 8em;
     font-weight: bold;
@@ -123,6 +123,7 @@
 .expGuiConditionPc .exp_conditionDetail .exp_conditionTable .exp_conditionItemList select {
     height: 24px;
     border: 1px solid #8A939C;
+    margin-top: -4px;
 }
 /* タブの余っている部分 */
 .expGuiConditionPc .exp_conditionDetail .exp_conditionTable .exp_conditionLeft {
