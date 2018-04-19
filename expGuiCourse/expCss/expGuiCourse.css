@@ -706,6 +706,15 @@
     text-shadow: 0px 1px 0px rgba(255,255,255,1);
     font-weight: bold;
 }
+.expGuiCourse .exp_route .exp_menu .exp_footer .exp_title {
+    display: block;
+    float: left;
+    margin-top: -0.7em;
+    margin-bottom: 0.5em;
+    margin-left: 0.7em;
+    margin-right: 0.7em;
+    text-shadow: 0px 1px 0px rgba(255,255,255,1);
+}
 /* ヘッダ */
 .expGuiCourse .exp_route .exp_routeHeader {
     position: relative;
