@@ -36,32 +36,38 @@ var resultApp;
 function init(){
   // 日付入力パーツ初期化
   dateTimeApp = new expGuiDateTime(document.getElementById("dateTime"));
+  dateTimeApp.setConfigure("ssl", true);
   dateTimeApp.dispDateTime(dateTimeApp.SEARCHTYPE_PLAIN);
 
   // 駅名入力パーツ#1初期化
   stationApp1 = new expGuiStation(document.getElementById("station1"));
+  stationApp1.setConfigure("ssl", true);
   stationApp1.setConfigure("maxStation",10);
   stationApp1.setConfigure("type",stationApp1.TYPE_TRAIN +":"+ stationApp1.TYPE_PLANE +":"+ stationApp1.TYPE_SHIP);
   stationApp1.dispStation();
 
   // 駅名入力パーツ#2初期化
   stationApp2 = new expGuiStation(document.getElementById("station2"));
+  stationApp2.setConfigure("ssl", true);
   stationApp2.setConfigure("maxStation",10);
   stationApp2.setConfigure("type",stationApp2.TYPE_TRAIN +":"+ stationApp2.TYPE_PLANE +":"+ stationApp2.TYPE_SHIP);
   stationApp2.dispStation();
 
   // 駅名入力パーツ#3初期化
   stationApp3 = new expGuiStation(document.getElementById("station3"));
+  stationApp3.setConfigure("ssl", true);
   stationApp3.setConfigure("maxStation",10);
   stationApp3.setConfigure("type",stationApp3.TYPE_TRAIN +":"+ stationApp3.TYPE_PLANE +":"+ stationApp3.TYPE_SHIP);
   stationApp3.dispStation();
 
   // 探索条件パーツ初期化
   conditonApp = new expGuiCondition(document.getElementById("condition"));
+  conditonApp.setConfigure("ssl", true);
   conditonApp.dispCondition();
 
   // 経路表示パーツ初期化
   resultApp = new expGuiCourse(document.getElementById("result"));
+  resultApp.setConfigure("ssl", true);
   resultApp.setConfigure("PriceChange",true);// 変更を許可
   resultApp.setConfigure("AssignDia",true);
 }
