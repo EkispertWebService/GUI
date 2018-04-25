@@ -1155,8 +1155,17 @@ var expGuiCondition = function (pObject, config) {
             setValue("nikukanteiki", parseInt(conditionList_f[8]));
             // 9:固定
             setValue("preferredTicketOrder", parseInt(conditionList_f[10]));
-            setValue("JRReservation", parseInt(conditionList_f[11]));
-            // 12:JR予約サービスの初期値には11桁目を利用
+            if (conditionList_f.length >= 12) {
+                if ( parseInt(conditionList_f[11]) > 0 ) {
+                    setValue("JRReservation", 10 - parseInt(conditionList_f[11]));
+                } else if ( parseInt(conditionList_f[12]) > 0 ) {
+                    setValue("JRReservation", 10 - ( parseInt(conditionList_f[12]) + 5) );
+                } else {
+                    setValue("JRReservation", 10);
+                }
+            } else {
+                setValue("JRReservation", 10);
+            }
             // 探索条件(A)
             setValue("useJR", parseInt(conditionList_a[1]));
             setValue("transfer", parseInt(conditionList_a[2]));
