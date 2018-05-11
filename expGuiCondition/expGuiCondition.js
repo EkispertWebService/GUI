@@ -211,11 +211,11 @@ var expGuiCondition = function (pObject, config) {
         //var tmpValue  = new Array("normal","tokuwari");
         //tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel,tmpOption,tmpValue);
         // 航空保険特別料金
-        var conditionId = "includeInsurance";
-        var conditionLabel = "航空保険特別料金";
-        var tmpOption = new Array("運賃に含む", "運賃に含まない");
-        var tmpValue = new Array("true", "false");
-        tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
+        // var conditionId = "includeInsurance";
+        // var conditionLabel = "航空保険特別料金";
+        // var tmpOption = new Array("運賃に含む", "運賃に含まない");
+        // var tmpValue = new Array("true", "false");
+        // tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
         // 乗車券計算のシステム
         var conditionId = "ticketSystemType";
         //  var conditionLabel = "乗車券計算のシステム";
@@ -577,9 +577,9 @@ var expGuiCondition = function (pObject, config) {
         buffer += outSeparator("preferredTicketOrder");
         // ２区間定期の利用
         buffer += outConditionRadio("nikukanteiki", "greenSelect");
-        buffer += outSeparator("nikukanteiki");
+        //buffer += outSeparator("nikukanteiki");
         // 航空保険特別料金
-        buffer += outConditionRadio("includeInsurance", "whiteSelect");
+        //buffer += outConditionRadio("includeInsurance", "whiteSelect");
         // 航空運賃の指定
         //  buffer += outConditionRadio("airFare");
         buffer += '</div>';
@@ -740,7 +740,7 @@ var expGuiCondition = function (pObject, config) {
         buffer += outConditionSelect("ticketSystemType", "whiteSelect"); // 乗車券計算のシステム
         buffer += outConditionSelect("preferredTicketOrder", "greenSelect"); // 優先する乗車券の順序
         buffer += outConditionSelect("nikukanteiki", "whiteSelect"); // ２区間定期の利用
-        buffer += outConditionSelect("includeInsurance", "greenSelect"); // 航空保険特別料金
+        //buffer += outConditionSelect("includeInsurance", "greenSelect"); // 航空保険特別料金
         //  buffer += outConditionSelect("airFare");// 航空運賃の指定
         buffer += '</div>';
         buffer += '</div>';
@@ -1150,7 +1150,7 @@ var expGuiCondition = function (pObject, config) {
             setValue("JRSeasonalRate", parseInt(conditionList_f[3]));
             setValue("studentDiscount", parseInt(conditionList_f[4]));
             //  setValue("airFare",parseInt(conditionList_f[5]));(固定)
-            setValue("includeInsurance", parseInt(conditionList_f[6]));
+            //setValue("includeInsurance", parseInt(conditionList_f[6]));
             setValue("ticketSystemType", parseInt(conditionList_f[7]));
             setValue("nikukanteiki", parseInt(conditionList_f[8]));
             // 9:固定
@@ -1268,7 +1268,7 @@ var expGuiCondition = function (pObject, config) {
         conditionList_f[3] = getValueIndex("JRSeasonalRate", parseInt(conditionList_f[3]));
         conditionList_f[4] = getValueIndex("studentDiscount", parseInt(conditionList_f[4]));
         //  conditionList_f[5] = getValueIndex("airFare",parseInt(conditionList_f[5]));
-        conditionList_f[6] = getValueIndex("includeInsurance", parseInt(conditionList_f[6]));
+        //conditionList_f[6] = getValueIndex("includeInsurance", parseInt(conditionList_f[6]));
         conditionList_f[7] = getValueIndex("ticketSystemType", parseInt(conditionList_f[7]));
         conditionList_f[8] = getValueIndex("nikukanteiki", parseInt(conditionList_f[8]));
         // 9:固定
@@ -1500,7 +1500,7 @@ var expGuiCondition = function (pObject, config) {
     this.CONDITON_JRRESERVATION = "JRReservation";
     this.CONDITON_STUDENTDISCOUNT = "studentDiscount";
     //this.CONDITON_AIRFARE = "airFare";
-    this.CONDITON_INCLUDEINSURANCE = "includeInsurance";
+    //this.CONDITON_INCLUDEINSURANCE = "includeInsurance";
     this.CONDITON_TICKETSYSTEMTYPE = "ticketSystemType";
     this.CONDITON_NIKUKANTEIKI = "nikukanteiki";
     this.CONDITON_USEJR = "useJR";
