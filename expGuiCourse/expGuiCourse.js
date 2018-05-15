@@ -2714,8 +2714,6 @@ var expGuiCourse = function (pObject, config) {
             buffer += '</div>';
             buffer += '</div>';
             buffer += '</div>';
-            buffer += '<div class="exp_footer">exp_footer';
-            buffer += '</div>';
         }
 
         // 路線
