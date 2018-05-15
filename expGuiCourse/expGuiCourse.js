@@ -3,9 +3,9 @@
  *  経路表示パーツ
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
- *  
- *  Version:2018-04-17
- *  
+ *
+ *  Version:2018-05-15
+ *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
@@ -238,6 +238,27 @@ var expGuiCourse = function (pObject, config) {
                         case "bringAssignmentError":
                             searchObj.setBringAssignmentError(tmpParam[1]);
                             break;
+                        case "from":
+                            searchObj.setFrom(tmpParam[1]);
+                            break;
+                        case "to":
+                            searchObj.setTo(tmpParam[1]);
+                            break;
+                        case "via":
+                            searchObj.setVia(tmpParam[1]);
+                            break;
+                        case "plane":
+                            searchObj.setPlane(tmpParam[1]);
+                            break;
+                        case "shinkansen":
+                            searchObj.setShinkansen(tmpParam[1]);
+                            break;
+                        case "limitedExpress":
+                            searchObj.setLimitedExpress(tmpParam[1]);
+                            break;
+                        case "bus":
+                            searchObj.setBus(tmpParam[1]);
+                            break;
                         default:
                             etcParam.push(tmpParam[0] + "=" + encodeURIComponent(tmpParam[1]));
                             break;
@@ -251,6 +272,7 @@ var expGuiCourse = function (pObject, config) {
             callbackFunction = param1;
         }
         // 探索オブジェクトを文字列に変換
+        var url = apiURL;
         var searchWord = "";
         if (typeof searchObj.getViaList() != 'undefined') {
             var tmp_stationList = searchObj.getViaList().split(":");
@@ -262,67 +284,88 @@ var expGuiCourse = function (pObject, config) {
                 }
             }
             searchWord += "&viaList=" + tmp_stationList.join(":");
-        }
-        if (typeof searchObj.getFixedRailList() != 'undefined') {
-            searchWord += "&fixedRailList=" + encodeURIComponent(searchObj.getFixedRailList());
-        }
-        if (typeof searchObj.getFixedRailDirectionList() != 'undefined') {
-            searchWord += "&fixedRailDirectionList=" + encodeURIComponent(searchObj.getFixedRailDirectionList());
-        }
-        if (typeof searchObj.getDate() != 'undefined') {
-            searchWord += "&date=" + searchObj.getDate();
-        }
-        if (typeof searchObj.getTime() != 'undefined') {
-            searchWord += "&time=" + searchObj.getTime();
-        }
-        if (typeof searchObj.getSearchType() != 'undefined') {
-            searchWord += "&searchType=" + searchObj.getSearchType();
-        }
-        if (typeof searchObj.getSort() != 'undefined') {
-            searchWord += "&sort=" + searchObj.getSort();
-        }
-        if (typeof searchObj.getAnswerCount() != 'undefined') {
-            searchWord += "&answerCount=" + searchObj.getAnswerCount();
-        }
-        if (typeof searchObj.getSearchCount() != 'undefined') {
-            searchWord += "&searchCount=" + searchObj.getSearchCount();
-        }
-        if (typeof searchObj.getConditionDetail() != 'undefined') {
-            searchWord += "&conditionDetail=" + searchObj.getConditionDetail();
-        }
-        if (typeof searchObj.getCorporationBind() != 'undefined') {
-            searchWord += "&corporationBind=" + encodeURIComponent(searchObj.getCorporationBind());
-        }
-        if (typeof searchObj.getInterruptCorporationList() != 'undefined') {
-            searchWord += "&interruptCorporationList=" + encodeURIComponent(searchObj.getInterruptCorporationList());
-        }
-        if (typeof searchObj.getInterruptRailList() != 'undefined') {
-            searchWord += "&interruptRailList=" + encodeURIComponent(searchObj.getInterruptRailList());
-        }
-        if (typeof searchObj.getResultDetail() != 'undefined') {
-            searchWord += "&resultDetail=" + searchObj.getResultDetail();
-        }
-        if (typeof searchObj.getAssignRoute() != 'undefined') {
-            searchWord += "&assignRoute=" + encodeURIComponent(searchObj.getAssignRoute());
-        }
-        if (typeof searchObj.getAssignDetailRoute() != 'undefined') {
-            searchWord += "&assignDetailRoute=" + encodeURIComponent(searchObj.getAssignDetailRoute());
-        }
-        if (typeof searchObj.getAssignNikukanteikiIndex() != 'undefined') {
-            searchWord += "&assignNikukanteikiIndex=" + searchObj.getAssignNikukanteikiIndex();
-        }
-        if (typeof searchObj.getCoupon() != 'undefined') {
-            searchWord += "&coupon=" + encodeURIComponent(searchObj.getCoupon());
-        }
-        if (typeof searchObj.getBringAssignmentError() != 'undefined') {
-            searchWord += "&bringAssignmentError=" + searchObj.getBringAssignmentError();
+            if (typeof searchObj.getFixedRailList() != 'undefined') {
+                searchWord += "&fixedRailList=" + encodeURIComponent(searchObj.getFixedRailList());
+            }
+            if (typeof searchObj.getFixedRailDirectionList() != 'undefined') {
+                searchWord += "&fixedRailDirectionList=" + encodeURIComponent(searchObj.getFixedRailDirectionList());
+            }
+            if (typeof searchObj.getDate() != 'undefined') {
+                searchWord += "&date=" + searchObj.getDate();
+            }
+            if (typeof searchObj.getTime() != 'undefined') {
+                searchWord += "&time=" + searchObj.getTime();
+            }
+            if (typeof searchObj.getSearchType() != 'undefined') {
+                searchWord += "&searchType=" + searchObj.getSearchType();
+            }
+            if (typeof searchObj.getSort() != 'undefined') {
+                searchWord += "&sort=" + searchObj.getSort();
+            }
+            if (typeof searchObj.getAnswerCount() != 'undefined') {
+                searchWord += "&answerCount=" + searchObj.getAnswerCount();
+            }
+            if (typeof searchObj.getSearchCount() != 'undefined') {
+                searchWord += "&searchCount=" + searchObj.getSearchCount();
+            }
+            if (typeof searchObj.getConditionDetail() != 'undefined') {
+                searchWord += "&conditionDetail=" + searchObj.getConditionDetail();
+            }
+            if (typeof searchObj.getCorporationBind() != 'undefined') {
+                searchWord += "&corporationBind=" + encodeURIComponent(searchObj.getCorporationBind());
+            }
+            if (typeof searchObj.getInterruptCorporationList() != 'undefined') {
+                searchWord += "&interruptCorporationList=" + encodeURIComponent(searchObj.getInterruptCorporationList());
+            }
+            if (typeof searchObj.getInterruptRailList() != 'undefined') {
+                searchWord += "&interruptRailList=" + encodeURIComponent(searchObj.getInterruptRailList());
+            }
+            if (typeof searchObj.getResultDetail() != 'undefined') {
+                searchWord += "&resultDetail=" + searchObj.getResultDetail();
+            }
+            if (typeof searchObj.getAssignRoute() != 'undefined') {
+                searchWord += "&assignRoute=" + encodeURIComponent(searchObj.getAssignRoute());
+            }
+            if (typeof searchObj.getAssignDetailRoute() != 'undefined') {
+                searchWord += "&assignDetailRoute=" + encodeURIComponent(searchObj.getAssignDetailRoute());
+            }
+            if (typeof searchObj.getAssignNikukanteikiIndex() != 'undefined') {
+                searchWord += "&assignNikukanteikiIndex=" + searchObj.getAssignNikukanteikiIndex();
+            }
+            if (typeof searchObj.getCoupon() != 'undefined') {
+                searchWord += "&coupon=" + encodeURIComponent(searchObj.getCoupon());
+            }
+            if (typeof searchObj.getBringAssignmentError() != 'undefined') {
+                searchWord += "&bringAssignmentError=" + searchObj.getBringAssignmentError();
+            }
+            url += "v1/json/search/course/extreme?key=" + key + searchWord;
+        } else if (typeof searchObj.getFrom() != 'undefined' && typeof searchObj.getTo() != 'undefined') {
+            searchWord += "&from=" + encodeURIComponent(searchObj.getFrom());
+            searchWord += "&to=" + encodeURIComponent(searchObj.getTo());
+            if (typeof searchObj.getVia() != 'undefined') {
+                searchWord += "&via=" + encodeURIComponent(searchObj.getVia());
+            }
+            if (typeof searchObj.getPlane() != 'undefined') {
+                searchWord += "&plane=" + searchObj.getPlane();
+            }
+            if (typeof searchObj.getShinkansen() != 'undefined') {
+                searchWord += "&shinkansen=" + searchObj.getShinkansen();
+            }
+            if (typeof searchObj.getLimitedExpress() != 'undefined') {
+                searchWord += "&limitedExpress=" + searchObj.getLimitedExpress();
+            }
+            if (typeof searchObj.getBus() != 'undefined') {
+                searchWord += "&bus=" + searchObj.getBus();
+            }
+            url += "v1/json/search/course/plain?key=" + key + searchWord;
+        } else {
+            alert("viaListまたはfrom、toは必須です。");
+            return;
         }
         // その他パラメータ追加
         if (etcParam.length > 0) {
             searchWord += "&" + etcParam.join("&");
         }
-        // 探索文字列の生成
-        var url = apiURL + "v1/json/search/course/extreme?key=" + key + searchWord;
         searchRun(url, searchObj.getPriceType());
     }
 
@@ -1051,7 +1094,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '赤色の金額は消費税率変更に未対応です';
             buffer += '</div>';
         }
-        // ソートを行う 
+        // ソートを行う
         if (!resultTab) {
             buffer += '<div class="exp_sortTab exp_clearfix">';
             // 時間順
@@ -4302,6 +4345,14 @@ var expGuiCourse = function (pObject, config) {
         var assignNikukanteikiIndex;
         var coupon;
         var bringAssignmentError;
+        var from;
+        var to;
+        var via;
+        var plane;
+        var shinkansen;
+        var limitedExpress;
+        var bus;
+
         // 関数リスト
         // ViaList設定
         function setViaList(value) { viaList = value; };
@@ -4405,6 +4456,41 @@ var expGuiCourse = function (pObject, config) {
         function getBringAssignmentError() { return bringAssignmentError; };
         this.setBringAssignmentError = setBringAssignmentError;
         this.getBringAssignmentError = getBringAssignmentError;
+        // From
+        function setFrom(value) { from = value; };
+        function getFrom() { return from; };
+        this.setFrom = setFrom;
+        this.getFrom = getFrom;
+        // To
+        function setTo(value) { to = value; };
+        function getTo() { return to; };
+        this.setTo = setTo;
+        this.getTo = getTo;
+        // Via
+        function setVia(value) { via = value; };
+        function getVia() { return via; };
+        this.setVia = setVia;
+        this.getVia = getVia;
+        // Plane
+        function setPlane(value) { plane = value; };
+        function getPlane() { return plane; };
+        this.setPlane = setPlane;
+        this.getPlane = getPlane;
+        // Shinkansen
+        function setShinkansen(value) { shinkansen = value; };
+        function getShinkansen() { return shinkansen; };
+        this.setShinkansen = setShinkansen;
+        this.getShinkansen = getShinkansen;
+        // LimitedExpress
+        function setLimitedExpress(value) { limitedExpress = value; };
+        function getLimitedExpress() { return limitedExpress; };
+        this.setLimitedExpress = setLimitedExpress;
+        this.getLimitedExpress = getLimitedExpress;
+        // Bus
+        function setBus(value) { bus = value; };
+        function getBus() { return bus; };
+        this.setBus = setBus;
+        this.getBus = getBus;
     };
 
     /**
