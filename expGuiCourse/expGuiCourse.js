@@ -235,7 +235,7 @@ var expGuiCourse = function (pObject, config) {
                         case "coupon":
                             searchObj.setCoupon(tmpParam[1]);
                             break;
-                        case "bringAssignmentError":
+                        case String("bringAssignmentError").toLowerCase():
                             searchObj.setBringAssignmentError(tmpParam[1]);
                             break;
                         case "from":
@@ -253,7 +253,7 @@ var expGuiCourse = function (pObject, config) {
                         case "shinkansen":
                             searchObj.setShinkansen(tmpParam[1]);
                             break;
-                        case "limitedExpress":
+                        case String("limitedExpress").toLowerCase():
                             searchObj.setLimitedExpress(tmpParam[1]);
                             break;
                         case "bus":
