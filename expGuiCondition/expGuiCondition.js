@@ -64,7 +64,8 @@ var expGuiCondition = function (pObject, config) {
     // 変数郡
     // デフォルト探索条件
     var def_condition_t = "T3221233232319";
-    var def_condition_f = "F332112212000";
+    var def_condition_f = "F342112212000";
+    
     var def_condition_a = "A23121141";
     var def_sortType = "ekispert"; // デフォルトソート
     var def_priceType = "oneway"; // 片道運賃がデフォルト
