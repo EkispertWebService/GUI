@@ -183,8 +183,8 @@ var expGuiCondition = function (pObject, config) {
         // 定期種別初期値
         var conditionId = "teikiKind";
         var conditionLabel = "定期種別初期値";
-        var tmpOption = new Array("通勤", "通学（中学）", "通学（高校）", "通学（大学）");
-        var tmpValue = new Array("3", "4", "2", "1"); //APIで返却値
+        var tmpOption = new Array("通勤", "通学（大学）", "通学（高校）", "通学（中学）");
+        var tmpValue = new Array("3", "1", "2", "4"); //APIで返却値
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
         // JR季節料金
         var conditionId = "JRSeasonalRate";
