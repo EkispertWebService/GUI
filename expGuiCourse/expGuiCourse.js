@@ -86,6 +86,7 @@ var expGuiCourse = function (pObject, config) {
     var sortType; // ソートする基準
     var resultTab = true; // タブを表示の有無を指定(オンにすることでソート可能)
     var resultSearchType; // 平均・ダイヤ探索
+    var addStopFlag = false; // 停車駅一覧取得するかどうか
 
     // 最適経路の変数
     var minEkispertIndex;
@@ -238,6 +239,9 @@ var expGuiCourse = function (pObject, config) {
                         case String("bringAssignmentError").toLowerCase():
                             searchObj.setBringAssignmentError(tmpParam[1]);
                             break;
+                        case String("addStop").toLowerCase():
+                            searchObj.setAddStop(tmpParam[1]);
+                            break;
                         case "from":
                             searchObj.setFrom(tmpParam[1]);
                             break;
@@ -337,6 +341,10 @@ var expGuiCourse = function (pObject, config) {
             }
             if (typeof searchObj.getBringAssignmentError() != 'undefined') {
                 searchWord += "&bringAssignmentError=" + searchObj.getBringAssignmentError();
+            }
+            if (typeof searchObj.getAddStop() != 'undefined') {
+                searchWord += "&addStop=" + searchObj.getAddStop();
+                addStopFlag = searchObj.getAddStop().toLowerCase() == "true" ? true : false;
             }
             url += "v1/json/search/course/extreme?key=" + key + searchWord;
         } else if (typeof searchObj.getFrom() != 'undefined' && typeof searchObj.getTo() != 'undefined') {
@@ -485,6 +493,10 @@ var expGuiCourse = function (pObject, config) {
         // エンジンバージョン同一チェック
         if (!checkEngineVersion) {
             url += "&checkEngineVersion=false";
+        }
+        // 停車駅一覧取得チェック
+        if (addStopFlag) {
+            url += "&addStop=true";
         }
         // 探索を実行
         reSearch(url, selectNo);
@@ -1604,6 +1616,17 @@ var expGuiCourse = function (pObject, config) {
                         }
                     }
                 }
+            } else if (eventIdList[1] == "lineStopStations" && eventIdList.length >= 5) {
+                // 停車駅一覧
+                if (eventIdList[4] == "open") {
+                    if (document.getElementById(baseId + ':lineStopStations:' + eventIdList[2] + ':' + eventIdList[3]).style.display == "none") {
+                        document.getElementById(baseId + ':lineStopStations:' + eventIdList[2] + ':' + eventIdList[3]).style.display = "block";
+                    } else {
+                        document.getElementById(baseId + ':lineStopStations:' + eventIdList[2] + ':' + eventIdList[3]).style.display = "none";
+                    }
+                } else if (eventIdList[4] == "close") {
+                    document.getElementById(baseId + ':lineStopStations:' + eventIdList[2] + ':' + eventIdList[3]).style.display = "none";
+                }
             } else if ((eventIdList[1] == "prevDia" || eventIdList[1] == "prevDia2") && eventIdList.length >= 3) {
                 if (courseDisplayAll) {
                     selectNo = parseInt(eventIdList[2]);
@@ -2716,6 +2739,27 @@ var expGuiCourse = function (pObject, config) {
             buffer += '</div>';
         }
 
+        // 停車駅一覧
+        if (parseInt(line.stopStationCount) > 0 && typeof line.Stop != 'undefined') {
+            buffer += '<div class="exp_menu exp_lineWindow" id="' + baseId + ':lineStopStations:' + String(routeNo) + ':' + String(index + 1) + '" style="display:none;">';
+            buffer += '<div class="exp_header exp_clearfix">';
+            buffer += '<span class="exp_title">途中駅</span>';
+            buffer += '<span class="exp_close">';
+            buffer += '<a class="exp_link" id="' + baseId + ':lineStopStations:' + String(routeNo) + ':' + String(index + 1) + ':close" href="Javascript:void(0);">×</a>';
+            buffer += '</span>';
+            buffer += '</div>';
+            buffer += '<div class="exp_body">';
+            buffer += '<div class="exp_list">';
+            // メニュー
+            var departureDateStr = line.DepartureState.Datetime.text.substring(0, 11);
+            for (var i = 1; i < line.Stop.length - 1; i++) {
+                buffer += '<div class="exp_item exp_' + (i % 2 == 0 ? 'odd' : 'even') + '">&nbsp;' + convertDate2TimeString(convertISOtoDate(departureDateStr + line.Stop[i].DepartureState.Datetime.text), line.TimeReliability) + '&nbsp;' + String(line.Stop[i].Point.Station.Name) + '&nbsp;</div>';
+            }
+            buffer += '</div>';
+            buffer += '</div>';
+            buffer += '</div>';
+        }
+
         // 路線
         if (chargeList.length > 0) {
             buffer += '<div class="exp_line exp_charge exp_clearfix">';
@@ -2741,7 +2785,11 @@ var expGuiCourse = function (pObject, config) {
                 buffer += '<div class="exp_timeOnBoard">' + line.timeOnBoard + '分</div>';
             }
             if (parseInt(line.stopStationCount) > 0) {
-                buffer += '<div class="exp_stopStationCount">' + line.stopStationCount + '駅</div>';
+                if (typeof line.Stop != 'undefined') {
+                    buffer += '<div class="exp_stopStationCount"><a id="' + baseId + ':lineStopStations:' + String(routeNo) + ':' + String(index + 1) + ':open" href="Javascript:void(0);">' + line.stopStationCount + '駅</a></div>';
+                } else {
+                    buffer += '<div class="exp_stopStationCount">' + line.stopStationCount + '駅</div>';
+                }
             }
             if (parseInt(line.distance) > 0) {
                 if (parseInt(line.distance) >= 10) {
@@ -2932,14 +2980,14 @@ var expGuiCourse = function (pObject, config) {
                         if (typeof chargeList[k].Oneway.remark != 'undefined') {
                             chargeRemark = '(' + chargeList[k].Oneway.remark + ')';
                         }
-                        
+
                         buffer += ((typeof chargeList[k].Name != 'undefined') ? chargeList[k].Name　+ chargeRemark : "指定なし")
-                        
+
                         if (typeof chargeList[k].Oneway.expectedRemark != 'undefined') {
                             expectedRemark = chargeList[k].Oneway.expectedFullRemark;
                             buffer += '※';
                         }
-                        
+
                         buffer +=  '&nbsp;</a></div>';
                     }
                     buffer += '</div>';
@@ -3021,7 +3069,7 @@ var expGuiCourse = function (pObject, config) {
                     }
                     buffer += '</select>';
                 }
-                
+
                 buffer += '</div>';
                 if (typeof expectedRemark != 'undefined') {
                     buffer += '<span class="exp_detail">';
@@ -3281,7 +3329,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-     * ソート済みインデックスを取得する 
+     * ソート済みインデックスを取得する
      */
     function getCourseNo(index) {
         for (var i = 0; i < sortCourseList.length; i++) {
@@ -3290,7 +3338,7 @@ var expGuiCourse = function (pObject, config) {
             }
         }
     }
-    
+
     /**
     * 探索結果オブジェクト内の1経路だけ入れ替え
     */
@@ -3660,7 +3708,7 @@ var expGuiCourse = function (pObject, config) {
             }
         }
     }
-    
+
     /**
     * 出発時刻を取得
     */
@@ -3697,7 +3745,7 @@ var expGuiCourse = function (pObject, config) {
             }
         }
     }
-    
+
     /**
     * 到着時刻を取得
     */
@@ -4343,6 +4391,7 @@ var expGuiCourse = function (pObject, config) {
         var assignNikukanteikiIndex;
         var coupon;
         var bringAssignmentError;
+        var addStop;
         var from;
         var to;
         var via;
@@ -4350,6 +4399,7 @@ var expGuiCourse = function (pObject, config) {
         var shinkansen;
         var limitedExpress;
         var bus;
+        var priceType;
 
         // 関数リスト
         // ViaList設定
@@ -4443,17 +4493,20 @@ var expGuiCourse = function (pObject, config) {
         this.setCoupon = setCoupon;
         this.getCoupon = getCoupon;
         // 金額設定
-        var priceType;
         function setPriceType(value) { priceType = value; };
         function getPriceType() { return priceType; };
         this.setPriceType = setPriceType;
         this.getPriceType = getPriceType;
         // 割り当てエラーの場合にエラーとする
-        var bringAssignmentError;
         function setBringAssignmentError(value) { bringAssignmentError = value; };
         function getBringAssignmentError() { return bringAssignmentError; };
         this.setBringAssignmentError = setBringAssignmentError;
         this.getBringAssignmentError = getBringAssignmentError;
+        // addStop
+        function setAddStop(value) { addStop = value; };
+        function getAddStop() { return addStop; };
+        this.setAddStop = setAddStop;
+        this.getAddStop = getAddStop;
         // From
         function setFrom(value) { from = value; };
         function getFrom() { return from; };
