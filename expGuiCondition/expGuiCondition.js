@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2018-04-17
+ *  Version:2018-05-28
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -64,7 +64,8 @@ var expGuiCondition = function (pObject, config) {
     // 変数郡
     // デフォルト探索条件
     var def_condition_t = "T3221233232319";
-    var def_condition_f = "F332112212000";
+    var def_condition_f = "F342112212000";
+    
     var def_condition_a = "A23121141";
     var def_sortType = "ekispert"; // デフォルトソート
     var def_priceType = "oneway"; // 片道運賃がデフォルト
@@ -182,8 +183,8 @@ var expGuiCondition = function (pObject, config) {
         // 定期種別初期値
         var conditionId = "teikiKind";
         var conditionLabel = "定期種別初期値";
-        var tmpOption = new Array("通勤", "学割（高校）", "学割");
-        var tmpValue = new Array("bussiness", "highSchool", "university");
+        var tmpOption = new Array("通勤", "通学（大学）", "通学（高校）", "通学（中学）");
+        var tmpValue = new Array("3", "1", "2", "4"); //APIで返却値
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
         // JR季節料金
         var conditionId = "JRSeasonalRate";
@@ -1178,7 +1179,6 @@ var expGuiCondition = function (pObject, config) {
         }
         setSimpleCondition();
     }
-
     /**
     * フォームに値をセットする
     */
@@ -1242,6 +1242,7 @@ var expGuiCondition = function (pObject, config) {
             }
         }
     }
+    
     /**
     * 探索条件の確定
     */
@@ -1264,11 +1265,11 @@ var expGuiCondition = function (pObject, config) {
         // 探索条件(F)
         var conditionList_f = def_condition_f.split('');
         conditionList_f[1] = getValueIndex("surchargeKind", parseInt(conditionList_f[1]));
-        conditionList_f[2] = getValueIndex("teikiKind", parseInt(conditionList_f[2]));
+        conditionList_f[2] = getInputValue("teikiKind");
         conditionList_f[3] = getValueIndex("JRSeasonalRate", parseInt(conditionList_f[3]));
         conditionList_f[4] = getValueIndex("studentDiscount", parseInt(conditionList_f[4]));
-        //  conditionList_f[5] = getValueIndex("airFare",parseInt(conditionList_f[5]));
-        //conditionList_f[6] = getValueIndex("includeInsurance", parseInt(conditionList_f[6]));
+        // conditionList_f[5] = getValueIndex("airFare",parseInt(conditionList_f[5]));
+        // conditionList_f[6] = getValueIndex("includeInsurance", parseInt(conditionList_f[6]));
         conditionList_f[7] = getValueIndex("ticketSystemType", parseInt(conditionList_f[7]));
         conditionList_f[8] = getValueIndex("nikukanteiki", parseInt(conditionList_f[8]));
         // 9:固定
@@ -1369,7 +1370,29 @@ var expGuiCondition = function (pObject, config) {
     function getSelectIndex(name) {
         return (document.getElementById(baseId + ':' + name).options.length - document.getElementById(baseId + ':' + name).selectedIndex)
     }
-
+    
+    /**
+    * 名称から選択または、クリックされているvalueを取得します。
+    */
+    function getInputValue(name){
+        name = name.toLowerCase();
+        if (document.getElementById(baseId + ':' + name)) {
+            if (typeof document.getElementById(baseId + ':' + name).length != 'undefined') {
+              // セレクトボックス
+              var index = document.getElementById(baseId + ':' + name).selectedIndex;
+              var api_id = document.getElementById(baseId + ':' + name).options[index].value;
+              return api_id;
+            }
+        }
+        // ラジオボタン
+        var index = document.getElementsByName(baseId + ':' + name).length;
+        for (var i = 0; i < index; i++) {
+            if (document.getElementsByName(baseId + ':' + name)[i].checked) {
+                var api_id = document.getElementsByName(baseId + ':' + name)[i].value;
+                return api_id;
+            }
+        }
+    }
     /**
     * デフォルトを設定
     */
