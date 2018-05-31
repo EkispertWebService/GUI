@@ -327,6 +327,9 @@ var expGuiDateTime = function (pObject, config) {
                 c_month = 1;
             }
         }
+
+        // 存在しない日付が指定されるのを防ぐため、カレンダー移動時には日付を1日に固定する
+        c_date = 1;
         document.getElementById(baseId + ':c_table').innerHTML = getCalendarTable(c_year, c_month, c_date);
         document.getElementById(baseId + ':calendar').style.display = "block";
 
