@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2016-06-20
+ *  Version:2018-06-06
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -16,6 +16,7 @@ var expGuiCourseLight = function (pObject, config) {
     // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
+    var imagePath;
     for (var i = 0; i < scripts.length; i++) {
         var s = scripts[i];
         imagePath = s.src.substring(0, s.src.indexOf("expGuiCourseLight\.js"));
@@ -190,8 +191,6 @@ var expGuiCourseLight = function (pObject, config) {
             apiURL = value;
         } else if (name.toLowerCase() == String("key").toLowerCase()) {
             key = value;
-        } else if (name.toLowerCase() == String("agent").toLowerCase()) {
-            agent = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
             if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
