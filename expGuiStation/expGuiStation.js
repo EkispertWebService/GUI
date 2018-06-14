@@ -3,9 +3,9 @@
  *  駅名入力パーツ
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
- *  
+ *
  *  Version:2016-08-03
- *  
+ *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
@@ -499,12 +499,12 @@ var expGuiStation = function (pObject, config) {
                         buffer += '</a>';
                         buffer += '</li>';
                     }
-                    if (stationSort[n].visible) {
-                        // リストの出力
-                        for (var i = 0; i < stationList.length; i++) {
-                            if (stationList[i].type.split(":")[0] == stationSort[n].type) {
-                                buffer += getStationListItem(i + 1, stationList[i]);
-                            }
+                }
+                if (stationSort[n].visible) {
+                    // リストの出力
+                    for (var i = 0; i < stationList.length; i++) {
+                        if (stationList[i].type.split(":")[0] == stationSort[n].type) {
+                            buffer += getStationListItem(i + 1, stationList[i]);
                         }
                     }
                 }
