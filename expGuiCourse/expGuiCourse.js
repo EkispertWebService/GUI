@@ -1266,8 +1266,8 @@ var expGuiCourse = function (pObject, config) {
                 }
                 summary_info += " 乗換";
             }
-            buffer += '<span class="exp_information_' + ((tmpResult.dataType == "onTimetable" ? "dia" : "plane")) + (icon_count > 0 ? String(icon_count) : "") + '" id="' + baseId + ':list:' + String(i + 1) + ':information">' + summary_info + '</span>';
 
+            buffer += '<span class="exp_information_' + (tmpResult.dataType == "onTimetable" ? "dia" : "plain") + (icon_count > 0 ? String(icon_count) : "") + ((agent == 2) ? " exp_informationPhone_" + (tmpResult.dataType == "onTimetable" ? "dia" : "plain") + (icon_count > 0 ? String(icon_count) : "") : "") + '" id="' + baseId + ':list:' + String(i + 1) + ':information">' + summary_info + '</span>';
             buffer += '</div>';
             // ダイヤ探索のみ
             if (tmpResult.dataType == "onTimetable") {
@@ -2932,14 +2932,14 @@ var expGuiCourse = function (pObject, config) {
                         if (typeof chargeList[k].Oneway.remark != 'undefined') {
                             chargeRemark = '(' + chargeList[k].Oneway.remark + ')';
                         }
-                        
+
                         buffer += ((typeof chargeList[k].Name != 'undefined') ? chargeList[k].Name　+ chargeRemark : "指定なし")
-                        
+
                         if (typeof chargeList[k].Oneway.expectedRemark != 'undefined') {
                             expectedRemark = chargeList[k].Oneway.expectedFullRemark;
                             buffer += '※';
                         }
-                        
+
                         buffer +=  '&nbsp;</a></div>';
                     }
                     buffer += '</div>';
@@ -3021,7 +3021,7 @@ var expGuiCourse = function (pObject, config) {
                     }
                     buffer += '</select>';
                 }
-                
+
                 buffer += '</div>';
                 if (typeof expectedRemark != 'undefined') {
                     buffer += '<span class="exp_detail">';
@@ -3281,7 +3281,7 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
-     * ソート済みインデックスを取得する 
+     * ソート済みインデックスを取得する
      */
     function getCourseNo(index) {
         for (var i = 0; i < sortCourseList.length; i++) {
@@ -3290,7 +3290,7 @@ var expGuiCourse = function (pObject, config) {
             }
         }
     }
-    
+
     /**
     * 探索結果オブジェクト内の1経路だけ入れ替え
     */
@@ -3660,7 +3660,7 @@ var expGuiCourse = function (pObject, config) {
             }
         }
     }
-    
+
     /**
     * 出発時刻を取得
     */
@@ -3697,7 +3697,7 @@ var expGuiCourse = function (pObject, config) {
             }
         }
     }
-    
+
     /**
     * 到着時刻を取得
     */
