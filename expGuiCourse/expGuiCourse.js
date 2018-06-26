@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2018-05-15
+ *  Version:2018-06-26
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
