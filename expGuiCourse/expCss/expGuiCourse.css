@@ -132,10 +132,10 @@
     background: url(../expImages/raku.png) no-repeat;
 }
 /* サマリー用情報出力欄 */
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane1,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane2,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane3,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain1,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain2,
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain3,
 .expGuiCourse .exp_resultList .exp_summary .exp_information_dia,
 .expGuiCourse .exp_resultList .exp_summary .exp_information_dia1,
 .expGuiCourse .exp_resultList .exp_summary .exp_information_dia2,
@@ -160,12 +160,45 @@
 .expGuiCourse .exp_resultList .exp_summary .exp_information_dia3 {
     width: 362px;
 }
-/* サマリー用情報出力欄(平均用) */
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane1,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane2,
-.expGuiCourse .exp_resultList .exp_summary .exp_information_plane3 {
-    width: 40%;
+/* マークがない時 */
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain {
+    width: 628px;
+}
+/* いずれか1個のマークがついた時 */
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain1 {
+    width: 596px;
+}
+/* いずれか2個のマークがついた時 */
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain2 {
+    width: 567px;
+}
+/* 3個のマークがついた時 */
+.expGuiCourse .exp_resultList .exp_summary .exp_information_plain3 {
+    width: 536px;
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_dia {
+    width: calc(100% - 17.5em);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_dia1 {
+    width: calc(100% - 17.5em - 26px);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_dia2 {
+    width: calc(100% - 17.5em - 52px);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_dia3 {
+    width: calc(100% - 17.5em - 78px);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_plain {
+    width: calc(100% - 7em);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_plain1 {
+    width: calc(100% - 7em - 26px);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_plain2 {
+    width: calc(100% - 7em - 52px);
+}
+.expGuiCourse .exp_resultList .exp_summary .exp_informationPhone_plain3 {
+    width: calc(100% - 7em - 78px);
 }
 /* サマリーの分割 */
 .expGuiCourse .exp_resultList .exp_summary .exp_separator {
@@ -1324,7 +1357,7 @@
     left:0;
     width:100%;
     height:100%;
-    opacity:0; 
+    opacity:0;
 }
 .expGuiCoursePhone .exp_resultHeader .exp_resultListButton {
     float: left;
