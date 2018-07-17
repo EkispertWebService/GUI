@@ -107,7 +107,7 @@ IE8/IE9の場合は"json2.js"等を利用し、JSONへの拡張を行なって�
 |定期代/運賃の分割計算|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/divided.html)|
 |経路を利用した時刻表表示|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/courseTimetable.html)|
 |回数券を利用した経路探索|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/courseCoupon.html)|
-|ランドマークを利用した経路探索|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/landmardCourse.html)|
+|ランドマークを利用した経路探索|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/landmarkCourse.html)|
 
 ### データ取得サンプル
 
