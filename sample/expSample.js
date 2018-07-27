@@ -15,7 +15,7 @@ var stationApp3;// 駅名入力パーツ#3
 var stationApp4;// 駅名入力パーツ#4
 var stationApp5;// 駅名入力パーツ#5
 var stationApp6;// 駅名入力パーツ#6
-var conditonApp;// 探索条件パーツ
+var conditionApp;// 探索条件パーツ
 var resultApp;// 経路表示パーツ
 var repaymentApp;// 定期払い戻しパーツ
 var stationInfoApp;// 駅情報パーツ
@@ -138,10 +138,10 @@ function init() {
 
     // 探索条件パーツ初期化
     if (document.getElementById("condition")) {
-        conditonApp = new expGuiCondition(document.getElementById("condition"));
-        conditonApp.dispCondition();
+        conditionApp = new expGuiCondition(document.getElementById("condition"));
+        conditionApp.dispCondition();
         if (getCookie("answerCount") != "" && getCookie("sort") != "" && getCookie("priceType") != "" && getCookie("conditionDetail") != "") {
-            conditonApp.setCondition(getCookie("answerCount"), getCookie("sort"), getCookie("priceType"), getCookie("conditionDetail"));
+            conditionApp.setCondition(getCookie("answerCount"), getCookie("sort"), getCookie("priceType"), getCookie("conditionDetail"));
         }
         if (typeof initCondition != 'undefined') {
             initCondition();
@@ -442,11 +442,11 @@ function search(callBack) {
                 break;
         }
         // ソート
-        searchWord += '&sort=' + conditonApp.getSortType();
+        searchWord += '&sort=' + conditionApp.getSortType();
         // 探索結果数
-        searchWord += '&answerCount=' + conditonApp.getAnswerCount();
+        searchWord += '&answerCount=' + conditionApp.getAnswerCount();
         // 探索条件
-        searchWord += '&conditionDetail=' + conditonApp.getConditionDetail();
+        searchWord += '&conditionDetail=' + conditionApp.getConditionDetail();
         // 会社名の出力をデフォルトにする
         searchWord += "&resultDetail=addCorporation";
         //定期券が存在する場合はセットする
@@ -456,7 +456,7 @@ function search(callBack) {
             }
         }
         // 探索を実行
-        resultApp.search(searchWord, conditonApp.getPriceType(), result);
+        resultApp.search(searchWord, conditionApp.getPriceType(), result);
     }
 }
 
@@ -518,11 +518,11 @@ function searchTeiki(callBack) {
         searchWord += '&date=' + dateTimeApp.getDate();
         searchWord += '&searchType=plain';
         // ソート
-        searchWord += '&sort=' + conditonApp.getSortType();
+        searchWord += '&sort=' + conditionApp.getSortType();
         // 探索結果数
-        searchWord += '&answerCount=' + conditonApp.getAnswerCount();
+        searchWord += '&answerCount=' + conditionApp.getAnswerCount();
         // 探索条件
-        searchWord += '&conditionDetail=' + conditonApp.getConditionDetail();
+        searchWord += '&conditionDetail=' + conditionApp.getConditionDetail();
         // 会社名の出力をデフォルトにする
         searchWord += "&resultDetail=addCorporation";
         //定期券が存在する場合はセットする
@@ -591,11 +591,11 @@ function restoreTeikiRoute() {
         resultApp.unbind("select");
     }
     // ソート
-    searchWordList.push('sort=' + conditonApp.getSortType());
+    searchWordList.push('sort=' + conditionApp.getSortType());
     // 探索結果数
-    searchWordList.push('answerCount=' + conditonApp.getAnswerCount());
+    searchWordList.push('answerCount=' + conditionApp.getAnswerCount());
     // 探索条件
-    searchWordList.push('conditionDetail=' + conditonApp.getConditionDetail());
+    searchWordList.push('conditionDetail=' + conditionApp.getConditionDetail());
     // 会社名の出力をデフォルトにする
     searchWordList.push("resultDetail=addCorporation");
 
@@ -763,11 +763,11 @@ function setCookie() {
     if (typeof dateTimeApp != 'undefined') {
         document.cookie = 'searchType=' + encodeURIComponent(dateTimeApp.getSearchType());
     }
-    if (typeof conditonApp != 'undefined') {
-        document.cookie = 'answerCount=' + encodeURIComponent(conditonApp.getAnswerCount());
-        document.cookie = 'sort=' + encodeURIComponent(conditonApp.getSortType());
-        document.cookie = 'priceType=' + encodeURIComponent(conditonApp.getPriceType());
-        document.cookie = 'conditionDetail=' + encodeURIComponent(conditonApp.getConditionDetail());
+    if (typeof conditionApp != 'undefined') {
+        document.cookie = 'answerCount=' + encodeURIComponent(conditionApp.getAnswerCount());
+        document.cookie = 'sort=' + encodeURIComponent(conditionApp.getSortType());
+        document.cookie = 'priceType=' + encodeURIComponent(conditionApp.getPriceType());
+        document.cookie = 'conditionDetail=' + encodeURIComponent(conditionApp.getConditionDetail());
     }
     if (typeof stationApp1 != 'undefined') {
         document.cookie = 'station1=' + encodeURIComponent(stationApp1.getStation());
