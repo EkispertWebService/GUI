@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2018-06-26
+ *  Version:2018-07-29
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -229,6 +229,9 @@ var expGuiCourse = function (pObject, config) {
                         case "assigndetailroute":
                             searchObj.setAssignDetailRoute(tmpParam[1]);
                             break;
+                        case "assignteikiserializedata":
+                            searchObj.setAssignTeikiSerializeData(tmpParam[1]);
+                            break;
                         case "assignnikukanteikiindex":
                             searchObj.setAssignNikukanteikiIndex(tmpParam[1]);
                             break;
@@ -329,6 +332,9 @@ var expGuiCourse = function (pObject, config) {
             if (typeof searchObj.getAssignDetailRoute() != 'undefined') {
                 searchWord += "&assignDetailRoute=" + encodeURIComponent(searchObj.getAssignDetailRoute());
             }
+            if (typeof searchObj.getAssignTeikiSerializeData() != 'undefined') {
+                searchWord += "&assignTeikiSerializeData=" + encodeURIComponent(searchObj.getAssignTeikiSerializeData());
+            }
             if (typeof searchObj.getAssignNikukanteikiIndex() != 'undefined') {
                 searchWord += "&assignNikukanteikiIndex=" + searchObj.getAssignNikukanteikiIndex();
             }
@@ -339,6 +345,10 @@ var expGuiCourse = function (pObject, config) {
                 searchWord += "&bringAssignmentError=" + searchObj.getBringAssignmentError();
             }
             url += "v1/json/search/course/extreme?key=" + key + searchWord;
+            // エンジンバージョン同一チェック
+            if (!checkEngineVersion) {
+                url += "&checkEngineVersion=false";
+            }
         } else if (typeof searchObj.getFrom() != 'undefined' && typeof searchObj.getTo() != 'undefined') {
             searchWord += "&from=" + encodeURIComponent(searchObj.getFrom());
             searchWord += "&to=" + encodeURIComponent(searchObj.getTo());
@@ -3345,9 +3355,37 @@ var expGuiCourse = function (pObject, config) {
     }
 
     /**
+    * 表示している探索結果の定期経路シリアライズデータを取得
+    */
+    function getTeikiSerializeData() {
+        if (viewCourseListFlag) {
+            // 一覧表示中は返さない
+            return;
+        }
+        if (typeof result == 'undefined') {
+            return;
+        }
+        var tmpResult;
+        if (resultCount == 1) {
+            tmpResult = result.ResultSet.Course;
+        } else {
+            tmpResult = result.ResultSet.Course[(selectNo - 1)];
+        }
+        if (typeof tmpResult.Teiki != 'undefined') {
+            return tmpResult.Teiki.SerializeData;
+        } else {
+            return;
+        }
+    }
+
+    /**
     * 表示している探索結果の定期控除のための文字列を取得
     */
     function getTeiki() {
+        if (viewCourseListFlag) {
+            // 一覧表示中は返さない
+            return;
+        }
         if (typeof result == 'undefined') {
             return;
         }
@@ -4340,6 +4378,7 @@ var expGuiCourse = function (pObject, config) {
         var resultDetail;
         var assignRoute;
         var assignDetailRoute;
+        var assignTeikiSerializeData;
         var assignNikukanteikiIndex;
         var coupon;
         var bringAssignmentError;
@@ -4432,6 +4471,11 @@ var expGuiCourse = function (pObject, config) {
         function getAssignDetailRoute() { return assignDetailRoute; };
         this.setAssignDetailRoute = setAssignDetailRoute;
         this.getAssignDetailRoute = getAssignDetailRoute;
+        // AssignTeikiSerializeData設定
+        function setAssignTeikiSerializeData(value) { assignTeikiSerializeData = value; };
+        function getAssignTeikiSerializeData() { return assignTeikiSerializeData; };
+        this.setAssignTeikiSerializeData = setAssignTeikiSerializeData;
+        this.getAssignTeikiSerializeData = getAssignTeikiSerializeData;
         // AssignNikukanteikiIndex設定
         function setAssignNikukanteikiIndex(value) { assignNikukanteikiIndex = value; };
         function getAssignNikukanteikiIndex() { return assignNikukanteikiIndex; };
@@ -4549,6 +4593,7 @@ var expGuiCourse = function (pObject, config) {
     this.dispCourseList = dispCourseList;
     this.getSerializeData = getSerializeData;
     this.getSerializeDataAll = getSerializeDataAll;
+    this.getTeikiSerializeData = getTeikiSerializeData;
     this.getTeiki = getTeiki;
     this.getNikukanteikiIndex = getNikukanteikiIndex;
     this.getVehicleIndex = getVehicleIndex;
