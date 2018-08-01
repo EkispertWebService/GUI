@@ -3361,18 +3361,18 @@ var expGuiCourse = function (pObject, config) {
         if (viewCourseListFlag) {
             // 一覧表示中は返さない
             return;
-        }
-        if (typeof result == 'undefined') {
-            return;
-        }
-        var tmpResult;
-        if (resultCount == 1) {
-            tmpResult = result.ResultSet.Course;
-        } else {
-            tmpResult = result.ResultSet.Course[(selectNo - 1)];
-        }
-        if (typeof tmpResult.Teiki != 'undefined') {
-            return tmpResult.Teiki.SerializeData;
+        } else if (typeof result != 'undefined') {
+            var tmpResult;
+            if (resultCount == 1) {
+                tmpResult = result.ResultSet.Course;
+            } else {
+                tmpResult = result.ResultSet.Course[(selectNo - 1)];
+            }
+            if (typeof tmpResult.Teiki != 'undefined') {
+                return tmpResult.Teiki.SerializeData;
+            } else {
+                return;
+            }
         } else {
             return;
         }
