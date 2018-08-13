@@ -625,7 +625,7 @@
     background-color: #3A97DD;
 }
 .expGuiCourse .exp_route .exp_detail .exp_priceSection .exp_priceData .exp_fare .exp_end {
-    background: url(../expImages/priceEnd.png) no-repeat center;
+    /* background: url(../expImages/) no-repeat center; */
 }
 .expGuiCourse .exp_route .exp_detail .exp_priceSection .exp_priceData .exp_fare,
 .expGuiCourse .exp_route .exp_detail .exp_priceSection .exp_priceData .exp_teiki {
@@ -642,7 +642,7 @@
     background-color: #EE8051;
 }
 .expGuiCourse .exp_route .exp_detail .exp_priceSection .exp_priceData .exp_teiki .exp_end {
-    background: url(../expImages/teikiEnd.png) no-repeat center;
+    /* background: url(../expImages/teikiEnd.png) no-repeat center; */
 }
 .expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost {
     margin-top: 0.5em;
@@ -3140,7 +3140,7 @@
     margin: auto;
     margin-top: 0.6em;
     padding-top: 3px;
-    background: url(../expImages/loading.gif) no-repeat;
+    /* background: url(../expImages/loading.gif) no-repeat; */
     text-align: center;
     font-weight: bold;
     color: #a0aab4;
