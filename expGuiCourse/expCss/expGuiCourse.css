@@ -3140,7 +3140,7 @@
     margin: auto;
     margin-top: 0.6em;
     padding-top: 3px;
-    /* background: url(../expImages/loading.gif) no-repeat; */
+    background: url(../expImages/loading.gif) no-repeat;
     text-align: center;
     font-weight: bold;
     color: #a0aab4;
