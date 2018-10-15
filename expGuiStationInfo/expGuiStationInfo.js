@@ -23,8 +23,8 @@ var expGuiStationInfo = function (pObject, config) {
         if (s.src && s.src.match(/expGuiStationInfo\.js(\?.*)?/)) {
             var params = s.src.replace(/.+\?/, '');
             params = params.split("&");
-            for (var i = 0; i < params.length; i++) {
-                var tmp = params[i].split("=");
+            for (var j = 0; j < params.length; j++) {
+                var tmp = params[j].split("=");
                 if (tmp[0] == "key") {
                     key = unescape(tmp[1]);
                 }
