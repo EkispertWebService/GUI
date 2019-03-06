@@ -101,11 +101,11 @@ IE8/IE9の場合は"json2.js"等を利用し、JSONへの拡張を行なって�
 | --- | --- |
 |経路探索|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/sample.html)|
 |鉄道駅の時刻表|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/stationTimeTable.html)|
-|区間の時刻表|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/sectionTimetable.html)|
-|鉄道駅時刻表の列車情報|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/trainTimetable.html)|
+|区間の時刻表|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/sectionTimeTable.html)|
+|鉄道駅時刻表の列車情報|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/trainTimeTable.html)|
 |定期代の払い戻し計算|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/repayment.html)|
 |定期代/運賃の分割計算|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/divided.html)|
-|経路を利用した時刻表表示|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/courseTimetable.html)|
+|経路を利用した時刻表表示|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/courseTimeTable.html)|
 |回数券を利用した経路探索|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/courseCoupon.html)|
 |ランドマークを利用した経路探索|[サンプルを確認](http://ekispertwebservice.github.io/GUI/sample/landmarkCourse.html)|
 
