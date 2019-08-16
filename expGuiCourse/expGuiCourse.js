@@ -47,6 +47,28 @@ var expGuiCourse = function (pObject, config) {
     if (isiPhone || isAndroid_phone) { agent = 2; }
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
+    // 合計運賃のスタイルを返す関数。
+    function appendRevisionStatusClass(RevisionStatusResults,Summary) {
+        if (RevisionStatusResults.some(x => x == 'previous')) {
+            return '<span class="exp_taxRateIsNotSupported">' + num2String(Summary) + '円</span>';
+        }
+        if (RevisionStatusResults.some(x => x == 'forecast')) {
+            return '<span class="exp_RevisionStatusPrice">' + num2String(Summary) + '円</span>';
+        }
+        return num2String(Summary) + '円';
+    }
+
+    // 区間の運賃のスタイルを返す関数。
+    // 引数attrは呼び出し元で作ったDomのid属性の値が渡されてくる。
+    function appendRevisionStatusLineClass(RevisionStatusResults, contents, attrs) {
+        if (RevisionStatusResults.some(x => x == 'previous')) {
+            return '<span class="exp_RevisionStatusPrevious" ' + attrs + '>' + contents + '</span>';
+        }
+        if (RevisionStatusResults.some(x => x == 'forecast')) {
+            return '<span class="exp_RevisionStatusForecast" ' + attrs + '>'  + contents + '</span>';
+        }
+        return '<span class="exp_linePrice" ' + attrs + '>' + contents + '</span>';
+    }
     /**
     * イベントの設定(IE対応版)
     */
@@ -1064,6 +1086,7 @@ var expGuiCourse = function (pObject, config) {
             }
         }
         buffer += '</div>';
+
         // 運賃改定未対応
         var salesTaxRateIsNotSupported = false;
         for (var i = 0; i < resultCount; i++) {
@@ -1091,7 +1114,7 @@ var expGuiCourse = function (pObject, config) {
         }
         if (salesTaxRateIsNotSupported) {
             buffer += '<div class="exp_fareRevisionStatus">';
-            buffer += '赤色の金額は消費税率変更に未対応です';
+            buffer += '赤色の金額は、消費税率変更に未対応です。';
             buffer += '</div>';
         }
         // ソートを行う
@@ -1443,6 +1466,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '</a>';
         }
         buffer += '</div>';
+
         return buffer;
     }
 
@@ -1875,13 +1899,14 @@ var expGuiCourse = function (pObject, config) {
                                         salesTaxRateIsNotSupported = true;
                                     }
                                 }
-                                fareName += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '" id="' + baseId + ':fareMenu:' + String(routeNo) + ':' + String(i + 1) + ':open:2">';
+
+                                var attrs = "id=" + baseId + ':fareMenu:' + String(routeNo) + ':' + String(i + 1) + ':open:2';
                                 if (priceViewFlag == "oneway") {
-                                    fareName += num2String(parseInt(getTextValue(fareList[j].Oneway))) + '円';
+                                    fareName += appendRevisionStatusLineClass([fareList[j].RevisionStatus],num2String(getTextValue(fareList[j].Oneway)) + '円', attrs);
                                 } else if (priceViewFlag == "round") {
-                                    fareName += num2String(parseInt(getTextValue(fareList[j].Round))) + '円';
+                                    fareName += appendRevisionStatusLineClass([fareList[j].RevisionStatus],num2String(getTextValue(fareList[j].Round)) + '円', attrs);
                                 }
-                                fareName += '</span>';
+
                                 if (fareList.length >= 2) {
                                     if (agent == 1) {
                                         // 選択している値
@@ -1941,7 +1966,6 @@ var expGuiCourse = function (pObject, config) {
                                     buffer += '<div class="exp_item' + (fareList[k].selected == "true" ? " exp_checked" : "") + ' exp_' + (k % 2 == 0 ? 'odd' : 'even') + '">';
                                     buffer += '<a href="Javascript:void(0);" id="' + baseId + ':fareMenu:' + String(routeNo) + ':' + String(i + 1) + ':' + String(fareList[k].index) + '">';
                                     // 金額
-                                    buffer += '<span class="exp_costList" id="' + baseId + ':fareMenu:' + String(routeNo) + ':' + String(i + 1) + ':' + String(fareList[k].index) + ':cost">';
                                     if (priceViewFlag == "oneway") {
                                         buffer += num2String(parseInt(getTextValue(fareList[k].Oneway))) + '円';
                                     } else if (priceViewFlag == "round") {
@@ -2035,80 +2059,44 @@ var expGuiCourse = function (pObject, config) {
                         buffer += '</div>';
                         buffer += '<div class="exp_teiki1">' + (agent != 2 ? '1ヵ月' : '');
                         if (typeof teiki1List[j] != 'undefined') {
-                            // 運賃改定未対応
-                            var salesTaxRateIsNotSupported = false;
-                            if (typeof teiki1List[j].fareRevisionStatus != 'undefined') {
-                                if (teiki1List[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
-                                    salesTaxRateIsNotSupported = true;
-                                }
-                            }
-                            buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
                             if (getTextValue(teiki1List[j].Name) != "") {
-                                buffer += getTextValue(teiki1List[j].Name);
+                                buffer += appendRevisionStatusLineClass([teiki1List[j].RevisionStatus], getTextValue(teiki1List[j].Name), '');
                             } else {
-                                buffer += num2String(parseInt(getTextValue(teiki1List[j].Oneway))) + '円';
+                                buffer += appendRevisionStatusLineClass([teiki1List[j].RevisionStatus], num2String(parseInt(getTextValue(teiki1List[j].Oneway))) + '円', '');
                             }
-                            buffer += '</span>';
                         } else {
                             buffer += '------円';
                         }
                         buffer += '</div>';
                         buffer += '<div class="exp_teiki3">' + (agent != 2 ? '3ヵ月' : '');
                         if (typeof teiki3List[j] != 'undefined') {
-                            // 運賃改定未対応
-                            var salesTaxRateIsNotSupported = false;
-                            if (typeof teiki3List[j].fareRevisionStatus != 'undefined') {
-                                if (teiki3List[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
-                                    salesTaxRateIsNotSupported = true;
-                                }
-                            }
-                            buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
                             if (getTextValue(teiki3List[j].Name) != "") {
-                                buffer += getTextValue(teiki3List[j].Name);
+                                buffer += appendRevisionStatusLineClass([teiki3List[j].RevisionStatus], getTextValue(teiki3List[j].Name), '');
                             } else {
-                                buffer += num2String(parseInt(getTextValue(teiki3List[j].Oneway))) + '円';
+                                buffer += appendRevisionStatusLineClass([teiki3List[j].RevisionStatus], num2String(parseInt(getTextValue(teiki3List[j].Oneway))) + '円', '');
                             }
-                            buffer += '</span>';
                         } else {
                             buffer += '------円';
                         }
                         buffer += '</div>';
                         buffer += '<div class="exp_teiki6">' + (agent != 2 ? '6ヵ月' : '');
                         if (typeof teiki6List[j] != 'undefined') {
-                            // 運賃改定未対応
-                            var salesTaxRateIsNotSupported = false;
-                            if (typeof teiki6List[j].fareRevisionStatus != 'undefined') {
-                                if (teiki6List[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
-                                    salesTaxRateIsNotSupported = true;
-                                }
-                            }
-                            buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
                             if (getTextValue(teiki6List[j].Name) != "") {
-                                buffer += getTextValue(teiki6List[j].Name);
+                                buffer += appendRevisionStatusLineClass([teiki6List[j].RevisionStatus], getTextValue(teiki6List[j].Name), '');
                             } else {
-                                buffer += num2String(parseInt(getTextValue(teiki6List[j].Oneway))) + '円';
+                                buffer += appendRevisionStatusLineClass([teiki6List[j].RevisionStatus], num2String(parseInt(getTextValue(teiki6List[j].Oneway))) + '円', '');
                             }
-                            buffer += '</span>';
                         } else {
                             buffer += '------円';
                         }
                         buffer += '</div>';
                         buffer += '<div class="exp_teiki12">' + (agent != 2 ? '12ヵ月' : '');
                         if (typeof teiki12List[j] != 'undefined') {
-                            // 運賃改定未対応
-                            var salesTaxRateIsNotSupported = false;
-                            if (typeof teiki12List[j].fareRevisionStatus != 'undefined') {
-                                if (teiki12List[j].fareRevisionStatus == 'salesTaxRateIsNotSupported') {
-                                    salesTaxRateIsNotSupported = true;
-                                }
-                            }
-                            buffer += '<span class="' + (salesTaxRateIsNotSupported ? 'exp_taxRateIsNotSupportedLine' : 'exp_linePrice') + '">';
                             if (getTextValue(teiki12List[j].Name) != "") {
-                                buffer += getTextValue(teiki12List[j].Name);
+                                buffer += appendRevisionStatusLineClass([teiki12List[j].RevisionStatus], getTextValue(teiki12List[j].Name), '');
                             } else {
-                                buffer += num2String(parseInt(getTextValue(teiki12List[j].Oneway))) + '円';
+                                buffer += appendRevisionStatusLineClass([teiki12List[j].RevisionStatus], num2String(parseInt(getTextValue(teiki12List[j].Oneway))) + '円', '');
                             }
-                            buffer += '</span>';
                         } else {
                             buffer += '------円';
                         }
@@ -2282,6 +2270,22 @@ var expGuiCourse = function (pObject, config) {
         var Teiki3SummarySalesTaxRateIsNotSupported = false;
         var Teiki6SummarySalesTaxRateIsNotSupported = false;
         var Teiki12SummarySalesTaxRateIsNotSupported = false;
+        // 事業者の金額改定への対応状況
+        var FareSummaryRevisionStatus = undefined;
+        var ChargeSummaryRevisionStatus = undefined;
+        var Teiki1SummaryRevisionStatus = undefined;
+        var Teiki3SummaryRevisionStatus = undefined;
+        var Teiki6SummaryRevisionStatus = undefined;
+        var Teiki12SummaryRevisionStatus = undefined;
+
+        // 事業者の金額改定への対応状況を判定するための配列
+        var FareSummaryRevisionStatusResults = [];
+        var ChargeSummaryRevisionStatusResults = [];
+        var Teiki1SummaryRevisionStatusResults = [];
+        var Teiki3SummaryRevisionStatusResults = [];
+        var Teiki6SummaryRevisionStatusResults = [];
+        var Teiki12SummaryRevisionStatusResults = [];
+
         if (typeof courseObj.Price != 'undefined') {
             for (var j = 0; j < courseObj.Price.length; j++) {
                 if (courseObj.Price[j].kind == "FareSummary") {
@@ -2332,9 +2336,25 @@ var expGuiCourse = function (pObject, config) {
                             }
                         }
                     }
+                    if (typeof courseObj.Price[j].RevisionStatus != 'undefined') {
+                        if (courseObj.Price[j].kind == "Fare") {
+                            FareSummaryRevisionStatusResults.push(courseObj.Price[j].RevisionStatus);
+                        } else if (courseObj.Price[j].kind == "Charge") {
+                            ChargeSummaryRevisionStatusResults.push(courseObj.Price[j].RevisionStatus);
+                        } else if (courseObj.Price[j].kind == "Teiki1") {
+                            Teiki1SummaryRevisionStatusResults.push(courseObj.Price[j].RevisionStatus);
+                        } else if (courseObj.Price[j].kind == "Teiki3") {
+                            Teiki3SummaryRevisionStatusResults.push(courseObj.Price[j].RevisionStatus);
+                        } else if (courseObj.Price[j].kind == "Teiki6") {
+                            Teiki6SummaryRevisionStatusResults.push(courseObj.Price[j].RevisionStatus);
+                        } else if (courseObj.Price[j].kind == "Teiki12") {
+                            Teiki12SummaryRevisionStatusResults.push(courseObj.Price[j].RevisionStatus);
+                        }
+                    }
                 }
             }
         }
+
         var salesTaxRateIsNotSupported = (FareSummarySalesTaxRateIsNotSupported || ChargeSummarySalesTaxRateIsNotSupported);
         // アイコン
         buffer += '<div class="exp_mark exp_clearfix">';
@@ -2447,13 +2467,9 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<span class="exp_title">運賃</span>';
             buffer += '<span class="exp_value">';
             if (typeof ChargeSummary == 'undefined') {
-                buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(FareSummary) + '円';
-                buffer += salesTaxRateIsNotSupported ? '</span>' : '';
+                buffer += appendRevisionStatusClass(FareSummaryRevisionStatusResults,FareSummary);
             } else {
-                buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(FareSummary + ChargeSummary) + '円';
-                buffer += salesTaxRateIsNotSupported ? '</span>' : '';
+                buffer += appendRevisionStatusClass(FareSummaryRevisionStatusResults.concat(ChargeSummaryRevisionStatusResults),(FareSummary+ChargeSummary));
                 if (agent == 1 || agent == 3) {
                     buffer += '<span class="exp_valueDetail">';
                     buffer += '(乗車券&nbsp;' + num2String(FareSummary) + '円&nbsp;料金' + num2String(ChargeSummary) + '円)';
@@ -2465,13 +2481,10 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<span class="exp_title">往復運賃</span>';
             buffer += '<span class="exp_value">';
             if (typeof ChargeSummary == 'undefined') {
-                buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(FareRoundSummary) + '円';
-                buffer += salesTaxRateIsNotSupported ? '</span>' : '';
+                buffer += appendRevisionStatusClass(FareSummaryRevisionStatusResults,FareRoundSummary);
             } else {
-                buffer += salesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(FareRoundSummary + ChargeRoundSummary) + '円';
-                buffer += salesTaxRateIsNotSupported ? '</span>' : '';
+                buffer += appendRevisionStatusClass(FareSummaryRevisionStatusResults,FareRoundSummary + ChargeRoundSummary);
+
                 if (agent == 1 || agent == 3) {
                     buffer += '<span class="exp_detail">';
                     buffer += '(乗車券&nbsp;' + num2String(FareRoundSummary) + '円&nbsp;料金' + num2String(ChargeRoundSummary) + '円)';
@@ -2483,9 +2496,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<span class="exp_titleTeiki1">定期1ヵ月</span>';
             buffer += '<span class="exp_value">';
             if (typeof Teiki1Summary != 'undefined') {
-                buffer += Teiki1SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(Teiki1Summary) + '円';
-                buffer += Teiki1SummarySalesTaxRateIsNotSupported ? '</span>' : '';
+                buffer += appendRevisionStatusClass(Teiki1SummaryRevisionStatusResults,Teiki1Summary);
             } else {
                 buffer += '------円';
             }
@@ -2493,9 +2504,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<span class="exp_titleTeiki3">定期3ヵ月</span>';
             buffer += '<span class="exp_value">';
             if (typeof Teiki3Summary != 'undefined') {
-                buffer += Teiki3SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(Teiki3Summary) + '円';
-                buffer += Teiki3SummarySalesTaxRateIsNotSupported ? '</span>' : '';
+                buffer += appendRevisionStatusClass(Teiki3SummaryRevisionStatusResults,Teiki3Summary);
             } else {
                 buffer += '------円';
             }
@@ -2503,9 +2512,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<span class="exp_titleTeiki6">定期6ヵ月</span>';
             buffer += '<span class="exp_value">';
             if (typeof Teiki6Summary != 'undefined') {
-                buffer += Teiki6SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(Teiki6Summary) + '円';
-                buffer += Teiki6SummarySalesTaxRateIsNotSupported ? '</span>' : '';
+                buffer += appendRevisionStatusClass(Teiki6SummaryRevisionStatusResults,Teiki6Summary);
             } else {
                 buffer += '------円';
             }
@@ -2513,9 +2520,7 @@ var expGuiCourse = function (pObject, config) {
             buffer += '<span class="exp_titleTeiki12">定期12ヵ月</span>';
             buffer += '<span class="exp_value">';
             if (typeof Teiki12Summary != 'undefined') {
-                buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '<span class="exp_taxRateIsNotSupported">' : '';
-                buffer += num2String(Teiki12Summary) + '円';
-                buffer += Teiki12SummarySalesTaxRateIsNotSupported ? '</span>' : '';
+                buffer += appendRevisionStatusClass(Teiki12SummaryRevisionStatusResults,Teiki12Summary);
             } else {
                 buffer += '------円';
             }
@@ -2538,16 +2543,33 @@ var expGuiCourse = function (pObject, config) {
         if (priceViewFlag == "oneway" || priceViewFlag == "round") {
             if (salesTaxRateIsNotSupported) {
                 buffer += '<div class="exp_fareRevisionStatus exp_clearfix">';
-                buffer += '赤色の金額は消費税率変更に未対応です';
+                buffer += '赤色の金額は、消費税率変更に未対応です。';
+                buffer += '</div>';
+            }
+
+            // 運賃改定状況に「見込み」(forecast)を含むものがあった場合にメッセージを出力する。
+            if (FareSummaryRevisionStatusResults.indexOf('forecast') != -1) {
+                buffer += '<div class="exp_RevisionStatus exp_clearfix">';
+                buffer += '青色の金額は、「駅すぱあと」が予測した運賃改定後の見込の金額です。';
                 buffer += '</div>';
             }
         } else if (priceViewFlag == "teiki") {
             if (Teiki1SummarySalesTaxRateIsNotSupported || Teiki3SummarySalesTaxRateIsNotSupported || Teiki6SummarySalesTaxRateIsNotSupported || Teiki12SummarySalesTaxRateIsNotSupported) {
                 buffer += '<div class="exp_fareRevisionStatus exp_clearfix">';
-                buffer += '赤色の金額は消費税率変更に未対応です';
+                buffer += '赤色の金額は、消費税率変更に未対応です。';
+                buffer += '</div>';
+            }
+
+            if (Teiki1SummaryRevisionStatusResults.indexOf('forecast') != -1 ||
+                Teiki3SummaryRevisionStatusResults.indexOf('forecast') != -1 ||
+                Teiki6SummaryRevisionStatusResults.indexOf('forecast') != -1 ||
+                Teiki12SummaryRevisionStatusResults.indexOf('forecast') != -1 ) {
+                buffer += '<div class="exp_RevisionStatus exp_clearfix">';
+                buffer += '青色の金額は、「駅すぱあと」が予測した運賃改定後の見込の金額です。';
                 buffer += '</div>';
             }
         }
+
         return buffer;
     }
 
