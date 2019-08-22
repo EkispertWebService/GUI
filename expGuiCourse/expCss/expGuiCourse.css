@@ -3145,39 +3145,76 @@
     font-weight: bold;
     color: #a0aab4;
 }
+
+/* 事業者の運賃改定状況 */
+.expGuiCourse .exp_resultList .exp_fareRevisionStatus {
+    color: #3F47C7;
+    font-weight: bold;
+}
+
 /* 運賃改定未対応 */
 .expGuiCourse .exp_resultList .exp_fareRevisionStatus {
     color: #C7433F;
     font-weight: bold;
 }
-.expGuiCoursePc .exp_resultList .exp_fareRevisionStatus {
+.expGuiCoursePc .exp_resultList .exp_fareRevisionStatus,
+.expGuiCoursePc .exp_resultList .exp_RevisionStatus
+{
     margin: 0 auto 0 auto;
     padding-left: 2em;
     padding-bottom: 1em;
     width: 700px;
 }
-.expGuiCoursePhone .exp_resultList .exp_fareRevisionStatus {
+.expGuiCoursePhone .exp_resultList .exp_fareRevisionStatus,
+.expGuiCoursePhone .exp_resultList .exp_RevisionStatus
+{
     text-align: center;
     padding-bottom: 0.5em;
 }
-.expGuiCourseTablet .exp_resultList .exp_fareRevisionStatus {
+.expGuiCourseTablet .exp_resultList .exp_fareRevisionStatus,
+.expGuiCourseTablet .exp_resultList .exp_RevisionStatus
+{
     margin: 0 auto 0.5em auto;
     width: 95%;
 }
+
+/* 事業者の運賃改定状況 */
+/* for comment */
+.expGuiCourse .exp_route .exp_RevisionStatus {
+    color: #3F47C7;
+    padding-left: 2em;
+    font-weight: bold;
+}
+
+/* for Price */
+.expGuiCourse .exp_route .exp_RevisionStatusPrice {
+    color: #3F47C7;
+}
+
 .expGuiCourse .exp_route .exp_fareRevisionStatus {
     color: #C7433F;
     font-weight: bold;
 }
-.expGuiCoursePc .exp_route .exp_fareRevisionStatus {
+.expGuiCoursePc .exp_route .exp_fareRevisionStatus
+{
     margin: auto;
     padding-left: 2em;
     width: 700px;
 }
-.expGuiCoursePhone .exp_route .exp_fareRevisionStatus {
+.expGuiCoursePc .exp_route .exp_RevisionStatus
+{
+    margin: auto;
+    width: 700px;
+}
+.expGuiCoursePhone .exp_route .exp_fareRevisionStatus,
+.expGuiCoursePhone .exp_route .exp_RevisionStatus
+{
     margin-top: 0.5em;
     text-align: center;
 }
-.expGuiCourseTablet .exp_route .exp_fareRevisionStatus {
+.expGuiCourseTablet .exp_route .exp_fareRevisionStatus,
+.expGuiCourseTablet .exp_route .exp_RevisionStatus
+{
     margin: 0 auto 0 auto;
     padding-left: 2em;
     padding-bottom: 0.5em;
@@ -3197,6 +3234,7 @@
     color: #384556;
     padding: 0 5px;
 }
+
 .expGuiCourse .exp_route .exp_taxRateIsNotSupportedLine {
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -3205,6 +3243,24 @@
     color: #C7433F;
     padding: 0 5px;
 }
+
+.expGuiCourse .exp_route .exp_RevisionStatusPrevious {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #C7433F;
+    padding: 0 5px;
+}
+.expGuiCourse .exp_route .exp_RevisionStatusForecast {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #3F47C7;
+    padding: 0 5px;
+}
+
 /* 経路のソート */
 .expGuiCourse .exp_resultList .exp_sortTab {
     font-weight: bold;
