@@ -3175,7 +3175,6 @@ var expGuiCourse = function (pObject, config) {
             } else if (document.getElementById(baseId + ':charge:undefined:' + (i + 1))) {
                 chargeList.push(parseInt(document.getElementById(baseId + ':charge:undefined:' + (i + 1)).value));
             }
-
             // 定期の選択リスト作成
             if (document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1))) {
                 if (document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1)).value == "vehicle") {
