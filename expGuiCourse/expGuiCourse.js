@@ -3172,13 +3172,11 @@ var expGuiCourse = function (pObject, config) {
                 chargeList.push(parseInt(document.getElementById(baseId + ':charge:' + selectNo + ':' + (i + 1)).value));
             }
             // 探索された経路がひとつの場合はundefinedを含んだidになるので、その可能性を考慮した判定を行う。
-if (! document.getElementById('check01').checked) {
             if (document.getElementById(baseId + ':chargeSelect:undefined:' + (i + 1))) {
                 chargeList.push(parseInt(document.getElementById(baseId + ':chargeSelect:undefined:' + (i + 1)).options.item(document.getElementById(baseId + ':chargeSelect:' + selectNo + ':' + (i + 1)).selectedIndex).value));
             } else if (document.getElementById(baseId + ':charge:undefined:' + (i + 1))) {
                 chargeList.push(parseInt(document.getElementById(baseId + ':charge:undefined:' + (i + 1)).value));
             }
-}
             // 定期の選択リスト作成
             if (document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1))) {
                 if (document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1)).value == "vehicle") {
