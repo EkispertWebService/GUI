@@ -49,10 +49,10 @@ var expGuiCourse = function (pObject, config) {
 
     // 合計運賃のスタイルを返す関数。
     function appendRevisionStatusClass(RevisionStatusResults,Summary) {
-        if (RevisionStatusResults.some(x => x == 'previous')) {
+        if (checkArray(RevisionStatusResults, "previous") != -1) {
             return '<span class="exp_taxRateIsNotSupported">' + num2String(Summary) + '円</span>';
         }
-        if (RevisionStatusResults.some(x => x == 'forecast')) {
+        if (checkArray(RevisionStatusResults, "forecast") != -1) {
             return '<span class="exp_RevisionStatusPrice">' + num2String(Summary) + '円</span>';
         }
         return num2String(Summary) + '円';
@@ -61,14 +61,15 @@ var expGuiCourse = function (pObject, config) {
     // 区間の運賃のスタイルを返す関数。
     // 引数attrは呼び出し元で作ったDomのid属性の値が渡されてくる。
     function appendRevisionStatusLineClass(RevisionStatusResults, contents, attrs) {
-        if (RevisionStatusResults.some(x => x == 'previous')) {
+        if (checkArray(RevisionStatusResults, "previous") != -1) {
             return '<span class="exp_RevisionStatusPrevious" ' + attrs + '>' + contents + '</span>';
         }
-        if (RevisionStatusResults.some(x => x == 'forecast')) {
+        if (checkArray(RevisionStatusResults, "forecast") != -1) {
             return '<span class="exp_RevisionStatusForecast" ' + attrs + '>'  + contents + '</span>';
         }
         return '<span class="exp_linePrice" ' + attrs + '>' + contents + '</span>';
     }
+
     /**
     * イベントの設定(IE対応版)
     */
@@ -2558,7 +2559,7 @@ var expGuiCourse = function (pObject, config) {
             }
 
             // 運賃改定状況に「見込み」(forecast)を含むものがあった場合にメッセージを出力する。
-            if (FareSummaryRevisionStatusResults.indexOf('forecast') != -1) {
+            if (checkArray(FareSummaryRevisionStatusResults, 'forecast') != -1) {
                 buffer += '<div class="exp_RevisionStatus exp_clearfix">';
                 buffer += '青色の金額は、「駅すぱあと」が予測した運賃改定後の見込の金額です。';
                 buffer += '</div>';
@@ -2570,10 +2571,10 @@ var expGuiCourse = function (pObject, config) {
                 buffer += '</div>';
             }
 
-            if (Teiki1SummaryRevisionStatusResults.indexOf('forecast') != -1 ||
-                Teiki3SummaryRevisionStatusResults.indexOf('forecast') != -1 ||
-                Teiki6SummaryRevisionStatusResults.indexOf('forecast') != -1 ||
-                Teiki12SummaryRevisionStatusResults.indexOf('forecast') != -1 ) {
+            if (checkArray(Teiki1SummaryRevisionStatusResults, 'forecast') != -1 ||
+                checkArray(Teiki3SummaryRevisionStatusResults, 'forecast') != -1 ||
+                checkArray(Teiki6SummaryRevisionStatusResults, 'forecast') != -1 ||
+                checkArray(Teiki12SummaryRevisionStatusResults, 'forecast') != -1) {
                 buffer += '<div class="exp_RevisionStatus exp_clearfix">';
                 buffer += '青色の金額は、「駅すぱあと」が予測した運賃改定後の見込の金額です。';
                 buffer += '</div>';
