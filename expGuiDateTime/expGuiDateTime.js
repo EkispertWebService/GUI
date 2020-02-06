@@ -3,9 +3,9 @@
  *  日付入力パーツ
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
- *  
+ *
  *  Version:2016-08-04
- *  
+ *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
@@ -627,9 +627,9 @@ var expGuiDateTime = function (pObject, config) {
                 if (month == 1) { syuku = '成人の日'; }    // 1月
                 if (month == 10 && year != 2020) { // 2020年のみ、スポーツの日は固定の日になる
                     if (year < 2020) {
-                        { syuku = '体育の日' }
+                        syuku = '体育の日';
                     } else {
-                        { syuku = 'スポーツの日' } // 体育の日は、2020年よりスポーツの日になる
+                        syuku = 'スポーツの日'; // 体育の日は、2020年よりスポーツの日になる
                     }
                 }
             }
