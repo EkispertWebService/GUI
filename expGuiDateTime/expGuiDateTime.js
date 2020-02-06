@@ -654,6 +654,7 @@ var expGuiDateTime = function (pObject, config) {
         // その他の祝日
         if (month == 1 && day == 1) { syuku = '元日'; }            //  1月 1日
         if (month == 2 && day == 11) { syuku = '建国記念の日'; }    //  2月11日
+        if (month == 2 && day == 24) { syuku = '天皇誕生日'; }     // 2月24日
         if (month == 4 && day == 29 && year <= 2006) { syuku = 'みどりの日'; }      //  4月29日(2006年まで)
         if (month == 4 && day == 29 && year >= 2007) { syuku = '昭和の日'; }        //  4月29日(2007年から)
         if (month == 5 && day == 3) { syuku = '憲法記念日'; }      //  5月 3日
@@ -661,7 +662,6 @@ var expGuiDateTime = function (pObject, config) {
         if (month == 5 && day == 5) { syuku = 'こどもの日'; }      //  5月 5日
         if (month == 11 && day == 3) { syuku = '文化の日'; }       // 11月 3日
         if (month == 11 && day == 23) { syuku = '勤労感謝の日'; }   // 11月23日
-        if (month == 12 && day == 23) { syuku = '天皇誕生日'; }     // 12月23日
         if (year < 2003 && month == 7 && day == 20) { syuku = '海の日'; }   // 7月20日(～2002)
         if (year < 2003 && month == 9 && day == 15) { syuku = '敬老の日'; } //  9月15日(～2002)
         if (month == 8 && day == 11 && year >= 2016) { syuku = '山の日'; } //  8月11日(2016年から)
