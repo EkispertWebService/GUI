@@ -855,3 +855,17 @@
     text-shadow: 0px 1px 1px rgba(255,255,255,1);
     font-weight: bold;
 }
+
+/* iPhone 6/7/8/X より画面幅が小さい場合 */
+@media screen and (max-width: 380px) {
+    .exp_conditionValue {
+        margin-left: 0;
+    }
+}
+
+/* iPhone 5/SE より画面幅が小さい場合 */
+@media screen and (max-width: 320px) {
+    .exp_conditionValue>select {
+        width: 110px !important;
+    }
+}
