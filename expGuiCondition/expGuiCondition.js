@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2018-05-28
+ *  Version:2020-10-12
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -64,7 +64,7 @@ var expGuiCondition = function (pObject, config) {
     // 変数郡
     // デフォルト探索条件
     var def_condition_t = "T3221233232319";
-    var def_condition_f = "F342112212000";
+    var def_condition_f = "F3421122120000";
     
     var def_condition_a = "A23121141";
     var def_sortType = "ekispert"; // デフォルトソート
@@ -204,6 +204,12 @@ var expGuiCondition = function (pObject, config) {
         var conditionLabel = "JR予約サービス";
         var tmpOption = new Array("適用しない","ＥＸ予約", "ＥＸ予約(ｅ特急券)", "ＥＸ予約(ＥＸ早特)", "ＥＸ予約(ＥＸ早特２１)", "ＥＸ予約(ＥＸグリーン早特)", "スマートＥＸ", "スマートＥＸ(ＥＸ早特)", "スマートＥＸ(ＥＸ早特２１)", "スマートＥＸ(ＥＸグリーン早特)");
         var tmpValue = new Array("none", "exYoyaku", "exETokkyu", "exHayatoku", "exHayatoku21", "exGreenHayatoku", "smartEx", "smartExHayatoku", "smartExHayatoku21", "smartExGreenHayatoku");
+        tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
+        // 新幹線eチケット
+        var conditionId = "shinkansenETicket";
+        var conditionLabel = "新幹線eチケットサービス";
+        var tmpOption = new Array("適用しない","新幹線eチケット");
+        var tmpValue = new Array("none", "eTicket");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
         // 航空運賃の指定
         //var conditionId = "airFare";
@@ -567,6 +573,13 @@ var expGuiCondition = function (pObject, config) {
             buffer += outConditionRadio("JRReservation");
         }
         buffer += outSeparator("JRReservation");
+        // 新幹線eチケット
+        if (agent == 1 || agent == 2) {
+            buffer += outConditionSelect("shinkansenETicket");
+        } else if (agent == 3) {
+            buffer += outConditionRadio("shinkansenETicket");
+        }
+        buffer += outSeparator("shinkansenETicket");
         // JR季節料金
         buffer += outConditionRadio("JRSeasonalRate", "whiteSelect");
         buffer += outSeparator("JRSeasonalRate");
@@ -738,9 +751,10 @@ var expGuiCondition = function (pObject, config) {
         buffer += outConditionSelect("teikiKind", "greenSelect"); // 定期種別初期値
         buffer += outConditionSelect("JRSeasonalRate", "whiteSelect"); // JR季節料金
         buffer += outConditionSelect("JRReservation", "greenSelect"); // JR予約サービス
-        buffer += outConditionSelect("ticketSystemType", "whiteSelect"); // 乗車券計算のシステム
-        buffer += outConditionSelect("preferredTicketOrder", "greenSelect"); // 優先する乗車券の順序
-        buffer += outConditionSelect("nikukanteiki", "whiteSelect"); // ２区間定期の利用
+        buffer += outConditionSelect("shinkansenETicket", "whiteSelect"); // 新幹線eチケットサービス
+        buffer += outConditionSelect("ticketSystemType", "greenSelect"); // 乗車券計算のシステム
+        buffer += outConditionSelect("preferredTicketOrder", "whiteSelect"); // 優先する乗車券の順序
+        buffer += outConditionSelect("nikukanteiki", "greenSelect"); // ２区間定期の利用
         //buffer += outConditionSelect("includeInsurance", "greenSelect"); // 航空保険特別料金
         //  buffer += outConditionSelect("airFare");// 航空運賃の指定
         buffer += '</div>';
@@ -939,11 +953,22 @@ var expGuiCondition = function (pObject, config) {
                         setValue("JRReservation", "none");
                         alert("学割乗車券とJR予約サービスを同時に有効にすることはできません。")
                     }
+                    // 学割乗車券と新幹線eチケットサービスは排他
+                    if (getValue("studentDiscount") == "true" && getValue("shinkansenETicket") != "none") {
+                        setValue("shinkansenETicket", "none");
+                        alert("学割乗車券と新幹線eチケットサービスを同時に有効にすることはできません。")
+                    }
                 } else if (eventIdList[1].toLowerCase() == String("JRReservation").toLowerCase()) {
                     // 学割乗車券とJR予約サービスは排他
                     if (getValue("JRReservation") != "none" && getValue("studentDiscount") == "true") {
                         setValue("studentDiscount", "false");
                         alert("学割乗車券とJR予約サービスを同時に有効にすることはできません。")
+                    }
+                } else if (eventIdList[1].toLowerCase() == String("shinkansenETicket").toLowerCase()) {
+                    // 学割乗車券とJR予約サービスは排他
+                    if (getValue("shinkansenETicket") != "none" && getValue("studentDiscount") == "true") {
+                        setValue("studentDiscount", "false");
+                        alert("学割乗車券と新幹線eチケットサービスを同時に有効にすることはできません。")
                     }
                 }
             }
@@ -1106,6 +1131,21 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /**
+    * 新幹線eチケットサービスのインデックスの桁数変換
+    */
+   function getShinkansenETicket() {      
+    var selectedName = getValue("shinkansenETicket");
+    switch(selectedName) {
+        case 'none':
+          return 0;
+        case 'eTicket':
+          return 1;
+        default:
+          return 0;
+    }
+}
+
+    /**
     * 探索条件をフォームにセットする
     */
     function setCondition(param1, param2, priceType, condition) {
@@ -1167,6 +1207,7 @@ var expGuiCondition = function (pObject, config) {
             } else {
                 setValue("JRReservation", 10);
             }
+            setValue("shinkansenETicket", parseInt(conditionList_f[13]));
             // 探索条件(A)
             setValue("useJR", parseInt(conditionList_a[1]));
             setValue("transfer", parseInt(conditionList_a[2]));
@@ -1276,6 +1317,7 @@ var expGuiCondition = function (pObject, config) {
         conditionList_f[10] = getValueIndex("preferredTicketOrder", parseInt(conditionList_f[10]));
         conditionList_f[11] = getJRReservation()[0];
         conditionList_f[12] = getJRReservation()[1];
+        conditionList_f[13] = getShinkansenETicket();
         // 探索条件(A)
         var conditionList_a = def_condition_a.split('');
         conditionList_a[1] = getValueIndex("useJR", parseInt(conditionList_a[1]));
@@ -1520,7 +1562,6 @@ var expGuiCondition = function (pObject, config) {
     this.CONDITON_SURCHARGEKIND = "surchargeKind";
     this.CONDITON_TEIKIKIND = "teikiKind";
     this.CONDITON_JRSEASONALRATE = "JRSeasonalRate";
-    this.CONDITON_JRRESERVATION = "JRReservation";
     this.CONDITON_STUDENTDISCOUNT = "studentDiscount";
     //this.CONDITON_AIRFARE = "airFare";
     //this.CONDITON_INCLUDEINSURANCE = "includeInsurance";
