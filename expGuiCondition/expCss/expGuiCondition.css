@@ -866,6 +866,6 @@
 /* iPhone 5/SE より画面幅が小さい場合 */
 @media screen and (max-width: 320px) {
     .exp_conditionValue>select {
-        width: 110px !important;
+        width: 120px !important;
     }
 }
