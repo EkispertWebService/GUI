@@ -199,15 +199,15 @@ var expGuiCondition = function (pObject, config) {
         var tmpOption = new Array("計算する", "計算しない");
         var tmpValue = new Array("true", "false");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
-        // エクスプレス予約サービス
+        // エクスプレス予約
         var conditionId = "JRReservation";
-        var conditionLabel = "エクスプレス予約サービス";
+        var conditionLabel = "エクスプレス予約";
         var tmpOption = new Array("適用しない","ＥＸ予約", "ＥＸ予約(ｅ特急券)", "ＥＸ予約(ＥＸ早特)", "ＥＸ予約(ＥＸ早特２１)", "ＥＸ予約(ＥＸグリーン早特)", "スマートＥＸ", "スマートＥＸ(ＥＸ早特)", "スマートＥＸ(ＥＸ早特２１)", "スマートＥＸ(ＥＸグリーン早特)");
         var tmpValue = new Array("none", "exYoyaku", "exETokkyu", "exHayatoku", "exHayatoku21", "exGreenHayatoku", "smartEx", "smartExHayatoku", "smartExHayatoku21", "smartExGreenHayatoku");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
         // 新幹線eチケット
         var conditionId = "shinkansenETicket";
-        var conditionLabel = "新幹線eチケットサービス";
+        var conditionLabel = "新幹線eチケット";
         var tmpOption = new Array("適用しない","新幹線eチケット");
         var tmpValue = new Array("none", "eTicket");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
@@ -566,7 +566,7 @@ var expGuiCondition = function (pObject, config) {
         // 定期種別初期値
         buffer += outConditionRadio("teikiKind", "greenSelect");
         buffer += outSeparator("teikiKind");
-        // エクスプレス予約サービス
+        // エクスプレス予約
         if (agent == 1 || agent == 2) {
             buffer += outConditionSelect("JRReservation");
         } else if (agent == 3) {
@@ -750,8 +750,8 @@ var expGuiCondition = function (pObject, config) {
         buffer += outConditionSelect("studentDiscount", "whiteSelect"); // 学割乗車券
         buffer += outConditionSelect("teikiKind", "greenSelect"); // 定期種別初期値
         buffer += outConditionSelect("JRSeasonalRate", "whiteSelect"); // JR季節料金
-        buffer += outConditionSelect("JRReservation", "greenSelect"); // エクスプレス予約サービス
-        buffer += outConditionSelect("shinkansenETicket", "whiteSelect"); // 新幹線eチケットサービス
+        buffer += outConditionSelect("JRReservation", "greenSelect"); // エクスプレス予約
+        buffer += outConditionSelect("shinkansenETicket", "whiteSelect"); // 新幹線eチケット
         buffer += outConditionSelect("ticketSystemType", "greenSelect"); // 乗車券計算のシステム
         buffer += outConditionSelect("preferredTicketOrder", "whiteSelect"); // 優先する乗車券の順序
         buffer += outConditionSelect("nikukanteiki", "greenSelect"); // ２区間定期の利用
@@ -948,27 +948,27 @@ var expGuiCondition = function (pObject, config) {
                         setValue("ticketSystemType", "ic");
                     }
                 } else if (eventIdList[1].toLowerCase() == String("studentDiscount").toLowerCase()) {
-                    // 学割乗車券とエクスプレス予約サービスは排他
+                    // 学割乗車券とエクスプレス予約は排他
                     if (getValue("studentDiscount") == "true" && getValue("JRReservation") != "none") {
                         setValue("JRReservation", "none");
-                        alert("学割乗車券とエクスプレス予約サービスを同時に有効にすることはできません。")
+                        alert("学割乗車券とエクスプレス予約を同時に有効にすることはできません。")
                     }
-                    // 学割乗車券と新幹線eチケットサービスは排他
+                    // 学割乗車券と新幹線eチケットは排他
                     if (getValue("studentDiscount") == "true" && getValue("shinkansenETicket") != "none") {
                         setValue("shinkansenETicket", "none");
-                        alert("学割乗車券と新幹線eチケットサービスを同時に有効にすることはできません。")
+                        alert("学割乗車券と新幹線eチケットを同時に有効にすることはできません。")
                     }
                 } else if (eventIdList[1].toLowerCase() == String("JRReservation").toLowerCase()) {
-                    // 学割乗車券とエクスプレス予約サービスは排他
+                    // 学割乗車券とエクスプレス予約は排他
                     if (getValue("JRReservation") != "none" && getValue("studentDiscount") == "true") {
                         setValue("studentDiscount", "false");
-                        alert("学割乗車券とエクスプレス予約サービスを同時に有効にすることはできません。")
+                        alert("学割乗車券とエクスプレス予約を同時に有効にすることはできません。")
                     }
                 } else if (eventIdList[1].toLowerCase() == String("shinkansenETicket").toLowerCase()) {
-                    // 学割乗車券とエクスプレス予約サービスは排他
+                    // 学割乗車券と新幹線eチケットは排他
                     if (getValue("shinkansenETicket") != "none" && getValue("studentDiscount") == "true") {
                         setValue("studentDiscount", "false");
-                        alert("学割乗車券と新幹線eチケットサービスを同時に有効にすることはできません。")
+                        alert("学割乗車券と新幹線eチケットを同時に有効にすることはできません。")
                     }
                 }
             }
@@ -1100,7 +1100,7 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /**
-    * エクスプレス予約サービスのインデックスの桁数変換
+    * エクスプレス予約のインデックスの桁数変換
     */
     function getJRReservation() {      
         var selectedName = getValue("JRReservation");
@@ -1131,7 +1131,7 @@ var expGuiCondition = function (pObject, config) {
     }
 
     /**
-    * 新幹線eチケットサービスのインデックスの桁数変換
+    * 新幹線eチケットのインデックスの桁数変換
     */
    function getShinkansenETicket() {      
     var selectedName = getValue("shinkansenETicket");
