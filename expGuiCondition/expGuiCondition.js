@@ -950,24 +950,24 @@ var expGuiCondition = function (pObject, config) {
                 } else if (eventIdList[1].toLowerCase() == String("studentDiscount").toLowerCase()) {
                     // 学割乗車券とエクスプレス予約は排他
                     if (getValue("studentDiscount") == "true" && getValue("JRReservation") != "none") {
-                        setValue("JRReservation", "none");
+                        setValue("studentDiscount", "false");
                         alert("学割乗車券とエクスプレス予約を同時に有効にすることはできません。")
                     }
                     // 学割乗車券と新幹線eチケットは排他
                     if (getValue("studentDiscount") == "true" && getValue("shinkansenETicket") != "none") {
-                        setValue("shinkansenETicket", "none");
+                        setValue("studentDiscount", "false");
                         alert("学割乗車券と新幹線eチケットを同時に有効にすることはできません。")
                     }
                 } else if (eventIdList[1].toLowerCase() == String("JRReservation").toLowerCase()) {
                     // 学割乗車券とエクスプレス予約は排他
                     if (getValue("JRReservation") != "none" && getValue("studentDiscount") == "true") {
-                        setValue("studentDiscount", "false");
+                        setValue("JRReservation", "none");
                         alert("学割乗車券とエクスプレス予約を同時に有効にすることはできません。")
                     }
                 } else if (eventIdList[1].toLowerCase() == String("shinkansenETicket").toLowerCase()) {
                     // 学割乗車券と新幹線eチケットは排他
                     if (getValue("shinkansenETicket") != "none" && getValue("studentDiscount") == "true") {
-                        setValue("studentDiscount", "false");
+                        setValue("shinkansenETicket", "none");
                         alert("学割乗車券と新幹線eチケットを同時に有効にすることはできません。")
                     }
                 }
