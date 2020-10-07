@@ -68,13 +68,13 @@
 
 |OS|バージョン|ブラウザ|備考|
 | --- | --- | --- | --- |
-| Windows |	8.1 | IE11 | | 
-| Windows |	10 | Microsoft Edge | 最新版のみ対応 | 
+| Windows | 8.1 | IE11 | |
+| Windows | 10 | Microsoft Edge | 最新版のみ対応 |
 | MacOSX | 10.7以降 | Safari | 最新版のみ対応 |
 | Windows/Mac | - | FireFox | 最新版のみ対応 |
-| Windows/Mac |	- | Chrome | 最新版のみ対応 |
-| iOS |	10.0以降 | Safari | | 
-| Android | 5.0以降 | Chrome | | 
+| Windows/Mac | - | Chrome | 最新版のみ対応 |
+| iOS | 11.0以降 | Safari | |
+| Android | 5.0以降 | Chrome | |
 
 ## デモ
 
