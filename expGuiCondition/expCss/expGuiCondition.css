@@ -100,7 +100,7 @@
     padding-top: 8px;
     padding-bottom: 10px;
     padding-left: 11px;
-    width: 8em;
+    width: 9.5em;
     font-weight: bold;
     font-size: 1.1em;
 }
@@ -110,6 +110,7 @@
     padding-top: 12px;
     text-align: left;
     font-size: 1em;
+    margin-left: 20px;
 }
 .expGuiConditionPc .exp_conditionDetail .exp_conditionTable .exp_conditionItemList .exp_conditionValue label {
     padding-right: 18px;
@@ -854,4 +855,18 @@
     color: #384556;
     text-shadow: 0px 1px 1px rgba(255,255,255,1);
     font-weight: bold;
+}
+
+/* iPhone 6/7/8/X より画面幅が小さい場合 */
+@media screen and (max-width: 380px) {
+    .exp_conditionValue {
+        margin-left: 0;
+    }
+}
+
+/* iPhone 5/SE より画面幅が小さい場合 */
+@media screen and (max-width: 320px) {
+    .exp_conditionValue select {
+        width: 120px !important;
+    }
 }
