@@ -74,7 +74,7 @@
 | Windows/Mac | - | FireFox | 最新版のみ対応 |
 | Windows/Mac | - | Chrome | 最新版のみ対応 |
 | iOS | 11.0以降 | Safari | |
-| Android | 5.0以降 | Chrome | |
+| Android | 6.0以降 | Chrome | |
 
 ## デモ
 
