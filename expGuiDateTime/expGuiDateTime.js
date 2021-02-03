@@ -673,8 +673,11 @@ var expGuiDateTime = function (pObject, config) {
         if (year < 2003 && month == 9 && day == 15) { syuku = '敬老の日'; } //  9月15日(～2002)
         if (month == 8 && day == 11 && year >= 2016 && year != 2020) { syuku = '山の日'; } //  8月11日(2016年から) 2020年のみ、山の日は別の日となる
         if (year == 2020 && month == 7 && day == 23) { syuku = '海の日'; }      //  2020年7月23日
+        if (year == 2021 && month == 7 && day == 22) { syuku = '海の日'; }      //  2021年7月22日
         if (year == 2020 && month == 7 && day == 24) { syuku = 'スポーツの日'; }      //  2020年7月24日
+        if (year == 2021 && month == 7 && day == 23) { syuku = 'スポーツの日'; }      //  2021年7月23日
         if (year == 2020 && month == 8 && day == 10) { syuku = '山の日'; }      //  2020年8月10日
+        if (year == 2021 && month == 8 && day == 8) { syuku = '山の日'; }      //  2021年8月8日
 
         // 振替休日
         // (2007年から)「国民の祝日」が日曜日に当たるときは、その日後においてその日に最も近い「国民の祝日」でない日を休日とする。
