@@ -661,7 +661,7 @@ var expGuiDateTime = function (pObject, config) {
         if (month == 1 && day == 1) { syuku = '元日'; }            //  1月 1日
         if (month == 2 && day == 11) { syuku = '建国記念の日'; }    //  2月11日
         if (year <= 2018 && month == 12 && day == 23) { syuku = '天皇誕生日'; } // 2018年まで
-        if (year >= 2020 && month == 2 && day == 23) { syuku = '天皇誕生日'; }     // 2021年から2月23日
+        if (year >= 2020 && month == 2 && day == 23) { syuku = '天皇誕生日'; }     // 2020年から2月23日
         if (month == 4 && day == 29 && year <= 2006) { syuku = 'みどりの日'; }      //  4月29日(2006年まで)
         if (month == 4 && day == 29 && year >= 2007) { syuku = '昭和の日'; }        //  4月29日(2007年から)
         if (month == 5 && day == 3) { syuku = '憲法記念日'; }      //  5月 3日
