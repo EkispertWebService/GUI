@@ -3197,10 +3197,10 @@ var expGuiCourse = function (pObject, config) {
             }
             // 定期の選択リスト作成
             if (document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1))) {
-                var select_options = document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1)).options;
-                for (var j = 0; j < select_options.length; j++) {
-                    if (select_options[j].selected) {
-                        var selectedTeikiList = select_options[j].value.split(':');
+                var selectOptions = document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1)).options;
+                for (var j = 0; j < selectOptions.length; j++) {
+                    if (selectOptions[j].selected) {
+                        var selectedTeikiList = selectOptions[j].value.split(':');
                         var selectedTeikiIndex = selectedTeikiList[0];
                         var selectedTeikiKind = selectedTeikiList[1];
                         var selectedTeikiTeiki1Index = selectedTeikiList[2];
