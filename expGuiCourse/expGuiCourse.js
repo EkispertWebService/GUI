@@ -2052,7 +2052,11 @@ var expGuiCourse = function (pObject, config) {
                         buffer += '<div class="exp_cost">';
                         buffer += '<div class="exp_name">';
                         // 選択されているすべての定期の名称を表示用に加工
-                        var selectedTeikiName = selectedTeikiList.map(function(selectedTeiki) { return selectedTeiki.teikiName; }).join(' + ');
+                        var selectedTeikiNameList = [];
+                        for (var k = 0; k < selectedTeikiList.length; k++) {
+                            selectedTeikiNameList.push(selectedTeikiList[k].teikiName);
+                        }
+                        var selectedTeikiName = selectedTeikiNameList.join('&nbsp;+&nbsp;');
                         if (agent == 1) {
                             if (teikiIndex == 0 || !priceChangeFlag || !priceChangeRefreshFlag) {
                                 buffer += (selectedTeikiName != "" ? selectedTeikiName : "定期");
@@ -3219,13 +3223,14 @@ var expGuiCourse = function (pObject, config) {
                         }
 
                         // レスポンスのPassStatusに、定期メニューで選択された定期と「teiki1Indexが同じ」かつ「kindが異なる」ものがある場合、そのうちselected="true"のものを配列に追加する
-                        var otherSelectedTeikiList = tmpPassStatus.map(function(passStatus, index) {
-                            if (passStatus.teiki1Index === selectedTeikiTeiki1Index && passStatus.kind !== selectedTeikiKind && passStatus.selected === "true") {
-                                return { index: (index + 1), value: passStatus };
+                        var otherSelectedTeikiList = [];
+                        for (var k = 0; k < tmpPassStatus.length; k++) {
+                            if (tmpPassStatus[k].teiki1Index === selectedTeikiTeiki1Index && tmpPassStatus[k].kind !== selectedTeikiKind && tmpPassStatus[k].selected === "true") {
+                                otherSelectedTeikiList.push({ index: (k + 1), value: tmpPassStatus[k] });
                             }
-                        });
-                        for (var k = 0; k < otherSelectedTeikiList.length; k++) {
-                            var passStatus = otherSelectedTeikiList[k];
+                        }
+                        for (var l = 0; l < otherSelectedTeikiList.length; l++) {
+                            var passStatus = otherSelectedTeikiList[l];
                             if (typeof passStatus == 'undefined') { continue; }
 
                             if (passStatus.value.kind == "vehicle") {
