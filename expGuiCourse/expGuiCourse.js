@@ -2052,7 +2052,7 @@ var expGuiCourse = function (pObject, config) {
                         buffer += '<div class="exp_cost">';
                         buffer += '<div class="exp_name">';
                         // 選択されているすべての定期の名称を表示用に加工
-                        var selectedTeikiName = selectedTeikiList.map(item => item.teikiName).join(" + ");
+                        var selectedTeikiName = selectedTeikiList.map(function(selectedTeiki) { return selectedTeiki.teikiName; }).join(' + ');
                         if (agent == 1) {
                             if (teikiIndex == 0 || !priceChangeFlag || !priceChangeRefreshFlag) {
                                 buffer += (selectedTeikiName != "" ? selectedTeikiName : "定期");
