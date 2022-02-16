@@ -2072,7 +2072,7 @@ var expGuiCourse = function (pObject, config) {
                                 for (var k = 0; k < teiki.length; k++) {
                                     if (teiki[k].teiki1Index == teiki1List[j].index) {
                                         buffer += '<option value="' + String(k + 1) + ':' + teiki[k].kind + ':' + teiki[k].teiki1Index + '"' + (selectedTeikiIndexList.includes(String(k + 1)) ? " selected" : "") + '>';
-                                        buffer += String(teiki[k].Name);
+                                        buffer += (teiki[k].kind === 'vehicle' ? '[車両]' : '[種類]') + '&nbsp;' + String(teiki[k].Name);
                                         buffer += '</option>';
                                     }
                                 }
@@ -2147,7 +2147,9 @@ var expGuiCourse = function (pObject, config) {
                                 var menuCount = 0;
                                 for (var k = 0; k < teiki.length; k++) {
                                     if (teiki[k].teiki1Index == teiki1List[j].index) {
-                                        buffer += '<div class="exp_item' + (teiki[k].selected == "true" ? " exp_checked" : "") + ' exp_' + (menuCount % 2 == 0 ? 'odd' : 'even') + '"><a href="Javascript:void(0);" id="' + baseId + ':teikiMenu:' + String(routeNo) + ':' + String(i + 1) + ':' + String(k + 1) + ':' + teiki[k].kind + '">&nbsp;' + String(teiki[k].Name) + '&nbsp;</a></div>';
+                                        buffer += '<div class="exp_item' + (teiki[k].selected == "true" ? " exp_checked" : "") + ' exp_' + (menuCount % 2 == 0 ? 'odd' : 'even') + '">'
+                                                  + '<a href="Javascript:void(0);" id="' + baseId + ':teikiMenu:' + String(routeNo) + ':' + String(i + 1) + ':' + String(k + 1) + ':' + teiki[k].kind + '">'
+                                                  + '&nbsp;' + (teiki[k].kind === 'vehicle' ? '[車両]' : '[種類]') + '&nbsp;' + String(teiki[k].Name) + '&nbsp;</a></div>';
                                         menuCount++;
                                     }
                                 }
