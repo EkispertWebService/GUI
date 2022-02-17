@@ -649,9 +649,6 @@
     padding: 0.5em;
     background-color: #EE8051;
 }
-.expGuiCourseTablet .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_name {
-    background: url("../expImages/teikiIcon.png") no-repeat scroll 9px 0 transparent;
-}
 .expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki1,
 .expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki3,
 .expGuiCourse .exp_route .exp_detail .exp_teikiValue .exp_cost .exp_teiki6,
