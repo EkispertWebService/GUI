@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2018-07-29
+ *  Version:2022-02-17
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -105,6 +105,7 @@ var expGuiCourse = function (pObject, config) {
     var fromName; // 座標指定等で名称を上書きする際の変数
     var toName; // 座標指定等で名称を上書きする際の変数
     var selectedIndex; // 選択中の経路NOを指定
+    var selectedTeikiIndexList = []; // 選択中の定期券NOの配列
     var sortCourseList; // ソート用配列
     var sortType; // ソートする基準
     var resultTab = true; // タブを表示の有無を指定(オンにすることでソート可能)
@@ -636,6 +637,10 @@ var expGuiCourse = function (pObject, config) {
     */
     function changeCourse(n, callback) {
         if (n >= 1 && n <= resultCount) {
+            if (selectNo !== n) {
+                // 表示する経路NOが変わった場合、選択されている定期券のインデックスリストを初期化
+                selectedTeikiIndexList = [];
+            }
             selectNo = n;
             viewCourseListFlag = false;
             // 最適経路のチェック
@@ -1630,6 +1635,7 @@ var expGuiCourse = function (pObject, config) {
                     } else {
                         if (priceChangeFlag) {
                             document.getElementById(baseId + ':teiki:' + eventIdList[2] + ':' + eventIdList[3]).value = eventIdList[4];
+                            document.getElementById(baseId + ':teikiKind:' + eventIdList[2] + ':' + eventIdList[3] + ':' + eventIdList[5]).value = eventIdList[4];
                             if (courseDisplayAll) {
                                 selectNo = parseInt(eventIdList[2]);
                             }
@@ -1998,6 +2004,7 @@ var expGuiCourse = function (pObject, config) {
                 var teiki3List = new Array();
                 var teiki6List = new Array();
                 var teiki12List = new Array();
+                var selectedTeikiList = new Array();
                 // 対象となる定期券をセット
                 for (var j = 0; j < teiki1.length; j++) {
                     if (parseInt(teiki1[j].fromLineIndex) == (i + 1)) {
@@ -2026,6 +2033,8 @@ var expGuiCourse = function (pObject, config) {
                         var teikiIndex = 0;
                         var teikiName = "";
                         var teikiKind = "";
+                        var selectedTeikiKindBuffer = "";
+
                         for (var k = 0; k < teiki.length; k++) {
                             if (teiki[k].teiki1Index == teiki1List[j].index) {
                                 // 選択している値
@@ -2033,6 +2042,8 @@ var expGuiCourse = function (pObject, config) {
                                     teikiIndex = k + 1;
                                     teikiName = teiki[k].Name;
                                     teikiKind = teiki[k].kind;
+                                    selectedTeikiKindBuffer += '<input type="hidden" id="' + baseId + ':teikiKind:' + String(routeNo) + ':' + String(i + 1) + ':' + teikiKind + '" value="' + String(teikiIndex) + '">';
+                                    selectedTeikiList.push( { teikiIndex: teikiIndex, teikiName: teikiName, teikiKind: teikiKind } );
                                 }
                             }
                         }
@@ -2040,26 +2051,32 @@ var expGuiCourse = function (pObject, config) {
                         buffer += '<div class="exp_teikiValue">';
                         buffer += '<div class="exp_cost">';
                         buffer += '<div class="exp_name">';
+                        // 選択されているすべての定期の名称を表示用に加工
+                        var selectedTeikiNameList = [];
+                        for (var k = 0; k < selectedTeikiList.length; k++) {
+                            selectedTeikiNameList.push(selectedTeikiList[k].teikiName);
+                        }
+                        var selectedTeikiName = selectedTeikiNameList.join('&nbsp;+&nbsp;');
                         if (agent == 1) {
                             if (teikiIndex == 0 || !priceChangeFlag || !priceChangeRefreshFlag) {
-                                buffer += (teikiName != "" ? teikiName : "定期");
+                                buffer += (selectedTeikiName != "" ? selectedTeikiName : "定期");
                             } else {
                                 // 2つ以上ある場合はメニューのリンクを設置
-                                buffer += '<span class="exp_priceMenu"><a id="' + baseId + ':teikiMenu:' + String(routeNo) + ':' + String(i + 1) + ':open" href="Javascript:void(0);">' + (teikiName != "" ? teikiName : "定期") + '▼</a></span>';
+                                buffer += '<span class="exp_priceMenu"><a id="' + baseId + ':teikiMenu:' + String(routeNo) + ':' + String(i + 1) + ':open" href="Javascript:void(0);">' + (selectedTeikiName != "" ? selectedTeikiName : "定期") + '▼</a></span>';
                             }
                         } else if (agent == 2 || agent == 3) {
                             if (teikiIndex == 0 || !priceChangeFlag || !priceChangeRefreshFlag) {
-                                buffer += (teikiName != "" ? teikiName : "定期");
+                                buffer += (selectedTeikiName != "" ? selectedTeikiName : "定期");
                             } else {
                                 // 定期が複数あった場合のフォーム出力
                                 buffer += '<div class="exp_teikiSelect">';
-                                buffer += '<div class="exp_teikiSelectText">' + teikiName + '▼</div>';
-                                buffer += '<input type="hidden" id="' + baseId + ':teikiKind:' + String(routeNo) + ':' + String(i + 1) + '" value="' + teikiKind + '">';
+                                buffer += '<div class="exp_teikiSelectText">' + selectedTeikiName + '▼</div>';
+                                buffer += selectedTeikiKindBuffer;
                                 buffer += '<select id="' + baseId + ':teikiSelect:' + String(routeNo) + ':' + String(i + 1) + '" value="' + String(teikiIndex) + '">';
                                 for (var k = 0; k < teiki.length; k++) {
                                     if (teiki[k].teiki1Index == teiki1List[j].index) {
-                                        buffer += '<option value="' + String(k + 1) + '"' + (teiki[k].selected == "true" ? " selected" : "") + '>';
-                                        buffer += String(teiki[k].Name);
+                                        buffer += '<option value="' + String(k + 1) + ':' + teiki[k].kind + ':' + teiki[k].teiki1Index + '"' + (selectedTeikiIndexList.includes(String(k + 1)) ? " selected" : "") + '>';
+                                        buffer += (teiki[k].kind === 'vehicle' ? '[車両]' : '[種類]') + '&nbsp;' + String(teiki[k].Name);
                                         buffer += '</option>';
                                     }
                                 }
@@ -2117,9 +2134,9 @@ var expGuiCourse = function (pObject, config) {
                         buffer += '</div>';
                         if (teikiIndex > 0) {
                             if (agent == 1) {
-                                buffer += '<input type="hidden" id="' + baseId + ':teiki:' + String(routeNo) + ':' + String(i + 1) + '" value="' + String(teikiIndex) + '">';
-                                // タイプを入れる
-                                buffer += '<input type="hidden" id="' + baseId + ':teikiKind:' + String(routeNo) + ':' + String(i + 1) + '" value="' + teikiKind + '">';
+                                buffer += '<input type="hidden" id="' + baseId + ':teiki:' + String(routeNo) + ':' + String(i + 1) + '">';
+                                // selectedTeikiKindBuffer: selected="true"になっている定期の種別ごとのインデックスを保持するための要素群
+                                buffer += selectedTeikiKindBuffer;
                                 // メニュー本体
                                 buffer += '<div class="exp_menu exp_teikiWindow" id="' + baseId + ':teikiMenu:' + String(routeNo) + ':' + String(i + 1) + '" style="display:none;">';
                                 buffer += '<div class="exp_header exp_clearfix">';
@@ -2134,7 +2151,9 @@ var expGuiCourse = function (pObject, config) {
                                 var menuCount = 0;
                                 for (var k = 0; k < teiki.length; k++) {
                                     if (teiki[k].teiki1Index == teiki1List[j].index) {
-                                        buffer += '<div class="exp_item' + (teiki[k].selected == "true" ? " exp_checked" : "") + ' exp_' + (menuCount % 2 == 0 ? 'odd' : 'even') + '"><a href="Javascript:void(0);" id="' + baseId + ':teikiMenu:' + String(routeNo) + ':' + String(i + 1) + ':' + String(k + 1) + '">&nbsp;' + String(teiki[k].Name) + '&nbsp;</a></div>';
+                                        buffer += '<div class="exp_item' + (teiki[k].selected == "true" ? " exp_checked" : "") + ' exp_' + (menuCount % 2 == 0 ? 'odd' : 'even') + '">'
+                                                  + '<a href="Javascript:void(0);" id="' + baseId + ':teikiMenu:' + String(routeNo) + ':' + String(i + 1) + ':' + String(k + 1) + ':' + teiki[k].kind + '">'
+                                                  + '&nbsp;' + (teiki[k].kind === 'vehicle' ? '[車両]' : '[種類]') + '&nbsp;' + String(teiki[k].Name) + '&nbsp;</a></div>';
                                         menuCount++;
                                     }
                                 }
@@ -3153,12 +3172,16 @@ var expGuiCourse = function (pObject, config) {
         } else {
             tmpResult = result.ResultSet.Course[(selectNo - 1)];
         }
+        var tmpPassStatus = (tmpResult.PassStatus instanceof Array) ? tmpResult.PassStatus : [tmpResult.PassStatus];
+
         // 変更対象となった料金のリスト作成
         var fareList = new Array();
         var chargeList = new Array();
         var vehicleTeikiList = new Array();
         var nikukanTeikiList = new Array();
         var passTeikiList = new Array();
+
+        selectedTeikiIndexList = [];
         for (var i = 0; i < (tmpResult.Route.Point.length - 1); i++) {
             // 乗車券のリスト作成
             if (document.getElementById(baseId + ':fareSelect:' + selectNo + ':' + (i + 1))) {
@@ -3180,26 +3203,64 @@ var expGuiCourse = function (pObject, config) {
             }
             // 定期の選択リスト作成
             if (document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1))) {
-                if (document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1)).value == "vehicle") {
-                    // 車両選択
-                    vehicleTeikiList.push(parseInt(document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1)).options.item(document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1)).selectedIndex).value));
-                } else if (document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1)).value == "nikukanteiki") {
-                    // 二区間定期
-                    nikukanTeikiList.push(parseInt(document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1)).options.item(document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1)).selectedIndex).value));
-                } else if (document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1)).value == "bycorporation") {
-                    // 各事業者が定める定期
-                    passTeikiList.push(parseInt(document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1)).options.item(document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1)).selectedIndex).value));
+                var selectOptions = document.getElementById(baseId + ':teikiSelect:' + selectNo + ':' + (i + 1)).options;
+                for (var j = 0; j < selectOptions.length; j++) {
+                    if (selectOptions[j].selected) {
+                        var selectedTeikiList = selectOptions[j].value.split(':');
+                        var selectedTeikiIndex = selectedTeikiList[0];
+                        var selectedTeikiKind = selectedTeikiList[1];
+                        var selectedTeikiTeiki1Index = selectedTeikiList[2];
+
+                        if (selectedTeikiKind == 'vehicle') {
+                            // 車両選択
+                            vehicleTeikiList.push(parseInt(selectedTeikiIndex));
+                        } else if (selectedTeikiKind == 'nikukanteiki') {
+                            // 二区間定期
+                            nikukanTeikiList.push(parseInt(selectedTeikiIndex));
+                        } else if (selectedTeikiKind == 'bycorporation') {
+                            // 各事業者が定める定期
+                            passTeikiList.push(parseInt(selectedTeikiIndex));
+                        }
+
+                        // レスポンスのPassStatusに、定期メニューで選択された定期と「teiki1Indexが同じ」かつ「kindが異なる」ものがある場合、そのうちselected="true"のものを配列に追加する
+                        var otherSelectedTeikiList = [];
+                        for (var k = 0; k < tmpPassStatus.length; k++) {
+                            if (tmpPassStatus[k].teiki1Index === selectedTeikiTeiki1Index && tmpPassStatus[k].kind !== selectedTeikiKind && tmpPassStatus[k].selected === "true") {
+                                otherSelectedTeikiList.push({ index: (k + 1), value: tmpPassStatus[k] });
+                            }
+                        }
+                        for (var l = 0; l < otherSelectedTeikiList.length; l++) {
+                            var passStatus = otherSelectedTeikiList[l];
+                            if (typeof passStatus == 'undefined') { continue; }
+
+                            if (passStatus.value.kind == "vehicle") {
+                                // 車両選択
+                                vehicleTeikiList.push(parseInt(passStatus.index));
+                            } else if (passStatus.value.kind == "nikukanteiki") {
+                                // 二区間定期
+                                nikukanTeikiList.push(parseInt(passStatus.index));
+                            } else if (passStatus.value.kind == "bycorporation") {
+                                // 各事業者が定める定期
+                                passTeikiList.push(parseInt(passStatus.index));
+                            }
+                        }
+
+                        // 選択されている定期券のインデックスを表示用に保持
+                        selectedTeikiIndexList.push(selectedTeikiIndex);
+                    }
                 }
             } else if (document.getElementById(baseId + ':teiki:' + selectNo + ':' + (i + 1))) {
-                if (document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1)).value == "vehicle") {
+                if (document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1) + ':vehicle')) {
                     // 車両選択
-                    vehicleTeikiList.push(parseInt(document.getElementById(baseId + ':teiki:' + selectNo + ':' + (i + 1)).value));
-                } else if (document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1)).value == "nikukanteiki") {
+                    vehicleTeikiList.push(parseInt(document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1) + ':vehicle').value));
+                }
+                if (document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1) + ':nikukanteiki')) {
                     // 二区間定期
-                    nikukanTeikiList.push(parseInt(document.getElementById(baseId + ':teiki:' + selectNo + ':' + (i + 1)).value));
-                } else if (document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1)).value == "bycorporation") {
+                    nikukanTeikiList.push(parseInt(document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1) + ':nikukanteiki').value));
+                }
+                if (document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1) + ':bycorporation')) {
                     // 各事業者が定める定期
-                    passTeikiList.push(parseInt(document.getElementById(baseId + ':teiki:' + selectNo + ':' + (i + 1)).value));
+                    passTeikiList.push(parseInt(document.getElementById(baseId + ':teikiKind:' + selectNo + ':' + (i + 1) + ':bycorporation').value));
                 }
             }
         }
