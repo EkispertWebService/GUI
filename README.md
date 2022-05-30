@@ -68,12 +68,13 @@
 
 |OS|バージョン|ブラウザ|備考|
 | --- | --- | --- | --- |
-| Windows | 10 | Microsoft Edge | 最新版のみ対応 |
-| MacOSX | 10.7以降 | Safari | 最新版のみ対応 |
-| Windows/Mac | - | FireFox | 最新版のみ対応 |
-| Windows/Mac | - | Chrome | 最新版のみ対応 |
+| Windows | 10 | Microsoft Edge | 最新版を推奨 |
+| MacOSX | 10.7以降 | Safari | 最新版を推奨 |
+| Windows/Mac | - | FireFox | 最新版を推奨 |
+| Windows/Mac | - | Chrome | 最新版を推奨 |
 | iOS | 11.0以降 | Safari | |
 | Android | 6.0以降 | Chrome | |
+
 ※ IE11は非推奨です。
 
 ## デモ
