@@ -2092,6 +2092,10 @@ var expGuiCourse = function (pObject, config) {
                             } else {
                                 buffer += appendRevisionStatusLineClass([teiki1List[j].RevisionStatus], num2String(parseInt(getTextValue(teiki1List[j].Oneway))) + '円', '');
                             }
+                            // オフピーク定期券の金額かどうかの判定
+                            if (teiki1List[j].offpeakTeiki == 'true') {
+                                buffer += '&nbsp;' + '[オフピーク]';
+                            }
                         } else {
                             buffer += '------円';
                         }
@@ -2102,6 +2106,10 @@ var expGuiCourse = function (pObject, config) {
                                 buffer += appendRevisionStatusLineClass([teiki3List[j].RevisionStatus], getTextValue(teiki3List[j].Name), '');
                             } else {
                                 buffer += appendRevisionStatusLineClass([teiki3List[j].RevisionStatus], num2String(parseInt(getTextValue(teiki3List[j].Oneway))) + '円', '');
+                            }
+                            // オフピーク定期券の金額かどうかの判定
+                            if (teiki3List[j].offpeakTeiki == 'true') {
+                                buffer += '&nbsp;' + '[オフピーク]';
                             }
                         } else {
                             buffer += '------円';
@@ -2114,6 +2122,10 @@ var expGuiCourse = function (pObject, config) {
                             } else {
                                 buffer += appendRevisionStatusLineClass([teiki6List[j].RevisionStatus], num2String(parseInt(getTextValue(teiki6List[j].Oneway))) + '円', '');
                             }
+                            // オフピーク定期券の金額かどうかの判定
+                            if (teiki6List[j].offpeakTeiki == 'true') {
+                                buffer += '&nbsp;' + '[オフピーク]';
+                            }
                         } else {
                             buffer += '------円';
                         }
@@ -2124,6 +2136,10 @@ var expGuiCourse = function (pObject, config) {
                                 buffer += appendRevisionStatusLineClass([teiki12List[j].RevisionStatus], getTextValue(teiki12List[j].Name), '');
                             } else {
                                 buffer += appendRevisionStatusLineClass([teiki12List[j].RevisionStatus], num2String(parseInt(getTextValue(teiki12List[j].Oneway))) + '円', '');
+                            }
+                            // オフピーク定期券の金額かどうかの判定
+                            if (teiki12List[j].offpeakTeiki == 'true') {
+                                buffer += '&nbsp;' + '[オフピーク]';
                             }
                         } else {
                             buffer += '------円';
