@@ -64,8 +64,7 @@ var expGuiCondition = function (pObject, config) {
     // 変数郡
     // デフォルト探索条件
     var def_condition_t = "T3221233232319";
-    var def_condition_f = "F3421122120000";
-    
+    var def_condition_f = "F34211221200001";
     var def_condition_a = "A23121141";
     var def_sortType = "ekispert"; // デフォルトソート
     var def_priceType = "oneway"; // 片道運賃がデフォルト
@@ -235,6 +234,12 @@ var expGuiCondition = function (pObject, config) {
         var conditionId = "nikukanteiki";
         var conditionLabel = "２区間定期の利用";
         var tmpOption = new Array("利用する", "利用しない");
+        var tmpValue = new Array("true", "false");
+        tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
+        // オフピーク定期券
+        var conditionId = "offpeakTeiki";
+        var conditionLabel = "オフピーク定期券";
+        var tmpOption = new Array("計算する", "計算しない");
         var tmpValue = new Array("true", "false");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
         // JR路線
@@ -591,7 +596,10 @@ var expGuiCondition = function (pObject, config) {
         buffer += outSeparator("preferredTicketOrder");
         // ２区間定期の利用
         buffer += outConditionRadio("nikukanteiki", "greenSelect");
-        //buffer += outSeparator("nikukanteiki");
+        buffer += outSeparator("nikukanteiki");
+        // オフピーク定期券
+        buffer += outConditionRadio("offpeakTeiki", "whiteSelect");
+        // buffer += outSeparator("offpeakTeiki");
         // 航空保険特別料金
         //buffer += outConditionRadio("includeInsurance", "whiteSelect");
         // 航空運賃の指定
@@ -755,6 +763,7 @@ var expGuiCondition = function (pObject, config) {
         buffer += outConditionSelect("ticketSystemType", "greenSelect"); // 乗車券計算のシステム
         buffer += outConditionSelect("preferredTicketOrder", "whiteSelect"); // 優先する乗車券の順序
         buffer += outConditionSelect("nikukanteiki", "greenSelect"); // ２区間定期の利用
+        buffer += outConditionSelect("offpeakTeiki", "whiteSelect"); // オフピーク定期券
         //buffer += outConditionSelect("includeInsurance", "greenSelect"); // 航空保険特別料金
         //  buffer += outConditionSelect("airFare");// 航空運賃の指定
         buffer += '</div>';
@@ -1208,6 +1217,7 @@ var expGuiCondition = function (pObject, config) {
                 setValue("JRReservation", 10);
             }
             setValue("shinkansenETicket", parseInt(conditionList_f[13]));
+            setValue("offpeakTeiki", parseInt(conditionList_f[14]));
             // 探索条件(A)
             setValue("useJR", parseInt(conditionList_a[1]));
             setValue("transfer", parseInt(conditionList_a[2]));
@@ -1318,6 +1328,7 @@ var expGuiCondition = function (pObject, config) {
         conditionList_f[11] = getJRReservation()[0];
         conditionList_f[12] = getJRReservation()[1];
         conditionList_f[13] = getShinkansenETicket();
+        conditionList_f[14] = getValueIndex("offpeakTeiki", parseInt(conditionList_f[14]));
         // 探索条件(A)
         var conditionList_a = def_condition_a.split('');
         conditionList_a[1] = getValueIndex("useJR", parseInt(conditionList_a[1]));
@@ -1567,6 +1578,7 @@ var expGuiCondition = function (pObject, config) {
     //this.CONDITON_INCLUDEINSURANCE = "includeInsurance";
     this.CONDITON_TICKETSYSTEMTYPE = "ticketSystemType";
     this.CONDITON_NIKUKANTEIKI = "nikukanteiki";
+    this.CONDITON_OFFPEAKTEIKI = "offpeakTeiki";
     this.CONDITON_USEJR = "useJR";
     this.CONDITON_TRANSFER = "transfer";
     this.CONDITON_EXPRESSSTARTINGSTATION = "expressStartingStation";
