@@ -4,20 +4,16 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiLandmark = function (pObject, config) {
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
 
     var apiURL = "http://api.ekispert.jp/";
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -27,8 +23,8 @@ var expGuiLandmark = function (pObject, config) {
         if (s.src && s.src.match(/expGuiLandmark\.js(\?.*)?/)) {
             var params = s.src.replace(/.+\?/, '');
             params = params.split("&");
-            for (var i = 0; i < params.length; i++) {
-                var tmp = params[i].split("=");
+            for (var j = 0; j < params.length; j++) {
+                var tmp = params[j].split("=");
                 if (tmp[0] == "key") {
                     key = unescape(tmp[1]);
                 }
@@ -37,14 +33,12 @@ var expGuiLandmark = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var httpObj;
     var callbackFunction; // コールバック関数の設定
     var serializeData;
 
-    /*
+    /**
     * 地点の生成
     */
     function createLandmark(landmarkObject, callBack) {
@@ -92,7 +86,7 @@ var expGuiLandmark = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * ランドマーク情報を返却
     */
     function setLandmarkData(json) {
@@ -111,14 +105,14 @@ var expGuiLandmark = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 地点インターフェースの生成
     */
     function createLandmarkInterface(name) {
         return new landmarkInterface(name);
     }
 
-    /*
+    /**
     * 地点インターフェース
     */
     function landmarkInterface(tmp_name) {
@@ -263,14 +257,14 @@ var expGuiLandmark = function (pObject, config) {
         this.getParam = getParam;
     }
 
-    /*
+    /**
     * 駅インターフェースの生成
     */
     function createLandmarkStationInterface(station) {
         return new landmarkStationInterface(station);
     }
 
-    /*
+    /**
     * 駅インターフェース
     */
     function landmarkStationInterface(tmp_station) {
@@ -324,7 +318,7 @@ var expGuiLandmark = function (pObject, config) {
         this.getTeiki6 = getTeiki6;
     }
 
-    /*
+    /**
     * 地点のシリアライズデータを取得
     */
     function getSerializeData() {
@@ -335,7 +329,7 @@ var expGuiLandmark = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -344,17 +338,15 @@ var expGuiLandmark = function (pObject, config) {
         } else if (name.toLowerCase() == String("key").toLowerCase()) {
             key = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.createLandmark = createLandmark;
     this.createLandmarkInterface = createLandmarkInterface;
     this.createLandmarkStationInterface = createLandmarkStationInterface;

@@ -4,20 +4,16 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiVersion = function (pObject, config) {
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -27,8 +23,8 @@ var expGuiVersion = function (pObject, config) {
         if (s.src && s.src.match(/expGuiVersion\.js(\?.*)?/)) {
             var params = s.src.replace(/.+\?/, '');
             params = params.split("&");
-            for (var i = 0; i < params.length; i++) {
-                var tmp = params[i].split("=");
+            for (var j = 0; j < params.length; j++) {
+                var tmp = params[j].split("=");
                 if (tmp[0] == "key") {
                     key = unescape(tmp[1]);
                 }
@@ -37,15 +33,13 @@ var expGuiVersion = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var versionObj;
     var httpObj;
     // 設定
     var callbackFunction; // コールバック関数の設定
 
-    /*
+    /**
     * データバージョンの取得
     */
     function getVersion(callback) {
@@ -89,7 +83,7 @@ var expGuiVersion = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * バージョン情報の解析
     */
     function setVersion(json) {
@@ -108,7 +102,7 @@ var expGuiVersion = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * APIバージョン
     */
     function getApiVersion() {
@@ -118,7 +112,7 @@ var expGuiVersion = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * エンジンバージョン
     */
     function getEngineVersion() {
@@ -128,7 +122,7 @@ var expGuiVersion = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * バージョンリスト
     */
     function getVersionList() {
@@ -141,7 +135,7 @@ var expGuiVersion = function (pObject, config) {
         return versionList;
     }
 
-    /*
+    /**
     *バージョンオブジェクトの作成
     */
     function setVersionObject(ver) {
@@ -175,7 +169,7 @@ var expGuiVersion = function (pObject, config) {
         return tmp_version;
     }
 
-    /*
+    /**
     * 権利団体の名称を取得
     * ※現在はid=2のみ対応
     */
@@ -189,7 +183,7 @@ var expGuiVersion = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * 著作権を取得
     * ※現在はid=2のみ対応
     */
@@ -203,7 +197,7 @@ var expGuiVersion = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -212,17 +206,15 @@ var expGuiVersion = function (pObject, config) {
         } else if (name.toLowerCase() == String("key").toLowerCase()) {
             key = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.getVersion = getVersion;
     this.getApiVersion = getApiVersion;
     this.getEngineVersion = getEngineVersion;
