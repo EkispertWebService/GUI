@@ -4,25 +4,19 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2017-03-29
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiMap = function (pObject, config) {
-    /*
-    * ドキュメントのオブジェクトを格納
-    */
+    // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
     var baseId = pObject.id;
 
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -33,8 +27,8 @@ var expGuiMap = function (pObject, config) {
         if (s.src && s.src.match(/expGuiMap\.js(\?.*)?/)) {
             var params = s.src.replace(/.+\?/, '');
             params = params.split("&");
-            for (var i = 0; i < params.length; i++) {
-                var tmp = params[i].split("=");
+            for (var j = 0; j < params.length; j++) {
+                var tmp = params[j].split("=");
                 if (tmp[0] == "key") {
                     key = unescape(tmp[1]);
                 }
@@ -44,7 +38,7 @@ var expGuiMap = function (pObject, config) {
     }
 
     //設定オブジェクト
-    var configs = new Object;
+    var configs = new Object();
 
     //古い端末向けのフラグ
     var oldFlag = false;
@@ -118,22 +112,22 @@ var expGuiMap = function (pObject, config) {
     //路線図のリスト
     var mapList;
 
-    /*
+    /**
     * フレーム処理の定義
     */
     var frame = (1000 / 60);
     window.requestAnimFrame = (function () {
         return window.requestAnimationFrame ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame ||
-          window.oRequestAnimationFrame ||
-          window.msRequestAnimationFrame ||
-          function (/* function */callback, /* DOMElement */element) {
-              window.setTimeout(callback, frame);
-          };
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function (/** function */callback, /** DOMElement */element) {
+                window.setTimeout(callback, frame);
+            };
     })();
 
-    /*
+    /**
     * 路線図を設定
     */
     function dispMap(prefix, cbFunction) {
@@ -141,7 +135,7 @@ var expGuiMap = function (pObject, config) {
         return setMapStation(prefix);
     }
 
-    /*
+    /**
     * 路線図を中心駅を指定して表示
     */
     function dispMapStation(centerStation, prefix, cbFunction) {
@@ -156,7 +150,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅名を指定して路線図を表示
     */
     function setDispMapStation(station) {
@@ -220,7 +214,7 @@ var expGuiMap = function (pObject, config) {
         http_request.send(null);
     }
 
-    /*
+    /**
     * 路線図の中心座標を指定
     */
     function dispMapCenterPoint(point) {
@@ -234,7 +228,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線図の中心駅を設定
     */
     function setMapStation(prefix, centerStation) {
@@ -360,9 +354,9 @@ var expGuiMap = function (pObject, config) {
             }
             return true;
         }
-    };
+    }
 
-    /*
+    /**
     * コールバック関数の定義
     */
     function bind(type, func) {
@@ -373,7 +367,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * コールバック関数の解除
     */
     function unbind(type) {
@@ -382,7 +376,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線図の倍率を取得
     */
     function getScale() {
@@ -396,7 +390,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * イベントの設定(IE対応版)
     */
     function addEvent(element, eventName, func) {
@@ -411,7 +405,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * マウス・タッチイベントの設定
     */
     function addMouseEvent() {
@@ -432,7 +426,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線図情報の取得
     */
     function loadMapData(prefix) {
@@ -477,7 +471,7 @@ var expGuiMap = function (pObject, config) {
         http_request.send(null);
     }
 
-    /*
+    /**
     * prefix指定で路線図変更
     */
     function changeMap() {
@@ -526,7 +520,12 @@ var expGuiMap = function (pObject, config) {
             loadMap();
         } else {
             if (typeof obj.centerStation == 'undefined') {
-                initMap(mapObj.defaultStation);
+                if (typeof mapObj.defaultStation != 'undefined') {
+                    initMap(mapObj.defaultStation);
+                } else {
+                    //中心駅が無い場合の処理
+                    setInitMapCenter(Math.floor(mapObj.width / 2), Math.floor(mapObj.height / 2));
+                }
             } else {
                 if (mapObj.defaultStation != obj.centerStation) {
                     initMap(obj.centerStation);
@@ -541,7 +540,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 描画領域の変更
     */
     function changeCanvas(w, h) {
@@ -560,7 +559,7 @@ var expGuiMap = function (pObject, config) {
         setCenter(tmp_x, tmp_y);
     }
 
-    /*
+    /**
     * JSONデータを解析
     */
     function getMapData(json, hd_flag) {
@@ -575,8 +574,10 @@ var expGuiMap = function (pObject, config) {
             mapData.width = json.width;
             mapData.height = json.height;
         }
-        mapData.defaultStation = json.Point.Station.code;
-        mapData.type = json.Point.Station.Type;
+        if (typeof json.Point != 'undefined') {
+            mapData.defaultStation = json.Point.Station.code;
+            mapData.type = json.Point.Station.Type;
+        }    
         if (mapData.prefix == "jpnx1" || mapData.prefix == "jpnx2" || mapData.prefix == "jpnx4") {
             mapData.minimap = "jp_small.png";
             if (mapData.prefix == "jpnx2" || mapData.prefix == "jpnx4") {
@@ -591,7 +592,7 @@ var expGuiMap = function (pObject, config) {
         return mapData;
     }
 
-    /*
+    /**
     * 路線図の中心位置を取得
     */
     function initMap(station) {
@@ -642,7 +643,7 @@ var expGuiMap = function (pObject, config) {
         http_request.send(null);
     }
 
-    /*
+    /**
     * 選択エラー時の処理
     */
     function resultCenterStation(flag, code) {
@@ -653,7 +654,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線図の初期位置を変更
     */
     function setInitMapCenter(x, y) {
@@ -669,7 +670,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線図オブジェクトの初期化
     */
     function loadMap() {
@@ -685,7 +686,7 @@ var expGuiMap = function (pObject, config) {
         drawMap(0, 0);
     }
 
-    /*
+    /**
     * 路線図を描画開始する処理
     */
     function setTimerDraw() {
@@ -698,7 +699,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * フレーム単位で呼ばれる関数
     */
     function onEnterFrame() {
@@ -740,22 +741,31 @@ var expGuiMap = function (pObject, config) {
                 if (Math.abs(obj.cursorMoveX) < 10) {
                     obj.x -= obj.cursorMoveX;
                     obj.cursorMoveX = 0;
-                } else if (obj.cursorMoveX > 10) {
+                } else if (obj.cursorMoveX > 0) {
                     obj.x -= 10;
                     obj.cursorMoveX -= 10;
-                } else if (obj.cursorMoveX < 10) {
+                } else if (obj.cursorMoveX < 0) {
                     obj.x += 10;
                     obj.cursorMoveX += 10;
                 }
                 if (Math.abs(obj.cursorMoveY) < 10) {
                     obj.x -= obj.cursorMoveY;
                     obj.cursorMoveY = 0;
-                } else if (obj.cursorMoveY > 10) {
+                } else if (obj.cursorMoveY > 0) {
                     obj.y -= 10;
                     obj.cursorMoveY -= 10;
-                } else if (obj.cursorMoveY < 10) {
+                } else if (obj.cursorMoveY < 0) {
                     obj.y += 10;
                     obj.cursorMoveY += 10;
+                }
+                //座標チェック
+                if (obj.x > 0) { obj.x = 0; }
+                if (obj.y > 0) { obj.y = 0; }
+                if (obj.x < obj.mapWidth * -1 + obj.cW / getScale()) {
+                    obj.x = (obj.mapWidth - obj.cW / getScale()) * -1;
+                }
+                if (obj.y < obj.mapHeight * -1 + obj.cH / getScale()) {
+                    obj.y = (obj.mapHeight - obj.cH / getScale()) * -1;
                 }
                 drawMap(0, 0);
             } else if (scaleObj.frame >= 1) {
@@ -790,7 +800,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線図の移動処理
     */
     function drawMap(moveX, moveY) {
@@ -837,7 +847,7 @@ var expGuiMap = function (pObject, config) {
     }
 
 
-    /*
+    /**
     * 路線図を実際に描画する関数
     */
     function drawImage(flag) {
@@ -853,7 +863,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * キャンバスへ路線図を描画
     */
     function drawImageObj(flag) {
@@ -871,9 +881,9 @@ var expGuiMap = function (pObject, config) {
             for (var i = 0; i < Math.ceil(obj.mapWidth / tileSize); i++) {
                 for (var j = 0; j < Math.ceil(obj.mapHeight / tileSize); j++) {
                     if (((obj.x + obj.moveX) + i * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
-           ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
-           ((obj.x + obj.moveX) + i * tileSize) * getScale() <= obj.cW + cacheSize &&
-           ((obj.y + obj.moveY) + j * tileSize) * getScale() <= obj.cH + cacheSize) {
+                        ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
+                        ((obj.x + obj.moveX) + i * tileSize) * getScale() <= obj.cW + cacheSize &&
+                        ((obj.y + obj.moveY) + j * tileSize) * getScale() <= obj.cH + cacheSize) {
                         //画像ファイルをロードしていない場合
                         if (imgArray[(i + j * Math.ceil(obj.mapWidth / tileSize))].src == "") {
                             //画像をロード
@@ -920,9 +930,9 @@ var expGuiMap = function (pObject, config) {
                 if (typeof stationMarkList[i].stationNameType != 'undefined' && (stationMarkType != 0 || typeof stationMarkList[i].stationIconType == 'undefined')) {
                     //駅名
                     if ((obj.x + obj.moveX) * -1 <= (stationMarkList[i].stationName_x + stationMarkList[i].stationName_w) &&
-           (obj.y + obj.moveY) * -1 <= (stationMarkList[i].stationName_y + stationMarkList[i].stationName_h) &&
-           (obj.x + obj.moveX) * -1 + obj.cW * getScale() >= stationMarkList[i].stationName_x &&
-           (obj.y + obj.moveY) * -1 + obj.cH * getScale() >= stationMarkList[i].stationName_y) {
+                        (obj.y + obj.moveY) * -1 <= (stationMarkList[i].stationName_y + stationMarkList[i].stationName_h) &&
+                        (obj.x + obj.moveX) * -1 + obj.cW * getScale() >= stationMarkList[i].stationName_x &&
+                        (obj.y + obj.moveY) * -1 + obj.cH * getScale() >= stationMarkList[i].stationName_y) {
                         if (typeof stationMarkList[i].stationIconType == 'undefined') {
                             //塗りつぶす
                             ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
@@ -936,9 +946,9 @@ var expGuiMap = function (pObject, config) {
                 if (typeof stationMarkList[i].stationIconType != 'undefined' && stationMarkType != 1) {
                     //駅のアイコン
                     if ((obj.x + obj.moveX) * -1 <= (stationMarkList[i].stationIcon_x + stationMarkList[i].stationIcon_w) &&
-           (obj.y + obj.moveY) * -1 <= (stationMarkList[i].stationIcon_y + stationMarkList[i].stationIcon_h) &&
-           (obj.x + obj.moveX) * -1 + obj.cW * getScale() >= stationMarkList[i].stationIcon_x &&
-           (obj.y + obj.moveY) * -1 + obj.cH * getScale() >= stationMarkList[i].stationIcon_y) {
+                        (obj.y + obj.moveY) * -1 <= (stationMarkList[i].stationIcon_y + stationMarkList[i].stationIcon_h) &&
+                        (obj.x + obj.moveX) * -1 + obj.cW * getScale() >= stationMarkList[i].stationIcon_x &&
+                        (obj.y + obj.moveY) * -1 + obj.cH * getScale() >= stationMarkList[i].stationIcon_y) {
                         if (stationMarkList[i].stationIconType == 2) {
                             //円
                             ctx.beginPath();
@@ -1042,8 +1052,9 @@ var expGuiMap = function (pObject, config) {
                     miniMap = new Image();
                     miniMap.src = apiURL + naviURL + obj.miniMapFile;
                     miniMapObj = new Object();
+                    miniMapObj.loaded = false;
                 }
-                if (miniMap.complete) {
+                if (miniMap.complete && miniMapObj.loaded) {
                     ctx.drawImage(miniMap, miniMapObj.x, miniMapObj.y);
                 } else {
                     reload = true;
@@ -1054,12 +1065,15 @@ var expGuiMap = function (pObject, config) {
                         miniMapSub = new Image();
                         miniMapSub.src = apiURL + naviURL + obj.miniMapSubFile;
                         miniMapSubObj = new Object();
+                        miniMapSubObj.loaded = false;
                     }
-                    if (miniMapSub.complete) {
+                    if (miniMapSub.complete && miniMapSubObj.loaded) {
                         ctx.drawImage(miniMapSub, miniMapSubObj.pos, 0, miniMapObj.w, miniMapSubObj.h, miniMapSubObj.x, miniMapSubObj.y, miniMapObj.w, miniMapSubObj.h);
                     } else {
                         reload = true;
                     }
+                } else {
+                    miniMapSubObj = new Object();
                 }
             }
 
@@ -1104,6 +1118,7 @@ var expGuiMap = function (pObject, config) {
                     if (lineHeight > miniMapObj.h) { lineHeight = miniMapObj.h; } //画面サイズ以下の場合
                     //線の描画
                     ctx.strokeRect(miniMapObj.x + Math.round(m_x * miniMapObj.w), miniMapObj.y + Math.round(m_y * miniMapObj.h), lineWidth, lineHeight);
+                    miniMapObj.loaded = true;
                     if (obj.miniMapSubFile.length > 0) {
                         if (miniMapSub.complete) {
                             //概観図の位置を設定
@@ -1125,6 +1140,7 @@ var expGuiMap = function (pObject, config) {
                             if (lineHeight2 > miniMapSubObj.h) { lineHeight2 = miniMapSubObj.h; } //画面サイズ以下の場合
                             //線の描画
                             ctx.strokeRect(miniMapSubObj.x + Math.round(m_x * miniMapSubObj.w) - miniMapSubObj.pos, miniMapSubObj.y + Math.round(m_y * miniMapSubObj.h), lineWidth2 / getScale(), lineHeight2 / getScale());
+                            miniMapSubObj.loaded = true;
                         }
                     }
                 }
@@ -1144,7 +1160,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * マウス・タッチイベント
     */
     function mouseDownListner(e) {
@@ -1276,7 +1292,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 倍率変更ボタンの処理
     */
     function scaleCheck(x, y) {
@@ -1325,7 +1341,7 @@ var expGuiMap = function (pObject, config) {
         return false;
     }
 
-    /*
+    /**
     * カーソルボタンの処理
     */
     function cursorCheck(x, y) {
@@ -1385,7 +1401,7 @@ var expGuiMap = function (pObject, config) {
         return false;
     }
 
-    /*
+    /**
     * 路線図変更ボタンの処理
     */
     function changeCheck(x, y) {
@@ -1407,16 +1423,16 @@ var expGuiMap = function (pObject, config) {
         return false;
     }
 
-    /*
+    /**
     * 概観図のクリックをチェック
     */
     function checkMap(x, y) {
         //概観図1のクリックチェック
         if (miniMapObj) {
             if (x >= miniMapObj.x &&
-       y >= miniMapObj.y &&
-       x <= (miniMapObj.x + miniMapObj.w) &&
-       y <= (miniMapObj.y + miniMapObj.h)) {
+                y >= miniMapObj.y &&
+                x <= (miniMapObj.x + miniMapObj.w) &&
+                y <= (miniMapObj.y + miniMapObj.h)) {
                 var center_x = Math.round(((x - miniMapObj.x) / miniMapObj.w) * obj.mapWidth);
                 var center_y = Math.round(((y - miniMapObj.y) / miniMapObj.h) * obj.mapHeight);
                 setCenter(center_x, center_y);
@@ -1424,21 +1440,23 @@ var expGuiMap = function (pObject, config) {
             }
         }
         //概観図2のクリックチェック
-        if (miniMapSubObj) {
-            if (x >= miniMapSubObj.x &&
-       y >= miniMapSubObj.y &&
-       x <= (miniMapSubObj.x + miniMapObj.w) &&
-       y <= (miniMapSubObj.y + miniMapSubObj.h)) {
-                var center_x = Math.round(((x - miniMapSubObj.x + miniMapSubObj.pos) / miniMapSubObj.w) * obj.mapWidth);
-                var center_y = Math.round(((y - miniMapSubObj.y) / miniMapSubObj.h) * obj.mapHeight);
-                setCenter(center_x, center_y);
-                return true;
+        if (obj.miniMapSubFile.length > 0) {
+            if (miniMapSubObj) {
+                if (x >= miniMapSubObj.x &&
+                    y >= miniMapSubObj.y &&
+                    x <= (miniMapSubObj.x + miniMapObj.w) &&
+                    y <= (miniMapSubObj.y + miniMapSubObj.h)) {
+                    var center_x = Math.round(((x - miniMapSubObj.x + miniMapSubObj.pos) / miniMapSubObj.w) * obj.mapWidth);
+                    var center_y = Math.round(((y - miniMapSubObj.y) / miniMapSubObj.h) * obj.mapHeight);
+                    setCenter(center_x, center_y);
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    /*
+    /**
     * 指定した座標を中心にする
     */
     function setCenter(x, y) {
@@ -1466,7 +1484,7 @@ var expGuiMap = function (pObject, config) {
         drawMap(0, 0);
     }
 
-    /*
+    /**
     * マウスムーブのリスナー
     */
     function mouseMoveListner(e) {
@@ -1503,7 +1521,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * ドラッグ終了リスナー
     */
     function mouseUpListner(e) {
@@ -1530,7 +1548,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * ドラッグ終了時に呼び出し
     */
     function dragEnd() {
@@ -1552,7 +1570,7 @@ var expGuiMap = function (pObject, config) {
         drawMap(0, 0);
     }
 
-    /*
+    /**
     * 駅のクリック領域を定義
     */
     function stationArea(mapNo) {
@@ -1602,7 +1620,7 @@ var expGuiMap = function (pObject, config) {
         stationListArea[mapNo]["max_y"] = max_y;
     }
 
-    /*
+    /**
     * 駅リストを取得開始
     */
     function getStationDataAPI(mapNo, mapStationUrl) {
@@ -1629,7 +1647,7 @@ var expGuiMap = function (pObject, config) {
         http_request.send(null);
     }
 
-    /*
+    /**
     * 駅リストを解析する処理
     */
     function parseStationList(mapNo, JSON_object) {
@@ -1644,7 +1662,7 @@ var expGuiMap = function (pObject, config) {
         drawImage(true);
     }
 
-    /*
+    /**
     * 駅の形を設定
     */
     function getSharpe(str) {
@@ -1657,7 +1675,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅のマークを取得
     */
     function getMarkData(markObject) {
@@ -1682,64 +1700,60 @@ var expGuiMap = function (pObject, config) {
         return tmp_mark;
     }
 
-    /*
+    /**
+     * 駅オブジェクトを生成
+     */
+    function createCStation(Point) {
+        var CStation = new Object();
+        //駅コード
+        CStation.code = parseInt(Point.Station.code);
+        //駅名
+        CStation.name = Point.Station.Name;
+        //駅よみ
+        CStation.yomi = Point.Station.Yomi;
+        //緯度
+        CStation.lati = Point.GeoPoint.lati;
+        CStation.lati_d = Point.GeoPoint.lati_d;
+        //経度
+        CStation.longi = Point.GeoPoint.longi;
+        CStation.longi_d = Point.GeoPoint.longi_d;
+        //県コード
+        CStation.kenCode = parseInt(Point.Prefecture.code);
+        //駅種別
+        CStation.type = Point.Station.Type;
+        //アイコン種別
+        CStation.mark = new Array();
+        if (typeof Point.MarkCoordinates != 'undefined') {
+            if (typeof Point.MarkCoordinates.length == 'undefined') {
+                CStation.mark = CStation.mark.concat(getMarkData(Point.MarkCoordinates));
+            } else {
+                for (var j = 0; j < Point.MarkCoordinates.length; j++) {
+                    CStation.mark = CStation.mark.concat(getMarkData(Point.MarkCoordinates[j]));
+                }
+            }
+        }
+        return CStation;
+    }
+
+    /**
     * 駅の座標情報を取得
     */
     function parseStation(JSON_object) {
         var stList = JSON_object.ResultSet.RailMap;
         var tmp_stationList = new Array();
         if (typeof stList.Point != 'undefined') {
-            for (var i = 0; i < stList.Point.length; i++) {
-                tmp_stationList[i] = new CStation();
-                //駅コード
-                tmp_stationList[i].code = parseInt(stList.Point[i].Station.code);
-                //駅名
-                tmp_stationList[i].name = stList.Point[i].Station.Name;
-                //駅よみ
-                tmp_stationList[i].yomi = stList.Point[i].Station.Yomi;
-                //緯度
-                tmp_stationList[i].lati = stList.Point[i].GeoPoint.lati;
-                tmp_stationList[i].lati_d = stList.Point[i].GeoPoint.lati_d;
-                //経度
-                tmp_stationList[i].longi = stList.Point[i].GeoPoint.longi;
-                tmp_stationList[i].longi_d = stList.Point[i].GeoPoint.longi_d;
-                //県コード
-                tmp_stationList[i].kenCode = parseInt(stList.Point[i].Prefecture.code);
-                //駅種別
-                tmp_stationList[i].type = stList.Point[i].Station.Type;
-                //アイコン種別
-                tmp_stationList[i].mark = new Array();
-                if (typeof stList.Point[i].MarkCoordinates != 'undefined') {
-                    if (typeof stList.Point[i].MarkCoordinates.length == 'undefined') {
-                        tmp_stationList[i].mark = tmp_stationList[i].mark.concat(getMarkData(stList.Point[i].MarkCoordinates));
-                    } else {
-                        for (var j = 0; j < stList.Point[i].MarkCoordinates.length; j++) {
-                            tmp_stationList[i].mark = tmp_stationList[i].mark.concat(getMarkData(stList.Point[i].MarkCoordinates[j]));
-                        }
-                    }
+            if (typeof stList.Point.length == 'undefined') {
+                tmp_stationList.push(createCStation(stList.Point));
+            } else {
+                for (var i = 0; i < stList.Point.length; i++) {
+                    tmp_stationList.push(createCStation(stList.Point[i]));
                 }
             }
         }
         return tmp_stationList;
     }
 
-    /*
-    * 駅のオブジェクト
-    */
-    var CStation = function () {
-        var code;
-        var name;
-        var yomi;
-        var lati;
-        var lati_d;
-        var longi;
-        var longi_d;
-        var kenCode;
-        var type;
-        var mark = new Array();
-    };
-
-    /*
+    /**
     * 駅リストを取得するURLを設定
     */
     function loadStation() {
@@ -1753,9 +1767,9 @@ var expGuiMap = function (pObject, config) {
             for (var i = 0; i < Math.ceil(obj.mapWidth / tileSize); i++) {
                 for (var j = 0; j < Math.ceil(obj.mapHeight / tileSize); j++) {
                     if (((obj.x + obj.moveX) + i * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
-           ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
-           ((obj.x + obj.moveX) + i * tileSize) * getScale() <= obj.cW + cacheSize &&
-           ((obj.y + obj.moveY) + j * tileSize) * getScale() <= obj.cH + cacheSize) {
+                        ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= cacheSize * -1 &&
+                        ((obj.x + obj.moveX) + i * tileSize) * getScale() <= obj.cW + cacheSize &&
+                        ((obj.y + obj.moveY) + j * tileSize) * getScale() <= obj.cH + cacheSize) {
                         if (!stationListLoaded[(i + j * Math.ceil(obj.mapWidth / tileSize))]) {
                             stationListLoaded[(i + j * Math.ceil(obj.mapWidth / tileSize))] = true;
                             //リスト読み込み
@@ -1776,7 +1790,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 駅がクリックされたかをチェックする
     */
     function clickStation(x, y) {
@@ -1785,27 +1799,27 @@ var expGuiMap = function (pObject, config) {
                 var mapNo = (i + j * Math.ceil(obj.mapWidth / tileSize));
                 if (typeof stationListArea[mapNo] != 'undefined') {
                     if (x >= stationListArea[mapNo]["min_x"] + i * tileSize &&
-           y >= stationListArea[mapNo]["min_x"] + j * tileSize &&
-           x <= stationListArea[mapNo]["max_x"] + i * tileSize &&
-           y <= stationListArea[mapNo]["max_y"] + j * tileSize) {
+                        y >= stationListArea[mapNo]["min_x"] + j * tileSize &&
+                        x <= stationListArea[mapNo]["max_x"] + i * tileSize &&
+                        y <= stationListArea[mapNo]["max_y"] + j * tileSize) {
                         var n = 0;
                         while (typeof stationList[mapNo][n] != 'undefined') {
                             for (var k = 0; k < stationList[mapNo][n]["mark"].length; k++) {
                                 if (stationList[mapNo][n]["mark"][k]["markType"] == 2) {
                                     //丸
                                     if (x - i * tileSize >= stationList[mapNo][n]["mark"][k]["mark_x"] - stationList[mapNo][n]["mark"][k]["mark_size"] &&
-                   y - j * tileSize >= stationList[mapNo][n]["mark"][k]["mark_y"] - stationList[mapNo][n]["mark"][k]["mark_size"] &&
-                   x - i * tileSize <= stationList[mapNo][n]["mark"][k]["mark_x"] + stationList[mapNo][n]["mark"][k]["mark_size"] &&
-                   y - j * tileSize <= stationList[mapNo][n]["mark"][k]["mark_y"] + stationList[mapNo][n]["mark"][k]["mark_size"]) {
+                                        y - j * tileSize >= stationList[mapNo][n]["mark"][k]["mark_y"] - stationList[mapNo][n]["mark"][k]["mark_size"] &&
+                                        x - i * tileSize <= stationList[mapNo][n]["mark"][k]["mark_x"] + stationList[mapNo][n]["mark"][k]["mark_size"] &&
+                                        y - j * tileSize <= stationList[mapNo][n]["mark"][k]["mark_y"] + stationList[mapNo][n]["mark"][k]["mark_size"]) {
                                         selectStation(stationList[mapNo][n]);
                                         return true;
                                     }
                                 } else {
                                     //四角
                                     if (x - i * tileSize >= stationList[mapNo][n]["mark"][k]["mark_x"] &&
-                   y - j * tileSize >= stationList[mapNo][n]["mark"][k]["mark_y"] &&
-                   x - i * tileSize <= stationList[mapNo][n]["mark"][k]["mark_w"] &&
-                   y - j * tileSize <= stationList[mapNo][n]["mark"][k]["mark_h"]) {
+                                        y - j * tileSize >= stationList[mapNo][n]["mark"][k]["mark_y"] &&
+                                        x - i * tileSize <= stationList[mapNo][n]["mark"][k]["mark_w"] &&
+                                        y - j * tileSize <= stationList[mapNo][n]["mark"][k]["mark_h"]) {
                                         selectStation(stationList[mapNo][n]);
                                         return true;
                                     }
@@ -1820,7 +1834,7 @@ var expGuiMap = function (pObject, config) {
         return false;
     }
 
-    /*
+    /**
     * マークを点灯するかチェックする
     */
     function checkStationMark() {
@@ -1829,9 +1843,9 @@ var expGuiMap = function (pObject, config) {
                 var mapNo = (i + j * Math.ceil(obj.mapWidth / tileSize));
                 if (typeof stationList[mapNo] != 'undefined') {
                     if (((obj.x + obj.moveX) + i * tileSize + tileSize) * getScale() >= 0 &&
-           ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= 0 &&
-           ((obj.x + obj.moveX) + i * tileSize - tileSize) * getScale() <= obj.cW &&
-           ((obj.y + obj.moveY) + j * tileSize - tileSize) * getScale() <= obj.cH) {
+                        ((obj.y + obj.moveY) + j * tileSize + tileSize) * getScale() >= 0 &&
+                        ((obj.x + obj.moveX) + i * tileSize - tileSize) * getScale() <= obj.cW &&
+                        ((obj.y + obj.moveY) + j * tileSize - tileSize) * getScale() <= obj.cH) {
                         var n = 0;
                         while (typeof stationList[mapNo][n] != 'undefined') {
                             for (var k = 0; k < stationMarkList.length; k++) {
@@ -1879,7 +1893,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * マークを路線図上にセットする
     */
     function showOnStation(stList, style) {
@@ -1896,7 +1910,7 @@ var expGuiMap = function (pObject, config) {
         drawMap(0, 0);
     }
 
-    /*
+    /**
     * マークのオブジェクトを作成
     */
     function getStationMark(station) {
@@ -1905,7 +1919,7 @@ var expGuiMap = function (pObject, config) {
         return tmpStationMark;
     }
 
-    /*
+    /**
     * 駅がクリックされた際に呼び出される関数
     */
     function selectStation(stationData) {
@@ -1913,14 +1927,14 @@ var expGuiMap = function (pObject, config) {
         clickStationObj = stationData;
     }
 
-    /*
+    /**
     * 駅リスト取得中は選択できない仕様
     */
     function selectStationError() {
         //  alert("駅リスト取得中はクリックできません");
     }
 
-    /*
+    /**
     * 倍率変更関数
     */
     function changeScale(n) {
@@ -1931,7 +1945,7 @@ var expGuiMap = function (pObject, config) {
         setCenter(tmp_x, tmp_y);
     }
 
-    /*
+    /**
     * 倍率の指定
     */
     function setScale(n) {
@@ -1943,7 +1957,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 概観図設定
     */
     function viewMiniMap(flag) {
@@ -1951,7 +1965,7 @@ var expGuiMap = function (pObject, config) {
         drawMap(0, 0);
     }
 
-    /*
+    /**
     * カーソル設定
     */
     function viewCursor(flag) {
@@ -1959,7 +1973,7 @@ var expGuiMap = function (pObject, config) {
         drawMap(0, 0);
     }
 
-    /*
+    /**
     * 路線図情報の取得
     */
     function searchMapList(callbackFunction) {
@@ -2019,7 +2033,7 @@ var expGuiMap = function (pObject, config) {
         http_request.send(null);
     }
 
-    /*
+    /**
     * 路線図リストを返却
     */
     function getMapList() {
@@ -2037,7 +2051,7 @@ var expGuiMap = function (pObject, config) {
         });
     }
 
-    /*
+    /**
     * JSONデータを解析
     */
     function setMapList(json) {
@@ -2050,9 +2064,11 @@ var expGuiMap = function (pObject, config) {
         mapData.groupIndex = parseInt(json.groupIndex);
         mapData.width = parseInt(json.width);
         mapData.height = parseInt(json.height);
-        mapData.kenCode = parseInt(json.Point.Prefecture.code);
-        mapData.defaultStation = parseInt(json.Point.Station.code);
-        mapData.type = json.Point.Station.Type;
+        if (typeof json.Point != 'undefined') {
+            mapData.kenCode = parseInt(json.Point.Prefecture.code);
+            mapData.defaultStation = parseInt(json.Point.Station.code);
+            mapData.type = json.Point.Station.Type;
+        }    
         if (mapData.prefix == "jpnx1" || mapData.prefix == "jpnx2" || mapData.prefix == "jpnx4") {
             mapData.navi = "jp_small.png";
             if (mapData.prefix == "jpnx2" || mapData.prefix == "jpnx4") {
@@ -2068,7 +2084,7 @@ var expGuiMap = function (pObject, config) {
         return mapData;
     }
 
-    /*
+    /**
     * 路線図選択画面
     */
     function openMapList() {
@@ -2081,7 +2097,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線図一覧取得のコールバック
     */
     function setMapObject(isSuccess) {
@@ -2092,7 +2108,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 路線図リストの出力
     */
     function viewMapList() {
@@ -2154,8 +2170,8 @@ var expGuiMap = function (pObject, config) {
         document.getElementById(baseId + ':mapList').innerHTML = buffer;
     }
 
-    /*
-    * イベントの振り分けを行う
+    /**
+    * イベントの振り分け
     */
     function onEvent(e) {
         var eventIdList;
@@ -2201,7 +2217,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -2228,7 +2244,7 @@ var expGuiMap = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 外部から路線図を移動する関数
     */
     function mapMove(x, y) {
@@ -2241,14 +2257,14 @@ var expGuiMap = function (pObject, config) {
         mouseObj.frame = 0;
     }
 
-    /*
+    /**
     * 表示している路線図のIDを取得
     */
     function getMapPrefix() {
         return obj.prefix;
     }
 
-    /*
+    /**
     * 表示している路線図の名称を取得
     */
     function getMapName() {
@@ -2256,11 +2272,11 @@ var expGuiMap = function (pObject, config) {
     }
 
 
-    /*
+    /**
     * 路線図の中心座標を取得
     */
     function getMapCenterPoint(tmp_x, tmp_y, tmp_prefix) {
-        var tmpObject = new Object;
+        var tmpObject = new Object();
         tmpObject.x = tmp_x;
         tmpObject.y = tmp_y;
         tmpObject.prefix = tmp_prefix;
@@ -2270,9 +2286,7 @@ var expGuiMap = function (pObject, config) {
         return tmpObject;
     };
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.dispMap = dispMap;
     this.dispMapStation = dispMapStation;
     this.dispMapCenterPoint = dispMapCenterPoint;
@@ -2287,9 +2301,7 @@ var expGuiMap = function (pObject, config) {
     this.searchMapList = searchMapList;
     this.getMapList = getMapList;
 
-    /*
-    * 定数リスト
-    */
+    // 定数リスト
     this.STYLE_STATION_POINT = 0;
     this.STYLE_STATION_NAME = 1;
     this.STYLE_STATION_ALL = 2;
@@ -2348,7 +2360,7 @@ var expGuiMap = function (pObject, config) {
     this.TDFK_OKINAWA = 47;
 };
 
-/*
+/**
  * 路線図インターフェース
  */
 var CUserInterface = function (p1, p2) {
@@ -2356,7 +2368,7 @@ var CUserInterface = function (p1, p2) {
     this.setScale = p2;
 };
 
-/*
+/**
  * 路線図座標インターフェース
  */
 var CMapPoint = function (tmp_x, tmp_y, tmp_prefix) {
