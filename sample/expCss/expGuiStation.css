@@ -362,10 +362,6 @@
     font-size: 1.1em;
     background: url(../expImages/SuggestLine.png) no-repeat 5px #f5f5f5;
 }
-.expGuiStation .exp_stationTitle:hover {
-    background-color: #0077ee;
-    color: #FFFFFF;
-}
 /* 駅の種別クローズ時 */
 .expGuiStation .exp_stationTitleClose {
     display: block;
