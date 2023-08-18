@@ -4,26 +4,20 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-02-22
+ *  Version:2016-06-20
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
 
 var expGuiTrainTimeTable = function (pObject, config) {
-    /*
-    * ドキュメントのオブジェクトを格納
-    */
+    // ドキュメントのオブジェクトを格納
     var documentObject = pObject;
     var baseId = pObject.id;
 
-    /*
-    * Webサービスの設定
-    */
+    // Webサービスの設定
     var apiURL = "http://api.ekispert.jp/";
 
-    /*
-    * GETパラメータからキーの設定
-    */
+    // GETパラメータからキーの設定
     var key;
     var scripts = document.getElementsByTagName("script");
     var imagePath;
@@ -33,8 +27,8 @@ var expGuiTrainTimeTable = function (pObject, config) {
         if (s.src && s.src.match(/expGuiTrainTimeTable\.js(\?.*)?/)) {
             var params = s.src.replace(/.+\?/, '');
             params = params.split("&");
-            for (var i = 0; i < params.length; i++) {
-                var tmp = params[i].split("=");
+            for (var j = 0; j < params.length; j++) {
+                var tmp = params[j].split("=");
                 if (tmp[0] == "key") {
                     key = unescape(tmp[1]);
                 }
@@ -43,9 +37,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
         }
     }
 
-    /*
-    * AGENTのチェック
-    */
+    // AGENTのチェック
     var agent = 1;
     var isiPad = navigator.userAgent.match(/iPad/i) != null;
     var isiPhone = navigator.userAgent.match(/iPhone/i) != null;
@@ -54,7 +46,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
     if (isiPhone || isAndroid_phone) { agent = 2; }
     if (isiPad || isAndroid_tablet) { agent = 3; }
 
-    /*
+    /**
     * イベントの設定(IE対応版)
     */
     function addEvent(element, eventName, func) {
@@ -69,15 +61,13 @@ var expGuiTrainTimeTable = function (pObject, config) {
         }
     }
 
-    /*
-    * 変数郡
-    */
+    // 変数郡
     var httpObj;
     var timeTable;
     var callbackFunction; // コールバック関数の設定
     var timeTableClickFunction;
 
-    /*
+    /**
     * 列車時刻表の設置
     */
     function dispStationTrainTimetable(code, callback) {
@@ -127,7 +117,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * 列車時刻表の設置
     */
     function dispCourseTrainTimetable(code, callback) {
@@ -175,7 +165,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
         httpObj.send(null);
     }
 
-    /*
+    /**
     * ISOの日時を文字列に変換
     */
     function convertISOtoTime(str, type) {
@@ -187,7 +177,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
         return String(hour) + ":" + tmp_time[1];
     }
 
-    /*
+    /**
     * 時刻表の出力開始
     */
     function outTimeTable(timeTableObject) {
@@ -201,7 +191,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 時刻表内の時間出力
     */
     function getTimeString(timeObject) {
@@ -209,7 +199,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
         return '<a id="' + baseId + ':table:' + String(parseInt(linkTimeList[0], 10)) + ':' + String(parseInt(linkTimeList[1], 10)) + '" href="Javascript:void(0);" style="text-decoration:none;color:Black;font-weight:bold;">' + convertISOtoTime(timeObject.text) + '</a>';
     }
 
-    /*
+    /**
     * 時刻表の出力
     */
     function outTimeTableObj() {
@@ -293,8 +283,8 @@ var expGuiTrainTimeTable = function (pObject, config) {
         }
     }
 
-    /*
-    * イベントの振り分けを行う
+    /**
+    * イベントの振り分け
     */
     function onEvent(e) {
         var eventIdList = (e.srcElement) ? e.srcElement.id.split(":") : e.target.id.split(":");
@@ -313,7 +303,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * 時間から地点オブジェクトを取得
     */
     function getPointObject(time) {
@@ -337,7 +327,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
         return;
     }
 
-    /*
+    /**
     * pointオブジェクトを作成
     */
     function convertPointObject(stopObject) {
@@ -357,7 +347,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
         return tmpPointObject;
     }
 
-    /*
+    /**
     * 環境設定
     */
     function setConfigure(name, value) {
@@ -368,15 +358,15 @@ var expGuiTrainTimeTable = function (pObject, config) {
         } else if (name.toLowerCase() == String("Agent").toLowerCase()) {
             agent = value;
         } else if (String(name).toLowerCase() == String("ssl").toLowerCase()) {
-            if(String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled"){
+            if (String(value).toLowerCase() == "true" || String(value).toLowerCase() == "enable" || String(value).toLowerCase() == "enabled") {
                 apiURL = apiURL.replace('http://', 'https://');
-            }else{
+            } else {
                 apiURL = apiURL.replace('https://', 'http://');
             }
         }
     }
 
-    /*
+    /**
     * コールバック関数の定義
     */
     function bind(type, func) {
@@ -385,7 +375,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
         }
     }
 
-    /*
+    /**
     * コールバック関数の解除
     */
     function unbind(type) {
@@ -394,9 +384,7 @@ var expGuiTrainTimeTable = function (pObject, config) {
         }
     }
 
-    /*
-    * 利用できる関数リスト
-    */
+    // 外部参照可能な関数リスト
     this.dispStationTrainTimetable = dispStationTrainTimetable;
     this.dispCourseTrainTimetable = dispCourseTrainTimetable;
     this.getPointObject = getPointObject;
