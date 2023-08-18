@@ -3,7 +3,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2016-06-20
+ *  Version:2023-08-25
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -449,10 +449,16 @@ function search(callBack) {
         searchWord += '&conditionDetail=' + conditionApp.getConditionDetail();
         // 会社名の出力をデフォルトにする
         searchWord += "&resultDetail=addCorporation";
-        //定期券が存在する場合はセットする
+        // 定期券が存在する場合はセットする
         if (document.getElementById("passRoute")) {
             if (document.getElementById("passRoute").value != "") {
                 searchWord += '&assignDetailRoute=' + document.getElementById("passRoute").value;
+            }
+        }
+        // オフピーク定期券利用時の計算モードが未指定でない場合はセットする
+        if (document.getElementById("offpeakTeikiMode")) {
+            if (document.getElementById("offpeakTeikiMode").value != "") {
+                searchWord += '&offpeakTeikiMode=' + document.getElementById("offpeakTeikiMode").value;
             }
         }
         // 探索を実行
