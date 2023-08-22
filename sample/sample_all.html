@@ -64,9 +64,9 @@
     }
 
     /**
-    * 定期を利用した探索実行
+    * オフピーク定期券を利用するための設定
     */
-    function searchWithTeiki(){
+    function settingForOffpeakTeikiMode(){
         // セレクトボックスで指定したオフピーク定期券利用時の計算モードを利用する
         if (document.getElementById("use_offpeak_teiki").checked) {
             document.getElementById("offpeakTeikiMode").value = document.getElementById("offpeak_teiki_mode").options.item(document.getElementById("offpeak_teiki_mode").selectedIndex).value;
@@ -76,6 +76,17 @@
         // オフピーク定期券利用時の計算モードは定期が設定されている場合のみ設定できる
         if (document.getElementById("passRoute").value == "" && document.getElementById("offpeakTeikiMode").value != "") {
             alert("下記の項目を確認してください。\n利用する定期が未設定でオフピーク定期券を利用することはできません。");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+    * 定期を利用した探索実行
+    */
+    function searchWithTeiki(){
+        // オフピーク定期券を利用するための設定
+        if (settingForOffpeakTeikiMode() == false) {
             return;
         }
         search();
