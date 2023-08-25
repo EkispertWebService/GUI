@@ -18,11 +18,42 @@
 <!--
     var key = "rnwfzKX4rvNVZYat";
 
-	function searchWithTeiki(){
+    function changeUseOffpeakTeiki() {
+        // オフピーク定期券を利用する場合のみ、計算モードのセレクトボックスを有効化する
+        if (document.getElementById("use_offpeak_teiki").checked) {
+            document.getElementById("offpeak_teiki_mode").disabled = false;
+        } else {
+            document.getElementById("offpeak_teiki_mode").disabled = true;
+        }
+    }
+
+    /**
+    * オフピーク定期券を利用するための設定
+    */
+    function settingForOffpeakTeikiMode(){
+        // セレクトボックスで指定したオフピーク定期券利用時の計算モードを利用する
+        if (document.getElementById("use_offpeak_teiki").checked) {
+            document.getElementById("offpeakTeikiMode").value = document.getElementById("offpeak_teiki_mode").options.item(document.getElementById("offpeak_teiki_mode").selectedIndex).value;
+        } else {
+            document.getElementById("offpeakTeikiMode").value = "";
+        }
+        // オフピーク定期券利用時の計算モードは定期が設定されている場合のみ設定できる
+        if (document.getElementById("passRoute").value == "" && document.getElementById("offpeakTeikiMode").value != "") {
+            alert("下記の項目を確認してください。\n利用する定期が未設定でオフピーク定期券を利用することはできません。");
+            return false;
+        }
+        return true;
+    }
+
+    function searchWithTeiki(){
         // セレクトボックスで指定した定期券を利用する
         document.getElementById("passRoute").value = document.getElementById("teiki").options.item(document.getElementById("teiki").selectedIndex).value;
+        // オフピーク定期券を利用するための設定
+        if (settingForOffpeakTeikiMode() == false) {
+            return;
+        }
         search();
-	}
+    }
 // -->
 </script>
 </head>
@@ -58,6 +89,22 @@
 
     <!-- 定期控除のパラメータ -->
     <input type="hidden" id="passRoute" value="">
+
+    <!-- オフピーク定期券利用時の計算モードの設定 -->
+    <div class="exp_sample_title">
+        オフピーク定期券の利用
+    </div>
+    <div>
+        <input type="checkbox" id="use_offpeak_teiki" onchange="JavaScript:changeUseOffpeakTeiki();"/>
+        <label for="use_offpeak_teiki">オフピーク定期券を利用する</label>
+    </div>
+    <select id="offpeak_teiki_mode" class="exp_select" disabled>
+        <option value="offpeakTime">オフピーク時間帯</option>
+        <option value="peakTime">ピーク時間帯</option>
+    </select>
+
+    <!-- オフピーク定期券利用時の計算モードのパラメータ -->
+    <input type="hidden" id="offpeakTeikiMode" value="">
 
     <!-- 探索実行ボタン -->
     <div class="exp_sample_btn_area">
