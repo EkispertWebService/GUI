@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2022-02-17
+ *  Version:2023-08-25
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -256,6 +256,9 @@ var expGuiCourse = function (pObject, config) {
                         case "assignteikiserializedata":
                             searchObj.setAssignTeikiSerializeData(tmpParam[1]);
                             break;
+                        case "offpeakteikimode":
+                            searchObj.setOffpeakTeikiMode(tmpParam[1]);
+                            break;
                         case "assignnikukanteikiindex":
                             searchObj.setAssignNikukanteikiIndex(tmpParam[1]);
                             break;
@@ -358,6 +361,9 @@ var expGuiCourse = function (pObject, config) {
             }
             if (typeof searchObj.getAssignTeikiSerializeData() != 'undefined') {
                 searchWord += "&assignTeikiSerializeData=" + encodeURIComponent(searchObj.getAssignTeikiSerializeData());
+            }
+            if (typeof searchObj.getOffpeakTeikiMode() != 'undefined') {
+                searchWord += "&offpeakTeikiMode=" + searchObj.getOffpeakTeikiMode();
             }
             if (typeof searchObj.getAssignNikukanteikiIndex() != 'undefined') {
                 searchWord += "&assignNikukanteikiIndex=" + searchObj.getAssignNikukanteikiIndex();
@@ -4485,6 +4491,7 @@ var expGuiCourse = function (pObject, config) {
         var assignRoute;
         var assignDetailRoute;
         var assignTeikiSerializeData;
+        var offpeakTeikiMode;
         var assignNikukanteikiIndex;
         var coupon;
         var bringAssignmentError;
@@ -4582,6 +4589,11 @@ var expGuiCourse = function (pObject, config) {
         function getAssignTeikiSerializeData() { return assignTeikiSerializeData; };
         this.setAssignTeikiSerializeData = setAssignTeikiSerializeData;
         this.getAssignTeikiSerializeData = getAssignTeikiSerializeData;
+        // offpeakTeikiMode設定
+        function setOffpeakTeikiMode(value) { offpeakTeikiMode = value; };
+        function getOffpeakTeikiMode() { return offpeakTeikiMode; };
+        this.setOffpeakTeikiMode = setOffpeakTeikiMode;
+        this.getOffpeakTeikiMode = getOffpeakTeikiMode;
         // AssignNikukanteikiIndex設定
         function setAssignNikukanteikiIndex(value) { assignNikukanteikiIndex = value; };
         function getAssignNikukanteikiIndex() { return assignNikukanteikiIndex; };
