@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiCoupon.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var coupon;
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 回数券情報
+  coupon = new expGuiCoupon();
+}
+
+/*
+ * 回数券一覧を取得
+ */
+function getCouponList(){
+  coupon.searchCoupon(setCouponList);
+}
+
+/*
+ * 回数券一覧取得のコールバック
+ */
+function setCouponList(isSuccess){
+  if(!isSuccess){
+    alert("回数券一覧が取得できませんでした");
+  }else{
+    //回数券詳細一覧の出力
+    var buffer = "";
+    buffer+='<select id="coupon" name="coupon" size="20" onClick="Javascript:setCoupon();">';
+    var couponList = coupon.getCouponList().split(",");
+    for(var i=0;i<couponList.length;i++){
+      buffer+='<option value="'+ couponList[i] +'">'+ couponList[i] +'</option>';
+    }
+    buffer+='</select>';
+    document.getElementById("couponList").innerHTML = buffer;
+  }
+}
+
+/*
+ * 回数券を選択
+ */
+function setCoupon(){
+  var couponName = document.getElementById("coupon").options.item(document.getElementById("coupon").selectedIndex).value;
+  coupon.searchCouponDetail(couponName,setCouponDetailList);
+}
+
+/*
+ * 回数券詳細一覧取得のコールバック
+ */
+function setCouponDetailList(isSuccess){
+  if(!isSuccess){
+    alert("回数券詳細一覧が取得できませんでした");
+  }else{
+    //回数券詳細一覧の出力
+    var buffer = "";
+    buffer+='<select id="couponDetail" name="couponDetail" size="20" onClick="Javascript:viewCoupon();">';
+    var couponList = coupon.getCouponDetailList().split(",");
+    for(var i=0;i<couponList.length;i++){
+      buffer+='<option value="'+ couponList[i] +'">'+ couponList[i] +'</option>';
+    }
+    buffer+='</select>';
+    document.getElementById("couponDetailList").innerHTML = buffer;
+  }
+}
+
+/*
+ * 回数券の詳細を表示
+ */
+function viewCoupon(){
+  var couponName = document.getElementById("couponDetail").options.item(document.getElementById("couponDetail").selectedIndex).value;
+  var couponObject = coupon.getCouponObject(couponName);
+  var buffer = "";
+  buffer += "名称:"+ couponObject.name +"\n";
+  buffer += "枚数:"+ couponObject.count +"枚\n";
+  buffer += "有効期間:"+ couponObject.validPeriod +"ヵ月\n";
+  if(couponObject.direction == coupon.DIRECTION_BOTH){
+    buffer += "設定区間の方向:両方向で利用可能\n";
+  }else if(couponObject.direction == coupon.DIRECTION_DEFINE){
+    buffer += "設定区間の方向:定義された方向のみ利用可能\n";
+  }
+  buffer += "金額:"+ couponObject.price +"円\n";
+  alert(buffer);
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<table class="sample">
+  <tr>
+    <td class="sample_header" colspan="2">回数券パーツ</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      <input class="sample_btn" type="button" value="回数券一覧を取得" onClick="Javascript:getCouponList();">
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">回数券一覧</td>
+    <td class="sample_title">回数券詳細</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      <div id="couponList"></div>
+    </td>
+    <td class="sample_top">
+      <div id="couponDetailList"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+

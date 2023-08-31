@@ -1,0 +1,170 @@
+@charset "utf-8";
+/* 列車時刻表パーツ */
+.expGuiTrainTimeTable {
+    border-collapse: collapse;
+    font-size: 1em;
+    font-family: "メイリオ", Meiryo, Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    _font-family: "メイリオ", Meiryo,"ＭＳ Ｐゴシック", Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "MS PGothic", sans-serif;
+    text-align: left;
+}
+/* 汎用処理 */
+.expGuiTrainTimeTable .exp_clearfix:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: ".";
+    font-size: 0;
+}
+/* 時刻表のヘッダー */
+.expGuiTrainTimeTable .exp_header {
+    border: 1px solid #a0aab4;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 0px 1px #fff;
+}
+.expGuiTrainTimeTable .exp_header .exp_title {
+    padding: 2px 10px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #3A97DD;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.expGuiTrainTimeTable .exp_header .exp_title,
+.expGuiTrainTimeTable .exp_header .exp_value {
+    text-align: center;
+}
+.expGuiTrainTimeTable .exp_header .exp_value {
+    margin-left: 0.8em;
+    margin-left: 0.8em;
+    padding-top: 0.2em;
+    padding-top: 0.2em;
+    color: #384556;
+    font-size: 0.9em;
+}
+.expGuiTrainTimeTable .exp_headerTitle {
+    border-top: 1px solid  #eee;
+}
+.expGuiTrainTimeTable .exp_timeTable {
+    margin-top: 0.5em;
+    width: 100%;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_arrival {
+    border-top: 1px solid #3E6F99;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_arrival .exp_caption {
+    background-color: #D96441;
+    color: #FFFFFF;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_arrival .exp_caption,
+.expGuiTrainTimeTable .exp_timeTable .exp_departure .exp_caption {
+    display: block;
+    float: left;
+    padding: 1px 4px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_arrival,
+.expGuiTrainTimeTable .exp_timeTable .exp_departure {
+    padding-top: 0.3em;
+    padding-bottom: 0.3em;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_arrivalMinute {
+    border-top: 1px solid #3E6F99;
+    border-right: 1px solid #3E6F99;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_departure {
+    border-bottom: 1px solid #3E6F99;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_departure .exp_caption {
+    background-color: #384556;
+    color: #FFFFFF;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_departureMinute {
+    border-right: 1px solid #3E6F99;
+    border-bottom: 1px solid #3E6F99;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_even {
+    border-right: 1px solid #a0aab4;
+    border-bottom: 1px solid #a0aab4;
+    border-left: 1px solid #a0aab4;
+    background-color: #E7F2FC;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_minute {
+    border-top: 1px solid #3E6F99;
+    border-right: 1px solid #3E6F99;
+    border-bottom: 1px solid #3E6F99;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_minute a,
+.expGuiTrainTimeTable .exp_timeTable .exp_arrivalMinute a,
+.expGuiTrainTimeTable .exp_timeTable .exp_departureMinute a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #384556;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_minute,
+.expGuiTrainTimeTable .exp_timeTable .exp_arrivalMinute,
+.expGuiTrainTimeTable .exp_timeTable .exp_departureMinute {
+    padding-right: 1em;
+    padding-left: 1em;
+    text-align: right;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_name {
+    padding-right: 1em;
+    padding-left: 1em;
+    border-top: 1px solid #3E6F99;
+    border-bottom: 1px solid #3E6F99;
+    border-left: 1px solid #3E6F99;
+    text-align: center;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_name a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: #384556;
+    text-decoration: none;
+    font-weight: bold;
+}
+.expGuiTrainTimeTable .exp_timeTable .exp_odd {
+    border-right: 1px solid #a0aab4;
+    border-bottom: 1px solid #a0aab4;
+    border-left: 1px solid #a0aab4;
+    background-color: #FFFFFF;
+}
+/* ヘッダーを出力 */
+.expGuiTrainTimeTable .exp_timeTable .exp_tableHeader {
+    border: 1px solid #3E6F99;
+    background: -moz-linear-gradient(top, #4682B5, #3A6F9D);
+    background: -webkit-gradient(linear, left top, left bottom, from(#4682B5), to(#3A6F9D));
+    background-color: #4b4b59;
+    color: #FFFFFF;
+    font-size: 0.8em;
+    line-height: 2.2em;
+}
+.expGuiTrainTimeTable .exp_timeTable table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.expLoading{
+    border: 1px solid #a0aab4;
+    height: 3em;
+}
+.expLoading .expText {
+    width: 10em;
+    height:24px;
+    margin: auto;
+    margin-top: 0.6em;
+    padding-top: 3px;
+    background: url(../expImages/loading.gif) no-repeat;
+    text-align: center;
+    font-weight: bold;
+    color: #a0aab4;
+}

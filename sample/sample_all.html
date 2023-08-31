@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiDateTime.css">
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiStation.css">
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCondition.css">
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCourse.css">
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiRepayment.css">
+<link class="css" rel="stylesheet" type="text/css" href="expSample.css">
+<script type="text/javascript" src="expGuiDateTime.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCondition.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiStation.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiRepayment.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiStationInfo.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiRail.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expSample.js" charset="UTF-8"></script>
+<script type="text/javascript">
+<!--
+    var key = "YOUR_ACCESS_KEY";
+
+    /**
+     * 探索結果の初期化部分
+     */
+    function initResult(){
+        resultApp.setConfigure("PriceChange", true); // 変更を許可
+        resultApp.setConfigure("PriceChangeRefresh", true); // 再読み込みをオン
+        resultApp.setConfigure("AssignDia", true);
+        resultApp.setConfigure("window", true);
+    }
+
+    /**
+     * 定期券の選択
+     */
+    function selectPassRoute() {
+        document.getElementById("passRoute").value = document.getElementById("teiki").options.item(document.getElementById("teiki").selectedIndex).value;
+    }
+
+    /**
+    * 定期文字列を登録
+    */
+    function selectCourse() {
+        var passRoute = resultApp.getTeiki();
+        if (typeof passRoute != 'undefined') {
+            document.getElementById("passRoute").value = passRoute;
+        }
+    }
+
+    /**
+    * オフピーク定期券利用の選択
+    */
+    function changeUseOffpeakTeiki() {
+        // オフピーク定期券を利用する場合のみ、計算モードのセレクトボックスを有効化する
+        if (document.getElementById("use_offpeak_teiki").checked) {
+            document.getElementById("offpeak_teiki_mode").disabled = false;
+            document.getElementById("offpeakTeikiMode").value = document.getElementById("offpeak_teiki_mode").options.item(document.getElementById("offpeak_teiki_mode").selectedIndex).value;
+        } else {
+            document.getElementById("offpeak_teiki_mode").disabled = true;
+            document.getElementById("offpeakTeikiMode").value = "";
+        }
+    }
+
+    /**
+    * オフピーク定期券を利用するための設定
+    */
+    function settingForOffpeakTeikiMode(){
+        // セレクトボックスで指定したオフピーク定期券利用時の計算モードを利用する
+        if (document.getElementById("use_offpeak_teiki").checked) {
+            document.getElementById("offpeakTeikiMode").value = document.getElementById("offpeak_teiki_mode").options.item(document.getElementById("offpeak_teiki_mode").selectedIndex).value;
+        } else {
+            document.getElementById("offpeakTeikiMode").value = "";
+        }
+        // オフピーク定期券利用時の計算モードは定期が設定されている場合のみ設定できる
+        if (document.getElementById("passRoute").value == "" && document.getElementById("offpeakTeikiMode").value != "") {
+            alert("下記の項目を確認してください。\n利用する定期が未設定でオフピーク定期券を利用することはできません。");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+    * 定期を利用した探索実行
+    */
+    function searchWithTeiki(){
+        // オフピーク定期券を利用するための設定
+        if (settingForOffpeakTeikiMode() == false) {
+            return;
+        }
+        search();
+    }
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+    <!-- 日付入力パーツ -->
+    <h3 class="exp_sample_header">出発日</h3>
+    <div id="dateTime"></div>
+
+    <!-- 探索条件パーツ -->
+    <h3 class="exp_sample_header">探索条件</h3>
+    <div id="condition"></div>
+
+    <!-- 駅名入力パーツ -->
+    <h3 class="exp_sample_header">地点情報</h3>
+    <div class="exp_sample_title">
+        出発地
+    </div>
+    <div id="station1" style="width:100%;"></div>
+    <div class="exp_sample_title">
+        目的地
+    </div>
+    <div id="station3" style="width:100%;"></div>
+    <div class="exp_sample_title">
+        経由地
+    </div>
+    <div id="station2" style="width:100%;"></div>
+    <br>
+
+    <!-- 定期券の設定 -->
+    <div class="exp_sample_title">
+        利用する定期
+    </div>
+    <select id="teiki" class="exp_select" onChange="JavaScript:selectPassRoute();">
+        <option value="">定期を選択してください(定期未使用)</option>
+        <option value="高円寺:ＪＲ中央線快速:Up:東京">高円寺:ＪＲ中央線快速:Up:東京</option>
+        <option value="高円寺:ＪＲ中央線快速:Up:新宿:ＪＲ山手線内回り:Down:品川">高円寺:ＪＲ中央線快速:Up:新宿:ＪＲ山手線内回り:Down:品川</option>
+        <option value="業平橋:東武伊勢崎線区間準急:Up:浅草">業平橋:東武伊勢崎線区間準急:Up:浅草(※この定期は継続更新が必要です)</option>
+    </select>
+
+    <!-- 定期設定 -->
+    <h3 class="exp_sample_header">定期経路</h3>
+    <input class="exp_sample_teiki" type="text" id="passRoute" value="" readonly>
+    <br><br>
+
+    <!-- オフピーク定期券利用時の計算モードの設定 -->
+    <div class="exp_sample_title">
+        オフピーク定期券の利用
+    </div>
+    <div>
+        <input type="checkbox" id="use_offpeak_teiki" onchange="JavaScript:changeUseOffpeakTeiki();"/>
+        <label for="use_offpeak_teiki">オフピーク定期券を利用する</label>
+    </div>
+    <select id="offpeak_teiki_mode" class="exp_select" disabled>
+        <option value="offpeakTime">オフピーク時間帯</option>
+        <option value="peakTime">ピーク時間帯</option>
+    </select>
+
+    <!-- オフピーク定期券利用時の計算モードのパラメータ -->
+    <input type="hidden" id="offpeakTeikiMode" value="">
+
+    <br><br>
+
+    <!-- 探索実行ボタン -->
+    <div class="exp_sample_btn_area">
+        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:searchWithTeiki();">
+        <input class="exp_sample_btn" type="button" value="定期券を探索" onClick="Javascript:searchTeiki(selectCourse);">
+        <input class="exp_sample_btn" type="button" value="定期券の払い戻し計算" onClick="Javascript:restoreTeikiRoute();">
+    </div>
+
+    <!-- 経路表示パーツ -->
+    <div id="result"></div>
+
+    <br><br>
+
+    <!-- 払い戻し計算の設定 -->
+    <h3 class="exp_sample_header">払い戻し計算設定</h3>
+    <div class="exp_sample_conf">
+        <span class="exp_sample_label">開始日</span><input class="exp_sample_input" type="text" id="repay_start" value=""><br>
+        <span class="exp_sample_label">払戻日</span><input class="exp_sample_input" type="text" id="repay_repayment" value=""><br>
+        <span class="exp_sample_label">有効期間</span>
+        <select id="repay_validity" class="exp_select">
+            <option value="1">1ヶ月</option>
+            <option value="3">3ヶ月</option>
+            <option value="6" selected>6ヶ月</option>
+        </select><br>
+        <span class="exp_sample_label">区間変更</span>
+        <select id="repay_change" class="exp_select">
+            <option value="1" selected>する</option>
+            <option value="0">しない</option>
+        </select><br>
+    </div>
+
+    <!-- 払い戻し計算パーツ -->
+    <h3 class="exp_sample_header">払い戻し計算</h3>
+    <div id="repayment"></div>
+
+</body>
+</html>

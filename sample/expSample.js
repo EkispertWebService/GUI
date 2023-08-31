@@ -184,6 +184,8 @@ function init() {
             initRepayment();
         }
     }
+    // 動作サンプル用のコードです。（不要な場合は下記行を削除してください。）
+    stationApp1.setStation("高円寺");
 
     stationInfoApp = new expGuiStationInfo();
     if (typeof apiURL != 'undefined') {
@@ -371,6 +373,8 @@ function checkData() {
 */
 function search(callBack) {
     setCookie();
+    // 動作サンプル用のコードです。（不要な場合は下記行を削除してください。）
+    stationApp1.setStation("高円寺");
     // 入力チェック後に動作
     if (checkData()) {
         var searchWord = "";
@@ -449,13 +453,13 @@ function search(callBack) {
         searchWord += '&conditionDetail=' + conditionApp.getConditionDetail();
         // 会社名の出力をデフォルトにする
         searchWord += "&resultDetail=addCorporation";
-        //定期券が存在する場合はセットする
+        // 定期券が存在する場合はセットする
         if (document.getElementById("passRoute")) {
             if (document.getElementById("passRoute").value != "") {
                 searchWord += '&assignDetailRoute=' + document.getElementById("passRoute").value;
             }
         }
-        // オフピーク定期券利用時の計算モードが存在する場合はセットする
+        // オフピーク定期券利用時の計算モードが未指定でない場合はセットする
         if (document.getElementById("offpeakTeikiMode")) {
             if (document.getElementById("offpeakTeikiMode").value != "") {
                 searchWord += '&offpeakTeikiMode=' + document.getElementById("offpeakTeikiMode").value;
@@ -471,6 +475,8 @@ function search(callBack) {
 */
 function searchTeiki(callBack) {
     setCookie();
+    // 動作サンプル用のコードです。（不要な場合は下記行を削除してください。）
+    stationApp1.setStation("高円寺");
     // 入力チェック後に動作
     if (checkData()) {
         var searchWord = "";

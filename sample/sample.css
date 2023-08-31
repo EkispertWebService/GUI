@@ -1,0 +1,86 @@
+@charset "shift_jis";
+body{
+/*    background-color: #ECF0F3;*/
+    background-color: #FFFFFF;
+}
+.sample{
+    width: 100%;
+}
+.sample_header{
+    font-weight: bold;
+    height: 2em;
+    color: #fff;
+    text-align: center;
+    background: -moz-linear-gradient(top, #000000, #808080);
+    background: -webkit-gradient(linear, left top, left bottom, from(#000000), to(#808080));
+    background-color: #808080;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.sample_title{
+    font-weight: bold;
+    text-align: center;
+    background: -moz-linear-gradient(top, #EAEAEA, #FFFFFF);
+    background: -webkit-gradient(linear, left top, left bottom, from(#EAEAEA), to(#FFFFFF));
+    background-color: #EAEAEA;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+.sample_conf{
+    border: 1px solid #EAEAEA;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+}
+.sample_teiki{
+    width: 100%;
+    border: 1px solid #a0aab4;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height: 30px;
+    box-shadow: inset #ececec 0 2px;
+    -moz-box-shadow: inset #ececec 0 2px;
+    background-color: #EAEAEA;
+}
+.sample_btn_area{
+    width: 100%;
+    text-align: center;
+}
+.sample_input{
+    width: 100%;
+    border: 1px solid #a0aab4;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height: 30px;
+    box-shadow: inset #ececec 0 2px;
+    -moz-box-shadow: inset #ececec 0 2px;
+    -webkit-appearance: none;
+}
+.sample_select{
+    width: 100%;
+}
+.sample_btn{
+    margin: 0px;
+    border: 1px solid #a0aab4;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    height: 2em;
+    box-shadow: inset #ececec 0 2px;
+    -moz-box-shadow: inset #ececec 0 2px;
+}
+.sample_btn:hover{
+    border: 1px solid #00cdf2;
+    box-shadow: inset #f5f5f5 0 2px;
+    -moz-box-shadow: inset #f5f5f5 0 2px;
+}
+.sample_label{
+    font-weight: bold;
+    color: #222222;
+    font-size: small;
+}
+.sample_top{
+    vertical-align: top;
+}
+.sample_table{
+    border: 2px solid #a0aab4;
+}

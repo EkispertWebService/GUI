@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCourse.css">
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiLandmark.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script language="JavaScript"> 
+<!--
+var fromLandmark;// ランドマークパーツ
+var toLandmark;// ランドマークパーツ
+var resultApp;// 経路表示パーツ
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 地点情報
+  fromLandmark = new expGuiLandmark();
+  toLandmark = new expGuiLandmark();
+  // 経路探索
+  resultApp = new expGuiCourse(document.getElementById("course"));
+}
+
+/*
+ * 出発地点情報の取得
+ */
+function getFromLandmarkData(){
+  // 出発地
+  var tmpLandmarkObject = fromLandmark.createLandmarkInterface(document.getElementById("fromName").value);
+  // 最寄駅情報
+  var tmpStation = fromLandmark.createLandmarkStationInterface(document.getElementById("fromStation").value);
+  tmpStation.setTraffic(document.getElementById("fromTrafiic").value);
+  tmpStation.setTime(document.getElementById("fromTime").value);
+  tmpLandmarkObject.addStation(tmpStation);
+  // 地点生成
+  fromLandmark.createLandmark(tmpLandmarkObject,setLandmark);
+
+  // 目的地
+  var tmpLandmarkObject = toLandmark.createLandmarkInterface(document.getElementById("toName").value);
+  // 最寄駅情報(1)
+  var tmpStation1 = toLandmark.createLandmarkStationInterface(document.getElementById("toStation1").value);
+  tmpStation1.setTraffic(document.getElementById("toTrafiic1").value);
+  tmpStation1.setTime(document.getElementById("toTime1").value);
+  tmpLandmarkObject.addStation(tmpStation1);
+  // 最寄駅情報(2)
+  var tmpStation2 = toLandmark.createLandmarkStationInterface(document.getElementById("toStation2").value);
+  tmpStation2.setTraffic(document.getElementById("toTrafiic2").value);
+  tmpStation2.setTime(document.getElementById("toTime2").value);
+  tmpLandmarkObject.addStation(tmpStation2);
+  // 地点生成
+  toLandmark.createLandmark(tmpLandmarkObject,setLandmark);
+}
+
+/*
+ * 地点情報生成のコールバック
+ */
+function setLandmark(isSuccess){
+  if(!isSuccess){
+    alert("地点情報が取得できませんでした");
+  }else{
+    // 両方のランドマーク設定が完了していた場合は探索する
+    if(typeof fromLandmark.getSerializeData() != 'undefined' && typeof toLandmark.getSerializeData() != 'undefined'){
+      search();
+    }
+  }
+}
+
+/*
+ * 経路の取得
+ */
+function search(){
+  // 探索条件を設定
+  var searchObject = resultApp.createSearchInterface();
+  // 発着地を設定
+  var from = fromLandmark.getSerializeData();
+  var to = toLandmark.getSerializeData();
+  searchObject.setViaList(from +":"+ to);
+  // 探索種別を設定
+  searchObject.setSearchType("plain");
+  // 探索実行
+  resultApp.search(searchObject,setResult);
+}
+
+/*
+ * 経路探索のコールバック
+ */
+function setResult(isSuccess){
+  if(!isSuccess){
+    alert("探索結果が取得できませんでした");
+  }
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<table class="sample">
+  <tr>
+    <td class="sample_title" style="width: 30%;">探索条件</td>
+    <td class="sample_title">経路</td>
+  </tr>
+  <tr>
+    <td class="sample_title">出発地</td>
+    <td rowspan="4">
+      <input class="sample_btn" type="button" value="経路の表示" onClick="JavaScript:getFromLandmarkData();"><br>
+      <div id="course"></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      名称：<input class="sample_input" type="text" id="fromName" value="株式会社ヴァル研究所" size="30" readonly><br>
+      最寄り駅：<input class="sample_input" type="text" id="fromStation" value="高円寺" readonly><br>
+      交通手段：<input class="sample_input" type="text" id="fromTrafiic" value="徒歩" readonly><br>
+      所要時間：<input class="sample_input" type="text" id="fromTime" value="5" readonly><br>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">目的地</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      名称：<input class="sample_input" type="text" id="toName" value="取引先" size="30" readonly><br>
+      最寄り駅(1)：<input class="sample_input" type="text" id="toStation1" value="新宿" readonly><br>
+      交通手段(1)：<input class="sample_input" type="text" id="toTrafiic1" value="徒歩" readonly><br>
+      所要時間(1)：<input class="sample_input" type="text" id="toTime1" value="10" readonly><br>
+      最寄り駅(2)：<input class="sample_input" type="text" id="toStation2" value="西新宿" readonly><br>
+      交通手段(2)：<input class="sample_input" type="text" id="toTrafiic2" value="徒歩" readonly><br>
+      所要時間(2)：<input class="sample_input" type="text" id="toTime2" value="3" readonly><br>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+

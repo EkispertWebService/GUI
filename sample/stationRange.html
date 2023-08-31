@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiRange.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var stationRange;
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 範囲探索
+  stationRange = new expGuiRange();
+}
+
+/*
+ * 駅リストを取得
+ */
+function searchStation(stationName,upperLimit){
+  stationRange.setConfigure("type",stationRange.TYPE_TRAIN);
+  stationRange.searchStation(stationName,upperLimit,setStationList);
+}
+
+/*
+ * 駅リスト取得のコールバック
+ */
+function setStationList(isSuccess){
+  if(!isSuccess){
+    alert("駅が見つかりませんでした");
+  }else{
+    // 駅リストの出力
+    var buffer = "";
+    buffer+='<select id="station" size="20" onClick="Javascript:selectStation();">';
+    var stationList = stationRange.getStationList().split(",");
+    for(var i=0;i<stationList.length;i++){
+      buffer+='<option value="'+ stationList[i] +'">'+ stationList[i] +'</option>';
+    }
+    buffer+='</select>';
+    document.getElementById("stationRangeInfo").innerHTML = buffer;
+  }
+}
+
+function selectStation(){
+  var stationName = document.getElementById("station").options.item(document.getElementById("station").selectedIndex).value;
+  var stationData = stationRange.getPointObject(stationName);
+  if(typeof stationData != 'undefined'){
+    var buffer = "";
+    buffer += "駅名:"+ stationData.name +"\n";
+    buffer += "駅コード:"+ stationData.code +"\n";
+    buffer += "都道府県コード:"+ stationData.kenCode +"\n";
+    buffer += "移動時間(平均):"+ stationData.minute;
+    alert(buffer);
+  }
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<table class="sample">
+  <tr>
+    <td class="sample_header" colspan="3">範囲探索パーツ</th>
+  </tr>
+  <tr>
+    <td class="sample_title">範囲探索</th>
+    <td class="sample_title">駅リスト</th>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      <input class="sample_btn" type="button" value="東京(10分)を範囲探索" onClick="Javascript:searchStation('東京',10);"><br>
+      <input class="sample_btn" type="button" value="高円寺(10分)を範囲探索" onClick="Javascript:searchStation('高円寺',10);"><br>
+      <input class="sample_btn" type="button" value="有楽町(15分)を範囲探索" onClick="Javascript:searchStation('有楽町',15);"><br>
+      <input class="sample_btn" type="button" value="飯田橋(20分)を範囲探索" onClick="Javascript:searchStation('飯田橋',20);"><br>
+    </td>
+    <td class="sample_top">
+      <div id="stationRangeInfo"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+

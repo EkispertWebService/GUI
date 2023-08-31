@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiDateTime.css">
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiStation.css">
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCondition.css">
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCourse.css">
+<link class="css" rel="stylesheet" type="text/css" href="expSample.css">
+<script type="text/javascript" src="expGuiDateTime.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCondition.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiStation.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expSample.js" charset="UTF-8"></script>
+<script type="text/javascript">
+<!--
+    var key = "YOUR_ACCESS_KEY";
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+    <!-- 日付入力パーツ -->
+    <h3 class="exp_sample_header">出発日</h3>
+    <div id="dateTime"></div>
+    
+    <!-- 探索条件パーツ -->
+    <h3 class="exp_sample_header">探索条件</h3>
+    <div id="condition"></div>
+
+    <!-- 駅名入力パーツ -->
+    <h3 class="exp_sample_header">地点情報</h3>
+    <div class="exp_sample_title">
+        出発地
+    </div>
+    <div id="station1" style="width:100%;"></div>
+    <div class="exp_sample_title">
+        目的地
+    </div>
+    <div id="station2" style="width:100%;"></div>
+
+    <!-- 探索実行ボタン -->
+    <div class="exp_sample_btn_area">
+        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:search();">
+    </div>
+
+    <!-- 経路表示パーツ -->
+    <div id="result"></div>
+
+</body>
+</html>

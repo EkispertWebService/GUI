@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiMap.css">
+<script type="text/javascript" src="expGuiMap.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<title>路線図ASP</title>
+<script type="text/javascript">
+<!--
+var app;
+
+function onLoad() {
+    app = new expGuiMap(document.getElementById("map"));
+    app.dispMapStation(22828,'jpnx4',onDispMapStation);
+}
+
+function onDispMapStation(isSuccess, stCode) {
+    if (isSuccess) {
+        // 東京駅を駅と駅名の両方をマーキング（STYLE_STATION_ALL）して選択状態にする
+        app.showOnStation(stCode,app.STYLE_STATION_ALL);
+    }
+}
+// -->
+</script>
+</head>
+<body onload="onLoad()">
+<div id="map" style="width:100%; height:100%;"></div>
+</body>
+</html>

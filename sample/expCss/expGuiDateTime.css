@@ -1,0 +1,917 @@
+@charset "utf-8";
+/* 日付入力パーツ */
+.expGuiDateTime {
+    margin: auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: inherit;
+    font-family: "メイリオ", Meiryo, Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    _font-family: "メイリオ", Meiryo,"ＭＳ Ｐゴシック", Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "MS PGothic", sans-serif;
+    text-align: left;
+}
+/* カレンダーのボタン */
+.expGuiDateTime .exp_cal_open {
+    background: url(../expImages/icnTckCalender.png) no-repeat;
+}
+.expGuiDateTime .exp_cal_open:hover {
+    background: url(../expImages/icnTckCalenderhover.png) no-repeat;
+}
+/* カレンダー */
+.expGuiDateTime .exp_calendar {
+    position: absolute;
+    z-index: 50;
+    margin-top: 25px;
+    -webkit-box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.4) #ebebeb;
+    box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.4) #ebebeb;
+}
+/* カレンダーの月表示部分 */
+.expGuiDateTime .exp_calendar .exp_cal_header {
+    width: 244px;
+    height: 34px;
+    border: 1px solid #616d7a;
+    border-radius: 6px 6px 0 0;
+    background: -moz-linear-gradient(top, #8f99ab, #717d8f);
+    background: -webkit-linear-gradient(top, #8f99ab, #717d8f);
+    background-color: #8f99ab;
+    box-shadow: inset 0 0 1px 1px #99a2b2;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+}
+/* 週の部分 */
+.expGuiDateTime .exp_calendar .exp_calFirstWeek,.expGuiDateTime .exp_calendar .exp_calSecWeek,.expGuiDateTime .exp_calendar .exp_calThirWeek,.expGuiDateTime .exp_calendar .exp_calFourWeek,.expGuiDateTime .exp_calendar .exp_calFifWeek,.expGuiDateTime .exp_calendar .exp_calSixWeek {
+    border-left: 1px solid #98a2ab;
+}
+.expGuiDateTime .exp_calendar .exp_calSixWeek {
+    border-bottom: 1px solid #98a2ab;
+} 
+/* 曜日の部分 */
+.expGuiDateTime .exp_calendar .exp_calWeek {
+    border-right: 1px solid #98a2ab;
+    border-left: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 0px #f4f6f8;
+    font-weight: bold;
+    font-size: small;
+}
+/* 本日以外の今月 */
+.expGuiDateTime .exp_calendar .exp_days a {
+    background: -moz-linear-gradient(bottom, #ffffff, #dbdee3 0%, #ebeef2 67%, #f9fafb);
+    background: -webkit-linear-gradient(bottom, #ffffff, #dbdee3 0%, #ebeef2 67%, #f9fafb);
+}
+.expGuiDateTime .exp_calendar .exp_days a:hover {
+    background: -moz-linear-gradient(bottom, #ffffff, #f2f2f2 0%, #f3f3f3 67%, #ffffff);
+    background: -webkit-linear-gradient(bottom, #ffffff, #f2f2f2 0%, #f3f3f3 67%, #ffffff);
+    color: #0082ad;
+}
+/* 土曜日 */
+.expGuiDateTime .exp_calendar .exp_header_saturday {
+    color: #2c85bf;
+}
+/* 日曜日 */
+.expGuiDateTime .exp_calendar .exp_header_sunday {
+    color: #bd0000;
+}
+/* 平日 */
+.expGuiDateTime .exp_calendar .exp_header_week {
+    color: #384556;
+}
+/* 日曜祝日 */
+.expGuiDateTime .exp_calendar .exp_holiday,.expGuiDateTime .exp_calendar .exp_sunday {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 1px #f4f6f8;
+    color: #bd0000;
+}
+/* 次の月 */
+.expGuiDateTime .exp_calendar .exp_next {
+    display: block;
+    float: left;
+    margin-top: 11px;
+    margin-left: 12px;
+    width: 22px;
+    height: 22px;
+    background: url(../expImages/btnCtrCalAdd.png) no-repeat;
+}
+/* 前後の月 */
+.expGuiDateTime .exp_calendar .exp_otherday a {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    background-color: #f3f5f8;
+    color: #a3a3a3;
+}
+/* 前の月 */
+.expGuiDateTime .exp_calendar .exp_prev {
+    display: block;
+    float: left;
+    margin-top: 11px;
+    margin-left: 12px;
+    width: 22px;
+    height: 22px;
+    background: url(../expImages/btnCtrCalDec.png) no-repeat;
+} 
+/* 土曜日 */
+.expGuiDateTime .exp_calendar .exp_saturday {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 1px #f4f6f8;
+    color: #2c85bf;
+}
+/* カレンダーの月の文字部分 */
+.expGuiDateTime .exp_calendar .exp_title {
+    float: left;
+    padding-top: 9px;
+    width: 173px;
+    height: 25px;
+}
+/* 本日の表示 */
+.expGuiDateTime .exp_calendar .exp_today a {
+    background: -moz-linear-gradient(top, #073ba8, #0944b0 30%, #073ba8);
+    background: -webkit-linear-gradient(top, #073ba8, #0944b0 30%, #073ba8);
+    background-color: #073ba8;
+    -moz-box-shadow: inset 0 0 1px 1px #0532a0;
+    box-shadow: inset 0 0 1px 1px #0532a0;
+    color: #FFFFFF;
+}
+/* 日付のリンク */
+.expGuiDateTime .exp_calendar .exp_today a,.expGuiDateTime .exp_calendar .exp_days a,.expGuiDateTime .exp_calendar .exp_otherday a {
+    display: block;
+    margin: 0;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: small;
+}
+/* 平日 */
+.expGuiDateTime .exp_calendar .exp_weekday {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 1px #f4f6f8;
+    color: #384556;
+}
+/* カレンダーの日付部分 */
+.expGuiDateTime .exp_calendar table td {
+    padding: 0;
+    height: 21px;
+    background-color: #eff1f5;
+}
+.expGuiDateTime .exp_calendar table tr {
+    padding: 0;
+    background-color: #eff1f5;
+}
+/* 汎用処理 */
+.expGuiDateTime .exp_clearfix:after {
+    display: block;
+    visibility: hidden;
+    clear: both;
+    height: 0;
+    content: ".";
+    font-size: 0;
+}
+/* 日付設定 */
+.expGuiDateTime .exp_date {
+    float: left;
+    margin-top: 3px;
+    margin-right: 0.3em;
+    height: 24px;
+    border: 1px solid #8A939C;
+    -webkit-border-radius: 2px;
+}
+/* 到着で探索 */
+.expGuiDateTime .exp_searchType .exp_arrival {
+    float: left;
+    border-top: 1px solid #8a939c;
+    border-right: 1px solid #8a939c;
+    border-bottom: 1px solid #8a939c;
+}
+/* 出発で探索 */
+.expGuiDateTime .exp_searchType .exp_departure {
+    float: left;
+    border: 1px solid #8a939c;
+    -webkit-border-top-left-radius: 6px;
+    -moz-border-radius-topleft: 6px;
+    border-top-left-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-left-radius: 6px;
+}
+/* 探索種別の選択時 */
+.expGuiDateTime .exp_searchType .exp_departure input:checked + label {
+    border-color: #007fa8 #0087b3 #1198c4;
+    -webkit-border-top-left-radius: 6px;
+    -moz-border-radius-topleft: 6px;
+    border-top-left-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-left-radius: 6px;
+}
+/* 探索種別のマウスオーバー */
+.expGuiDateTime .exp_searchType .exp_departure label:hover {
+    -webkit-border-top-left-radius: 6px;
+    -moz-border-radius-topleft: 6px;
+    border-top-left-radius: 6px;
+    -webkit-border-bottom-left-radius: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border-bottom-left-radius: 6px;
+}
+/* 探索種別(スマホ＆タブレット) */
+.expGuiDateTime .exp_searchType .exp_departure,.expGuiDateTime .exp_searchType .exp_arrival,.expGuiDateTime .exp_searchType .exp_firstTrain,.expGuiDateTime .exp_searchType .exp_lastTrain,.expGuiDateTime .exp_searchType .exp_plain {
+    width: 19%;
+    height: 30px;
+    background: -moz-linear-gradient(bottom, #FFFFFF, #dbdee3 10%, #ebeef2 0.67, #f9fafb);
+    background: -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+    background-color: #FFFFFF;
+    color: #384556;
+    text-align: center;
+    text-shadow: 0px 1px 0px rgba(255,255,255,1);
+    font-weight: bold;
+}
+/* 始発で探索 */
+.expGuiDateTime .exp_searchType .exp_firstTrain {
+    float: left;
+    border-top: 1px solid #8a939c;
+    border-right: 1px solid #8a939c;
+    border-bottom: 1px solid #8a939c;
+}
+/* 終電で探索 */
+.expGuiDateTime .exp_searchType .exp_lastTrain {
+    float: left;
+    border-top: 1px solid #8a939c;
+    border-right: 1px solid #8a939c;
+    border-bottom: 1px solid #8a939c;
+    -webkit-border-top-right-radius: 6px;
+    -moz-border-radius-topright: 6px;
+    border-top-right-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    border-bottom-right-radius: 6px;
+}
+.expGuiDateTime .exp_searchType .exp_lastTrain input:checked + label {
+    border-color: #007fa8 #0087b3 #1198c4;
+    -webkit-border-top-right-radius: 6px;
+    -moz-border-radius-topright: 6px;
+    border-top-right-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    border-bottom-right-radius: 6px;
+}
+.expGuiDateTime .exp_searchType .exp_lastTrain label:hover {
+    -webkit-border-top-right-radius: 6px;
+    -moz-border-radius-topright: 6px;
+    border-top-right-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    border-bottom-right-radius: 6px;
+}
+/* 平均で探索 */
+.expGuiDateTime .exp_searchType .exp_plain {
+    float: right;
+    border: 1px solid #8a939c;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+.expGuiDateTime .exp_searchType .exp_plain input:checked + label {
+    border-color: #007fa8 #0087b3 #1198c4;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+.expGuiDateTime .exp_searchType .exp_plain label:hover {
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+}
+/* 探索種別の選択時 */
+.expGuiDateTime .exp_searchType input:checked + label {
+    background: -moz-linear-gradient(bottom, #02b7f2, #05b0e8 30%, #02a2d6);
+    background: -webkit-gradient(linear, left top, left bottom, from(#5386cb), color-stop(0.5,#1150b7), color-stop(0.5,#0533a1), to(#0946b2));
+    background-color: #02A3D8;
+    -webkit-box-shadow: 0 0 2px 0 #0287b3;
+    -webkit-box-shadow: 0px 1px 2px 0px #0287b3 inset;
+    -moz-box-shadow: 0 0 2px 0 #0287b3;
+    box-shadow: 0 1px #0091c0 inset;
+    box-shadow: 0 0 2px 0 #ffffff;
+    color: #FFFFFF;
+    text-shadow: 0px 0px 0px rgba(0,0,0,0);
+}
+/* 探索種別のラジオボタンを非表示 */
+.expGuiDateTime .exp_searchType input[type="radio"] {
+    display: none;
+}
+/* 探索種別のラベルを広げる */
+.expGuiDateTime .exp_searchType label {
+    display: block;
+    padding-top: 0.4em;
+    height: 25px;
+}
+/* 探索種別のマウスオーバー */
+.expGuiDateTime .exp_searchType label:hover {
+    color: #0082ad;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeArrivalOff a:link,.expGuiDateTime .exp_searchTypeList .exp_searchTypeArrivalOff a:visited {
+    width: 76px;
+    height: 31px;
+    color: #384556;
+    background: url(../expImages/offBtnType.png) no-repeat;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeArrivalOff:hover,.expGuiDateTime .exp_searchTypeList .exp_searchTypeArrivalOff a:hover {
+    width: 76px;
+    height: 31px;
+    color: #0082ad;
+}
+/* 到着 */
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeArrivalOn {
+    width: 76px;
+    height: 31px;
+    color: #FFFFFF;
+    background: url(../expImages/onBtnType.png) no-repeat;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeButton {
+    display: block;
+    width: 60px;
+    height: 40px;
+    text-decoration: none;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeDepartureOff a:link,.expGuiDateTime .exp_searchTypeList .exp_searchTypeDepartureOff a:visited {
+    width: 75px;
+    height: 31px;
+    color: #384556;
+    background: url(../expImages/offBtnDep.png) no-repeat;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeDepartureOff:hover,.expGuiDateTime .exp_searchTypeList .exp_searchTypeDepartureOff a:hover {
+    width: 75px;
+    height: 31px;
+    color: #0082ad;
+}
+/* 出発 */
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeDepartureOn {
+    width: 75px;
+    height: 31px;
+    color: #FFFFFF;
+    background: url(../expImages/onBtnDep.png) no-repeat;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeDepartureOn,.expGuiDateTime .exp_searchTypeList .exp_searchTypeDepartureOff,.expGuiDateTime .exp_searchTypeList .exp_searchTypeArrivalOn,.expGuiDateTime .exp_searchTypeList .exp_searchTypeArrivalOff,.expGuiDateTime .exp_searchTypeList .exp_searchTypeFirstTrainOn,.expGuiDateTime .exp_searchTypeList .exp_searchTypeFirstTrainOff,.expGuiDateTime .exp_searchTypeList .exp_searchTypeLastTrainOn,.expGuiDateTime .exp_searchTypeList .exp_searchTypeLastTrainOff,.expGuiDateTime .exp_searchTypeList .exp_searchTypePlainOn,.expGuiDateTime .exp_searchTypeList .exp_searchTypePlainOff {
+    float: left;
+    margin-bottom: 0.8em;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeFirstTrainOff a:link,.expGuiDateTime .exp_searchTypeList .exp_searchTypeFirstTrainOff a:visited {
+    width: 76px;
+    height: 31px;
+    color: #384556;
+    background: url(../expImages/offBtnType.png) no-repeat;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeFirstTrainOff:hover,.expGuiDateTime .exp_searchTypeList .exp_searchTypeFirstTrainOff a:hover {
+    width: 76px;
+    height: 31px;
+    color: #0082ad;
+}
+/* 始発 */
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeFirstTrainOn {
+    width: 76px;
+    height: 31px;
+    color: #FFFFFF;
+    background: url(../expImages/onBtnType.png) no-repeat;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeLastTrainOff a:link,.expGuiDateTime .exp_searchTypeList .exp_searchTypeLastTrainOff a:visited {
+    width: 75px;
+    height: 31px;
+    color: #384556;
+    background: url(../expImages/offBtnLas.png) no-repeat;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeLastTrainOff:hover,.expGuiDateTime .exp_searchTypeList .exp_searchTypeLastTrainOff a:hover {
+    width: 75px;
+    height: 31px;
+    color: #0082ad;
+}
+/* 終電 */
+.expGuiDateTime .exp_searchTypeList .exp_searchTypeLastTrainOn {
+    width: 75px;
+    height: 31px;
+    color: #FFFFFF;
+    background: url(../expImages/onBtnLas.png) no-repeat;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypePlainOff a:link,.expGuiDateTime .exp_searchTypeList .exp_searchTypePlainOff a:visited {
+    width: 73px;
+    height: 31px;
+    color: #384556;
+    background: url(../expImages/offBtnPlain.png) no-repeat;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypePlainOff:hover,.expGuiDateTime .exp_searchTypeList .exp_searchTypePlainOff a:hover {
+    width: 73px;
+    height: 31px;
+    color: #0082ad;
+}
+/* 平均 */
+.expGuiDateTime .exp_searchTypeList .exp_searchTypePlainOn {
+    width: 73px;
+    height: 31px;
+    color: #FFFFFF;
+    background: url(../expImages/onBtnPlain.png) no-repeat;
+}
+.expGuiDateTime .exp_searchTypeList .exp_searchTypePlainOn,.expGuiDateTime .exp_searchTypeList .exp_searchTypePlainOff {
+    margin-left: 0.5em;
+}
+.expGuiDateTime .exp_searchTypeList .exp_text {
+    display: block;
+    padding-top: 4px;
+    text-align: center;
+    font-size: 1.1em;
+}
+/* 日付と時刻のセパレータ */
+.expGuiDateTime .exp_separate {
+    clear: both;
+}
+/* 現在日時のボタン */
+.expGuiDateTime .exp_setNow {
+    background: url(../expImages/btnCtrTimeNow.png) no-repeat;
+}
+.expGuiDateTime .exp_setNow:hover {
+    background: url(../expImages/btnCtrTimeNowhover.png) no-repeat;
+}
+/* 時間設定 */
+.expGuiDateTime .exp_time {
+    border: 1px solid #8A939C;
+}
+/* カレンダーのテーブル */
+.expGuiDateTime table {
+    width: 246px;
+    border-collapse: collapse;
+    text-align: center;
+}
+.expGuiDateTimePC {
+    font-size: 0.8em;
+}
+/* カレンダーのボタン */
+.expGuiDateTimePc .exp_cal_open {
+    display: block;
+    float: left;
+    margin-right: 0.8em;
+    width: 31px;
+    height: 30px;
+}
+.expGuiDateTimePc .exp_calendar .exp_prev .exp_header_prev,.expGuiDateTimePc .exp_calendar .exp_next .exp_header_next {
+    display: block;
+    margin-top: -11px;
+    margin-left: -12px;
+    width: 33px;
+    height: 34px;
+}
+/* 探索種別 PC*/
+.expGuiDateTimePC .exp_searchTypeList,.expGuiDateTimePC .exp_dateTime {
+    margin: auto;
+    width: 100%;
+}
+/* 現在日時のボタン */
+.expGuiDateTimePc .exp_setNow {
+    display: block;
+    float: left;
+    margin-bottom: 0.8em;
+    width: 31px;
+    height: 30px;
+}
+/* 時間設定 */
+.expGuiDateTimePc .exp_time {
+    float: left;
+    margin-top: 3px;
+    margin-right: 0.3em;
+    height: 24px;
+    -webkit-border-radius: 2px;
+}
+/* カレンダーのボタン */
+.expGuiDateTimePhone .exp_cal_open {
+    display: block;
+    float: right;
+    margin-right: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #616d7a;
+    border-radius: 6px;
+    background: url(../expImages/TabicnTckCalender.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiDateTimePhone .exp_cal_open:hover {
+    background: url(../expImages/TabicnTckCalender.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+/* カレンダー */
+.expGuiDateTimePhone .exp_calendar {
+    position: absolute;
+    z-index: 50;
+    width: 94%;
+    -webkit-box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.4) #ebebeb;
+    box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.4) #ebebeb;
+}
+/* カレンダーの月表示部分 */
+.expGuiDateTimePhone .exp_calendar .exp_cal_header {
+    width: 100%;
+    height: 44px;
+    border: 1px solid #616d7a;
+    border-radius: 6px 6px 0 0;
+    background: -webkit-linear-gradient(top, #8f99ab, #717d8f);
+    box-shadow: inset 0 0 1px 1px #99a2b2;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+}
+/* 週の部分 */
+.expGuiDateTimePhone .exp_calendar .exp_calFirstWeek,.expGuiDateTimePhone .exp_calendar .exp_calSecWeek,.expGuiDateTimePhone .exp_calendar .exp_calThirWeek,.expGuiDateTimePhone .exp_calendar .exp_calFourWeek,.expGuiDateTimePhone .exp_calendar .exp_calFifWeek,.expGuiDateTimePhone .exp_calendar .exp_calSixWeek {
+    border-left: 1px solid #98a2ab;
+}
+.expGuiDateTimePhone .exp_calendar .exp_calSixWeek {
+    border-bottom: 1px solid #98a2ab;
+} 
+/* 曜日の部分 */
+.expGuiDateTimePhone .exp_calendar .exp_calWeek {
+    border-right: 1px solid #98a2ab;
+    border-left: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 0px #f4f6f8;
+    font-weight: bold;
+    font-size: small;
+}
+/* 本日以外の今月 */
+.expGuiDateTimePhone .exp_calendar .exp_days a {
+    background: -moz-linear-gradient(bottom, #ffffff, #dbdee3 0%, #ebeef2 67%, #f9fafb);
+    background: -webkit-linear-gradient(bottom, #ffffff, #dbdee3 0%, #ebeef2 67%, #f9fafb);
+}
+.expGuiDateTimePhone .exp_calendar .exp_days a:hover {
+    background: -moz-linear-gradient(bottom, #ffffff, #f2f2f2 0%, #f3f3f3 67%, #ffffff);
+    background: -webkit-linear-gradient(bottom, #ffffff, #f2f2f2 0%, #f3f3f3 67%, #ffffff);
+    color: #0082ad;
+}
+.expGuiDateTimePhone .exp_calendar .exp_header_prev,.expGuiDateTimePhone .exp_calendar .exp_header_next {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+/* 土曜日 */
+.expGuiDateTimePhone .exp_calendar .exp_header_saturday {
+    color: #2c85bf;
+}
+/* 日曜日 */
+.expGuiDateTimePhone .exp_calendar .exp_header_sunday {
+    color: #bd0000;
+}
+/* 平日 */
+.expGuiDateTimePhone .exp_calendar .exp_header_week {
+    color: #384556;
+}
+/* 日曜祝日 */
+.expGuiDateTimePhone .exp_calendar .exp_holiday,.expGuiDateTimePhone .exp_calendar .exp_sunday {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 1px #f4f6f8;
+    color: #bd0000;
+}
+/* 次の月 */
+.expGuiDateTimePhone .exp_calendar .exp_next {
+    display: block;
+    float: right;
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 15%;
+    height: 44px;
+    border-left: 1px solid #616d7a;
+    background: url(../expImages/TabbtnCtrCalAdd.png) no-repeat center;
+}
+/* 前後の月 */
+.expGuiDateTimePhone .exp_calendar .exp_otherday a {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    background-color: #f3f5f8;
+    color: #a3a3a3;
+}
+/* 前の月 */
+.expGuiDateTimePhone .exp_calendar .exp_prev {
+    display: block;
+    float: left;
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 15%;
+    height: 44px;
+    border-right: 1px solid #616d7a;
+    background: url(../expImages/TabbtnCtrCalDec.png) no-repeat center;
+} 
+/* 土曜日 */
+.expGuiDateTimePhone .exp_calendar .exp_saturday {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 1px #f4f6f8;
+    color: #2c85bf;
+}
+/* カレンダーの月の文字部分 */
+.expGuiDateTimePhone .exp_calendar .exp_title {
+    float: left;
+    padding-top: 12px;
+    width: 69%;
+    height: 32px;
+    border: none;
+    font-size: 1.2em;
+}
+/* 本日の表示 */
+.expGuiDateTimePhone .exp_calendar .exp_today a {
+    background: -moz-linear-gradient(top, #02a2d6, #05b0e8 30%, #02b7f2);
+    background: -webkit-linear-gradient(top, #02a2d6, #05b0e8 30%, #02b7f2);
+    -moz-box-shadow: inset 0 0 1px 1px #0290be;
+    box-shadow: inset 0 0 1px 1px #0290be;
+    color: #FFFFFF;
+}
+/* 日付のリンク */
+.expGuiDateTimePhone .exp_calendar .exp_today a,.expGuiDateTimePhone .exp_calendar .exp_days a,.expGuiDateTimePhone .exp_calendar .exp_otherday a {
+    display: block;
+    margin: 0;
+    height: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+/* 平日 */
+.expGuiDateTimePhone .exp_calendar .exp_weekday {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 1px #f4f6f8;
+    color: #384556;
+}
+/* カレンダーの日付部分 */
+.expGuiDateTimePhone .exp_calendar table td {
+    padding: 0;
+    height: 30px;
+    background-color: #eff1f5;
+}
+.expGuiDateTimePhone .exp_calendar table tr {
+    padding: 0;
+    background-color: #eff1f5;
+}
+.expGuiDateTimePhone .exp_dateGroup {
+    padding-right: 40px;
+}
+.expGuiDateTimePhone .exp_date {
+    float: left;
+    margin-right: -50px;
+    margin-bottom: 0.7em;
+    width: 100%;
+    height: 32px;
+}
+/* 端末種別 */
+.expGuiDateTimePhone .exp_dateTime,.expGuiDateTimeTablet .exp_dateTime {
+    margin: 0 auto 0 auto;
+    width: 100%;
+}
+/* 探索種別 */
+.expGuiDateTimePhone .exp_searchType {
+    margin: 6px auto 10px auto;
+    width: 100%;
+}
+/* 現在日時のボタン */
+.expGuiDateTimePhone .exp_setNow {
+    display: block;
+    float: right;
+    width: 31px;
+    height: 30px;
+    border: 1px solid #616d7a;
+    border-radius: 6px;
+    background: url(../expImages/TabbtnCtrTimeNow.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiDateTimePhone .exp_setNow:hover {
+    background: url(../expImages/TabbtnCtrTimeNow.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiDateTimePhone .exp_timeGroup {
+    padding-right: 40px;
+}
+.expGuiDateTimePhone .exp_time {
+    float: left;
+    width: 50%;
+    height: 32px;
+}
+/* カレンダーのテーブル */
+.expGuiDateTimePhone table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #333;
+    text-align: center;
+}
+.expGuiDateTimePhone,.expGuiDateTimeTablet {
+    font-size: small;
+}
+/* カレンダーのボタン */
+.expGuiDateTimeTablet .exp_cal_open {
+    display: block;
+    float: left;
+    margin-right: 3%;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #616d7a;
+    border-radius: 6px;
+    background: url(../expImages/TabicnTckCalender.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiDateTimeTablet .exp_cal_open:hover {
+    background: url(../expImages/TabicnTckCalender.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+/* カレンダー */
+.expGuiDateTimeTablet .exp_calendar {
+    position: absolute;
+    z-index: 50;
+    margin: 25px 3% 0 3%;
+    width: 30em;
+}
+/* カレンダーの月表示部分 */
+.expGuiDateTimeTablet .exp_calendar .exp_cal_header {
+    width: 99.25%;
+    height: 44px;
+    border: 1px solid #616d7a;
+    border-radius: 6px 6px 0 0;
+    background: -webkit-linear-gradient(top, #8f99ab, #717d8f);
+    box-shadow: inset 0 0 1px 1px #99a2b2;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+}
+/* 週の部分 */
+.expGuiDateTimeTablet .exp_calendar .exp_calFirstWeek,.expGuiDateTimeTablet .exp_calendar .exp_calSecWeek,.expGuiDateTimeTablet .exp_calendar .exp_calThirWeek,.expGuiDateTimeTablet .exp_calendar .exp_calFourWeek,.expGuiDateTimeTablet .exp_calendar .exp_calFifWeek,.expGuiDateTimeTablet .exp_calendar .exp_calSixWeek {
+    border-left: 1px solid #98a2ab;
+}
+.expGuiDateTimeTablet .exp_calendar .exp_calSixWeek {
+    border-bottom: 1px solid #98a2ab;
+} 
+/* 曜日の部分 */
+.expGuiDateTimeTablet .exp_calendar .exp_calWeek {
+    border-right: 1px solid #98a2ab;
+    border-left: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 0px #f4f6f8;
+    font-weight: bold;
+    font-size: small;
+}
+/* 本日以外の今月 */
+.expGuiDateTimeTablet .exp_calendar .exp_days a {
+    background: -moz-linear-gradient(bottom, #ffffff, #dbdee3 0%, #ebeef2 67%, #f9fafb);
+    background: -webkit-linear-gradient(bottom, #ffffff, #dbdee3 0%, #ebeef2 67%, #f9fafb);
+}
+.expGuiDateTimeTablet .exp_calendar .exp_days a:hover {
+    background: -moz-linear-gradient(bottom, #ffffff, #f2f2f2 0%, #f3f3f3 67%, #ffffff);
+    background: -webkit-linear-gradient(bottom, #ffffff, #f2f2f2 0%, #f3f3f3 67%, #ffffff);
+    color: #0082ad;
+}
+.expGuiDateTimeTablet .exp_calendar .exp_header_prev,.expGuiDateTimeTablet .exp_calendar .exp_header_next {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+/* 土曜日 */
+.expGuiDateTimeTablet .exp_calendar .exp_header_saturday {
+    color: #2c85bf;
+}
+/* 日曜日 */
+.expGuiDateTimeTablet .exp_calendar .exp_header_sunday {
+    color: #bd0000;
+}
+/* 平日 */
+.expGuiDateTimeTablet .exp_calendar .exp_header_week {
+    color: #384556;
+}
+/* 日曜祝日 */
+.expGuiDateTimeTablet .exp_calendar .exp_holiday,.expGuiDateTimeTablet .exp_calendar .exp_sunday {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 1px #f4f6f8;
+    color: #bd0000;
+}
+/* 次の月 */
+.expGuiDateTimeTablet .exp_calendar .exp_next {
+    display: block;
+    float: right;
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 15%;
+    height: 44px;
+    border-left: 1px solid #616d7a;
+    background: url(../expImages/TabbtnCtrCalAdd.png) no-repeat center;
+}
+/* 前後の月 */
+.expGuiDateTimeTablet .exp_calendar .exp_otherday a {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    background-color: #f3f5f8;
+    color: #a3a3a3;
+}
+/* 前の月 */
+.expGuiDateTimeTablet .exp_calendar .exp_prev {
+    display: block;
+    float: left;
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 15%;
+    height: 44px;
+    border-right: 1px solid #616d7a;
+    background: url(../expImages/TabbtnCtrCalDec.png) no-repeat center;
+} 
+/* 土曜日 */
+.expGuiDateTimeTablet .exp_calendar .exp_saturday {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 1px #f4f6f8;
+    color: #2c85bf;
+}
+/* カレンダーの月の文字部分 */
+.expGuiDateTimeTablet .exp_calendar .exp_title {
+    float: left;
+    padding-top: 12px;
+    width: 69%;
+    height: 32px;
+    border: none;
+    font-size: 1.2em;
+}
+/* 本日の表示 */
+.expGuiDateTimeTablet .exp_calendar .exp_today a {
+    background: -moz-linear-gradient(top, #02a2d6, #05b0e8 30%, #02b7f2);
+    background: -webkit-linear-gradient(top, #02a2d6, #05b0e8 30%, #02b7f2);
+    -moz-box-shadow: inset 0 0 1px 1px #0290be;
+    box-shadow: inset 0 0 1px 1px #0290be;
+    color: #FFFFFF;
+}
+/* 日付のリンク */
+.expGuiDateTimeTablet .exp_calendar .exp_today a,.expGuiDateTimeTablet .exp_calendar .exp_days a,.expGuiDateTimeTablet .exp_calendar .exp_otherday a {
+    display: block;
+    margin: 0;
+    height: 24px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+/* 平日 */
+.expGuiDateTimeTablet .exp_calendar .exp_weekday {
+    border-top: 1px solid #98a2ab;
+    border-right: 1px solid #98a2ab;
+    -webkit-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    -moz-box-shadow: inset 0 0 1px 1px #f4f6f8;
+    box-shadow: inset 0 0 1px 1px #f4f6f8;
+    color: #384556;
+}
+/* カレンダーの日付部分 */
+.expGuiDateTimeTablet .exp_calendar table td {
+    padding: 0;
+    height: 30px;
+    background-color: #eff1f5;
+}
+.expGuiDateTimeTablet .exp_calendar table tr {
+    padding: 0;
+    background-color: #eff1f5;
+}
+.expGuiDateTimeTablet .exp_date {
+    float: left;
+    margin-top: 0.1em;
+    margin-right: 1%;
+    width: 31.5%;
+    height: 30px;
+}
+/* 探索種別 */
+.expGuiDateTimeTablet .exp_searchType {
+    margin: 6px auto 10px auto;
+    width: 100%;
+}
+/* 現在日時のボタン */
+.expGuiDateTimeTablet .exp_setNow {
+    display: block;
+    float: left;
+    margin-right: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #616d7a;
+    border-radius: 6px;
+    background: url(../expImages/TabbtnCtrTimeNow.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiDateTimeTablet .exp_setNow:hover {
+    background: url(../expImages/TabbtnCtrTimeNow.png) no-repeat center, -webkit-gradient(linear, left bottom, left top,  from(#ffffff),color-stop(0.05, #dbdee3),color-stop(0.67, #ebeef2), to(#f9fafb));
+}
+.expGuiDateTimeTablet .exp_time {
+    float: left;
+    margin-top: 0.1em;
+    margin-right: 1%;
+    width: 21%;
+    height: 30px;
+}
+/* カレンダーのテーブル */
+.expGuiDateTimeTablet table {
+    width: 99.5%;
+    border-collapse: collapse;
+    text-align: center;
+}

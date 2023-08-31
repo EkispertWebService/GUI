@@ -1,0 +1,530 @@
+@charset "utf-8";
+/* 駅名入力パーツ */
+.expGuiStation {
+    margin: auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: inherit;
+    font-family: "メイリオ", Meiryo, Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+    _font-family: "メイリオ", Meiryo,"ＭＳ Ｐゴシック", Tahoma, Verdana, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "MS PGothic", sans-serif;
+    text-align: left;
+}
+/* バスのアイコン */
+.expGuiStation .exp_bus {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url(../expImages/spicnbus.png);
+}
+/* 飛行機のアイコン */
+.expGuiStation .exp_plane {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url(../expImages/spicnair.png);
+}
+/* 船のアイコン */
+.expGuiStation .exp_ship {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url(../expImages/spicnship.png);
+}
+/* 駅の入力ボックス */
+.expGuiStation .exp_station {
+    width: 100%;
+    margin: 0px;
+    height: 30px;
+    border: 1px solid #a0aab4;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: inset #ececec 0 2px;
+    box-shadow: inset #ececec 0 2px;
+}
+/* 駅の入力にフォーカスを合わせる */
+.expGuiStation .exp_station:focus {
+    margin: 0px;
+    height: 30px;
+    border: 1px solid #00cdf2;
+    border-radius: 5px;
+    -moz-box-shadow: inset #f5f5f5 0 2px;
+    box-shadow: inset #f5f5f5 0 2px;
+}
+/* 候補数のカウント表示 */
+.expGuiStation .exp_stationCount {
+    float: right;
+    margin-right: 5px;
+    padding-right: 1em;
+    padding-left: 1em;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    background-color: #B4B4B4;
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+/* 駅リスト */
+.expGuiStation .exp_stationList {
+    border-top: 1px solid #a9a9a9;
+    border-top: 1px solid #a9a9a9;
+    border-right: 1px solid #a9a9a9;
+    border-right: 1px solid #a9a9a9;
+    border-bottom: 1px solid #a9a9a9;
+    border-bottom: 1px solid #a9a9a9;
+    border-left: 1px solid #a9a9a9;
+    border-left: 1px solid #a9a9a9;
+    background-color: #FFFFFF;
+    background-color: #FFFFFF;
+    -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.3);
+    color: #636363;
+    color: #636363;
+}
+/* 駅の選択 */
+.expGuiStation .exp_stationList .exp_stationSelect {
+    overflow: auto;
+    max-height: 20em;
+}
+/* 駅の種別選択 */
+.expGuiStation .exp_stationList .exp_stationTabList {
+    overflow: hidden;
+    padding: 5px;
+    border-bottom: #727882 1px solid;
+    background: linear-gradient(top, #f8f9fb, #dcdfe4);
+    background: -webkit-linear-gradient(top, #f8f9fb, #dcdfe4);
+    box-shadow: inset 0 0 0 1px #e7e9ec;
+    box-shadow: 0 0 1px 2px #e7e9ec;
+}
+/* 駅の表示種別 */
+.expGuiStation .exp_stationList .exp_stationTabList .exp_stationTab {
+    float: left;
+    width: 25%;
+    text-align: center;
+}
+/* 駅の表示種別選択 */
+.expGuiStation .exp_stationList .exp_stationTabList .exp_stationTab .exp_stationTabCheck {
+    display: none;
+}
+/* 駅の表示種別の選択中表示 */
+.expGuiStation .exp_stationList .exp_stationTabList .exp_stationTab .exp_stationTabCheck + label {
+    display: block;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    width: 100%;
+    border-top: 1px solid #4c555e;
+    border-bottom: 1px solid #4c555e;
+    border-left: 1px solid #4c555e;
+    background: #979797;
+    -webkit-box-shadow: inset 0 0 1px 1px #a1a1a1;
+    box-shadow: inset 0 0 1px 1px #a1a1a1;
+    color: #ededed;
+    font-weight: bold;
+}
+/* 駅の選択中表示 */
+.expGuiStation .exp_stationList .exp_stationTabList .exp_stationTab .exp_stationTabCheck:checked + label {
+    display: block;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    width: 100%;
+    border-top: 1px solid #4c555e;
+    border-bottom: 1px solid #4c555e;
+    border-left: 1px solid #4c555e;
+    background: -moz-linear-gradient(top, #8f99ab, #717d8f);
+    background: -webkit-linear-gradient(top, #8f99ab, #717d8f);
+    background-color: #8C97A9;
+    box-shadow: inset 0 0 1px 1px #99a2b2;
+    color: #ffffff;
+    font-weight: bold;
+}
+/* 駅の選択ホバー */
+.expGuiStation .exp_stationList .exp_stationTabList .exp_stationTab .exp_stationTabCheck:checked + label:hover {
+    display: block;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    width: 100%;
+    font-weight: bold;
+}
+/* 駅のタブ左側 */
+.expGuiStation .exp_stationList .exp_stationTabList .exp_stationTab .exp_stationTabTextLeft {
+    border-left: 1px solid #333;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topleft: 5px;
+    border-top-left-radius: 5px;
+    border-top-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+/* 駅のタブデザイン */
+.expGuiStation .exp_stationList .exp_stationTabList .exp_stationTab .exp_stationTabTextLeft,
+.expGuiStation .exp_stationList .exp_stationTabList .exp_stationTab .exp_stationTabText,
+.expGuiStation .exp_stationList .exp_stationTabList .exp_stationTab .exp_stationTabTextRight {
+    display: block;
+    padding-top: 0.5em;
+    width: 100%;
+    height: 1.5em;
+    border-left: 1px solid #000000;
+    background: -moz-linear-gradient(top, #8C97A9, #727E90);
+    background: -webkit-gradient(linear, left top, left bottom, from(#8C97A9), to(#727E90));
+    background-color: #8C97A9;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+/* 駅のタブ右側 */
+.expGuiStation .exp_stationList .exp_stationTabList .exp_stationTab .exp_stationTabTextRight {
+    border-right: 1px solid #333;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-right-radius: 5px;
+    border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomright: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+/* 駅メニュー */
+.expGuiStation .exp_stationMenu {
+    display: block;
+    float: left;
+    margin-right: 0;
+    width: 32px;
+    height: 32px;
+    background: url(../expImages/btnStationMenu.png) no-repeat;
+}
+/* 駅メニューのホバー */
+.expGuiStation .exp_stationMenu:hover {
+    background: url(../expImages/btnStationMenuhover.png) no-repeat;
+}
+/* 駅名 */
+.expGuiStation .exp_stationName {
+    display: block;
+    padding: 3px 10px 3px 9px;
+    padding-left: 1%;
+    border-bottom: 1px solid #f5f5f5;
+    color: #333333;
+    text-decoration: none;
+    font-size: 1.1em;
+}
+/* 駅名のマウスオーバー時 */
+.expGuiStation .exp_stationName:hover {
+    background-color: #0077ee;
+    color: #FFFFFF;
+}
+/* 駅名のマウスオーバー時 */
+.expGuiStation .exp_stationNameCursor {
+    background-color: #0077ee;
+    color: #FFFFFF;
+}
+/* 駅候補のポップアップ */
+.expGuiStation .exp_stationPopup {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: #EAEDF1;
+}
+/*駅入力キャンセル  */
+.expGuiStation .exp_stationPopup .exp_stationBack {
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+/* ポップアップ時の駅名入力 */
+.expGuiStation .exp_stationPopup .exp_stationInputHeader {
+    padding: 0.5em 0.5em;
+    background: -webkit-gradient(linear, left bottom, left top, from(#ffffff),color-stop(0.03, #dbdee3),color-stop(70, #e4e7ec), to(#ffffff));
+}
+/* 戻るボタン */
+.expGuiStation .exp_stationPopup .exp_stationInputHeader .exp_stationInputBack {
+    float: left;
+    margin: 0.7em 1em 0em 0.5em;
+    width: 22px;
+    height: 22px;
+    background: url(../expImages/inputBk.png) no-repeat center;
+}
+/* 駅入力キャンセルのリンク */
+.expGuiStation .exp_stationPopup .exp_stationInputHeader .exp_stationInputBack a {
+    display: block;
+    width: 22px;
+    height: 22px;
+}
+/* 入力ボックス */
+.expGuiStation .exp_stationPopup .exp_stationInputHeader .exp_stationInputText {
+    padding: 0.3em 0 0.3em 1.5em;
+}
+/* ポップアップ版駅入力 */
+.expGuiStation .exp_stationPopup .exp_stationInputHeader .exp_stationInputText input {
+    width: 92%;
+    height: 2.5em;
+    border: 1px solid #a0aab4;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: inset #ececec 0 2px;
+    box-shadow: inset #ececec 0 2px;
+    -webkit-shadow: inset #ececec 0 2px;
+}
+/* スマートフォン用駅名 */
+.expGuiStation .exp_stationPopup .exp_stationName {
+    padding-top: 0.7em;
+    padding-bottom: 0.7em;
+}
+/* 駅リスト */
+.expGuiStation .exp_stationPopup .exp_stationSPList {
+    border: 1px solid #eeeeee;
+}
+/* 駅の表示種別選択 */
+.expGuiStation .exp_stationPopup .exp_stationTab .exp_stationTabCheck {
+    display: none;
+}
+/* 表示種別選択のテキスト */
+.expGuiStation .exp_stationPopup .exp_stationTab .exp_stationTabText {
+    display: block;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+    width: 100%;
+    height: 2.0em;
+    border-top: 1px solid #4c555e;
+    border-bottom: 1px solid #4c555e;
+    border-left: 1px solid #4c555e;
+    background: #979797;
+    -webkit-box-shadow: inset 0 0 1px 1px #a1a1a1;
+    box-shadow: inset 0 0 1px 1px #a1a1a1;
+    color: #ededed;
+    font-weight: bold;
+}
+/* 駅種別選択中 */
+.expGuiStation .exp_stationPopup .exp_stationTabCheck:checked + label {
+    display: block;
+    padding-top: 1em;
+    padding-bottom: 0.5em;
+    width: 100%;
+    height: 2.0em;
+    border-top: 1px solid #4c555e;
+    border-bottom: 1px solid #4c555e;
+    border-left: 1px solid #4c555e;
+    background: -moz-linear-gradient(top, #8f99ab, #717d8f);
+    background: -webkit-linear-gradient(top, #8f99ab, #717d8f);
+    background-color: #8C97A9;
+    box-shadow: inset 0px 0px 0px 1px #99a2b2;
+    color: #FFFFFF;
+    text-shadow: 0px 1px 1px rgba(0,0,0,1);
+    font-weight: bold;
+}
+/* 駅の種別選択 */
+.expGuiStation .exp_stationPopup .exp_stationTabList {
+    overflow: hidden;
+}
+/* 駅リストのタブ */
+.expGuiStation .exp_stationPopup .exp_stationTabList .exp_stationTab {
+    float: left;
+    width: 25%;
+    text-align: center;
+    font-size: 1.1em;
+}
+/* スマートフォン用ポップアップ */
+.expGuiStation .exp_stationPopupBack {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    overflow: auto;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+}
+/* 駅の候補 */
+.expGuiStation .exp_stationTable {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+/* 駅の種別タイトル  PC */
+.expGuiStation .exp_stationTitle {
+    display: block;
+    margin-bottom: 2px;
+    padding: 5px 0px 5px 10px;
+    height: 100%;
+    color: #3a97dd;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+    background: url(../expImages/SuggestLine.png) no-repeat 5px #f5f5f5;
+}
+/* 駅の種別クローズ時 */
+.expGuiStation .exp_stationTitleClose {
+    display: block;
+    height: 100%;
+    border-left: 5px solid #459DDE;
+    background-color: #f5f5f5;
+    color: #3a97dd;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: smaller;
+}
+.expGuiStation .exp_stationTitleClose:hover {
+    background-color: #45AFFF;
+    color: #FFFFFF;
+}
+.expGuiStation .exp_train {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background: url(../expImages/spicneki.png);
+}
+/* 駅名入力パーツ PC */
+.expGuiStationPC {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8em;
+}
+/* ヘッダー PC */
+.expGuiStationPC .exp_searchTypeList {
+    margin: auto;
+    width: 390px;
+}
+.expGuiStationPC .exp_station {
+    margin: 0px;
+    height: 30px;
+    border: 1px solid #a0aab4;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: inset #ececec 0 2px;
+    box-shadow: inset #ececec 0 2px;
+}
+.expGuiStationPC .exp_station:focus {
+    margin: 0px;
+    height: 30px;
+    border: 1px solid #00cdf2;
+    border-radius: 5px;
+    -moz-box-shadow: inset #f5f5f5 0 2px;
+    box-shadow: inset #f5f5f5 0 2px;
+}
+/* PCの場合のみ */
+.expGuiStationPc .exp_stationIcon {
+    margin: 0 0.5em 0 0.5em;
+}
+/* 駅リスト */
+.expGuiStationPc .exp_stationList {
+    position: absolute;
+    z-index: 50;
+    overflow: auto;
+    padding: 0px;
+    width: 90%;
+    min-height: 0;
+    height: auto !important;
+    height: 20em;
+}
+/* 駅のアイコン */
+.expGuiStationPc .exp_stationTable .exp_stationIcon {
+    float: left;
+    width: 16px;
+}
+/* 駅の候補 PC　*/
+.expGuiStationPc .exp_stationTable li {
+    clear: both;
+}
+/* 入力エリア  スマホ*/
+.expGuiStationPhone {
+    width: 100%;
+}
+.expGuiStationPhone .exp_station:focus {
+    height: 34px;
+}
+/* 駅の候補 スマホ */
+.expGuiStationPhone .exp_stationTable {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+/* 駅のアイコン スマホ */
+.expGuiStationPhone .exp_stationTable .exp_stationIcon {
+    float: left;
+    padding: 12px 10px 0 10px;
+    width: 16px;
+}
+/* 駅の候補 スマホ */
+.expGuiStationPhone .exp_stationTable li {
+    clear: both;
+    border-bottom: 1px #727882 solid;
+    box-shadow: #ffffff 0 1px;
+}
+/* 駅の候補 スマホ */
+.expGuiStationPhone .exp_stationTable ul {
+    margin-left: 50px;
+    padding-left: 50px;
+}
+/* 駅の種別タイトル */
+.expGuiStationPhone .exp_stationTitle {
+    display: block;
+    margin-bottom: 2px;
+    padding: 8px 0px 8px 10px;
+    height: 100%;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+.expGuiStationPhone .exp_station {
+    height: 34px;
+}
+/* 駅の種別タイトル */
+.expGuiStationPhone　stationTable .exp_stationTitle {
+    color: #3a97dd;
+    background: url(../expImages/SuggestLine.png) no-repeat 5px #f5f5f5;
+}
+.expGuiStationPhone,
+.expGuiStationTablet {
+    font-size: small;
+}
+/* 入力エリア  スマホ*/
+.expGuiStationTablet {
+    width: 100%;
+    position: relative;
+}
+.expGuiStationTablet .exp_station:focus {
+    height: 34px;
+}
+.expGuiStationTablet .exp_stationList {
+    position: absolute;
+    z-index: 50;
+    overflow: auto;
+    padding: 0px;
+    left: 0px;
+    right: 0px;
+}
+/* タブレット用駅名 */
+.expGuiStationTablet .exp_stationList .exp_stationName {
+    border-bottom: #727882 1px solid;
+}
+.expGuiStationTablet .exp_stationList li {
+    border-top: #fff 1px solid;
+    background: #eaedf1;
+}
+.expGuiStationTablet .exp_stationSelect .exp_stationIcon {
+    float: left;
+    padding: 12px 10px 0 10px;
+    width: 16px;
+}
+/* タブレット用駅名 */
+.expGuiStationTablet .exp_stationSelect .exp_stationName {
+    padding: 0.7em 0;
+}
+.expGuiStationTablet .exp_stationSelect li {
+    list-style: none;
+}
+.expGuiStationTablet .exp_station {
+    height: 34px;
+}
