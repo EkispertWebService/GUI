@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiCourse.css">
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiStationTimeTable.css">
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiSectionTimeTable.css">
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiStationTimeTable.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiSectionTimeTable.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="expGuiCourse.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var stationTimetable;// 列車時刻表パーツ
+var courseStationTimeTable;// 駅時刻表パーツ
+var courseSectionTimeTable;// 区間時刻表パーツ
+var resultApp;//経路表示パーツ
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 駅時刻表
+  courseStationTimeTable = new expGuiStationTimeTable(document.getElementById("stationTimetable"));
+  // 区間時刻表
+  courseSectionTimeTable = new expGuiSectionTimeTable(document.getElementById("sectionTimetable"));
+  // 経路探索
+  resultApp = new expGuiCourse(document.getElementById("course"));
+}
+
+/*
+ * 経路の取得
+ */
+function search(){
+  // 探索条件を設定
+  var searchObject = resultApp.createSearchInterface();
+  // 発着地を設定
+  searchObject.setViaList("高円寺:銀座");
+  // 時刻表へのリンクを設定
+  var stationTimeTableMenu = new resultApp.menu("駅時刻表",lineStationTimeTable,resultApp.TYPE_TRAIN);
+  var sectionTimeTableMenu = new resultApp.menu("区間時刻表",lineSectionTimeTable,resultApp.TYPE_TRAIN);
+  resultApp.addLineMenu(stationTimeTableMenu);
+  resultApp.addLineMenu(sectionTimeTableMenu);
+  // 探索実行
+  resultApp.search(searchObject,setResult);
+}
+
+/*
+ * 経路探索のコールバック
+ */
+function setResult(isSuccess){
+  if(!isSuccess){
+    alert("探索結果が取得できませんでした");
+  }
+}
+
+/*
+ * 駅時刻表の表示
+ */
+function lineStationTimeTable(sectionIndex){
+  // 区間時刻表と列車時刻表は隠す
+  document.getElementById("sectionTimetable").style.display = 'none';
+  // 駅時刻表を表示
+  document.getElementById("stationTimetable").style.display = 'block';
+  courseStationTimeTable.dispCourseTimetable(resultApp.getSerializeData(),sectionIndex,resultTimeTable);
+}
+
+/*
+ * 区間時刻表の表示
+ */
+function lineSectionTimeTable(sectionIndex){
+  // 駅時刻表と列車時刻表は隠す
+  document.getElementById("stationTimetable").style.display = 'none';
+  // 区間時刻表を表示
+  document.getElementById("sectionTimetable").style.display = 'block';
+  courseSectionTimeTable.dispRailTimetable(resultApp.getSerializeData(),sectionIndex,resultTimeTable);
+}
+
+/*
+ * 時刻表取得時のコールバック関数
+ */
+function resultTimeTable(isSuccess){
+  if(!isSuccess){
+    alert("時刻表が取得できませんでした");
+  }
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<!-- 時刻表パーツ -->
+<table class="sample">
+  <tr>
+    <td class="sample_title">設定</td>
+    <td class="sample_title">時刻表</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      <input class="sample_btn" type="button" value="経路の表示" onClick="JavaScript:search();">
+      <div id="course"></div>
+    </td>
+    <td>
+      <div id="stationTimetable" style="display:none;"></div>
+      <div id="sectionTimetable" style="display:none;"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+

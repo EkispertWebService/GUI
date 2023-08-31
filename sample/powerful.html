@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link class="css" rel="stylesheet" type="text/css" href="expCss/expGuiMap.css">
+<script type="text/javascript" src="expGuiMap.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<title>Webサービスサンプル</title>
+<script type="text/javascript">
+<!--
+    // アプリケーションオブジェクト
+    var app = null; // アプリケーションオブジェクト
+
+    function onLoad() {
+                // アプリケーションオブジェクトを生成します
+                app = new expGuiMap(document.getElementById("map"),{configure : {
+                                                          cursor    : true,
+                                                          zoom      : true,
+                                                          continuousZoom : true,
+                                                          doubleClickZoom : true,
+                                                          navi      : true
+                                                        }
+                                                      });
+                // 東京(22828)を中心とした全域400％(jpnx4)の路線図を表示します
+                app.dispMapStation(22828,'jpnx4',onDispMapStation);
+                // クリックイベントを設定します
+                app.bind('click',onStationClick);
+    }
+
+    // 駅がクリックされたときに実行される関数
+    function onStationClick(station) {
+        document.getElementById("stname").innerHTML = station.name;
+        document.getElementById("stcode").innerHTML = station.code;
+        document.getElementById("lati").innerHTML = station.lati;
+        document.getElementById("longi").innerHTML = station.longi;
+    }
+
+    // 路線図の中心を指定された駅にする
+    function changeCenter(stcode) {
+        app.dispMapStation(stcode, app.getMapPrefix(), onDispMapStation);
+    }
+
+    // 路線図を切り替える
+    function changeMap(prefix, mapname, stcode) {
+        // 路線図名を更新する。
+        document.getElementById("mapname").innerHTML = mapname;
+        // 指定された駅(stcode)を中心とした路線図(prefix)を表示します。
+        app.dispMapStation(stcode, prefix, onDispMapStation);
+    }
+
+    // エラー時に実行される関数
+    function onDispMapStation(isSuccess, stCode) {
+        if (!isSuccess) {
+            alert("路線図 [" + app.getMapPrefix() + "] には指定された駅(" + stCode + ")はありません。");
+        }
+    }
+// -->
+</script>
+</head>
+<body onload="onLoad()">
+  <table border="1" width="100%" height="100%">
+    <tr>
+      <td width="25%" align="center" valign="top">
+        <table border="1" width="100%">
+          <tr>
+            <th bgcolor="#689aff" colspan="2"><font color="#ffffff">中心位置の変更</font></th>
+          </tr>
+          <tr>
+            <td nowrap><a href="javascript:changeCenter(20220)">札幌</a></td>
+            <td nowrap><a href="javascript:changeCenter(21044)">仙台</a></td>
+          </tr>
+          <tr>
+            <td nowrap><a href="javascript:changeCenter(22828)">東京</a></td>
+            <td nowrap><a href="javascript:changeCenter(25077)">名古屋</a></td>
+          </tr>
+          <tr>
+            <td nowrap><a href="javascript:changeCenter(25853)">大阪</a></td>
+            <td nowrap><a href="javascript:changeCenter(27365)">広島</a></td>
+          </tr>
+          <tr>
+            <td nowrap><a href="javascript:changeCenter(27724)">高松</a></td>
+            <td nowrap><a href="javascript:changeCenter(28283)">博多</a></td>
+          </tr>
+        </table>
+        <table border="1" width="100%">
+          <tr>
+            <th bgcolor="#689aff" colspan="2"><font color="#ffffff">路線図の選択</font></th>
+          </tr>
+          <tr>
+            <td nowrap><a href="javascript:changeMap('jpnx1','全域（100％）',22828)">全域（100％）</a></td>
+            <td nowrap><a href="javascript:changeMap('jpnx4','全域（400％）',22828)">全域（400％）</a></td>
+          </tr>
+          <tr>
+            <td nowrap><a href="javascript:changeMap('tokyo','東京近郊',22828)">東京近郊</a></td>
+            <td nowrap><a href="javascript:changeMap('nagoya','名古屋近郊',25077)">名古屋近郊</a></td>
+          </tr>
+          <tr>
+            <td nowrap><a href="javascript:changeMap('osaka','大阪近郊',25853)">大阪近郊</a></td>
+            <td nowrap><a href="javascript:changeMap('fukuoka','福岡近郊',28283)">福岡近郊</a></td>
+          </tr>
+        </table>
+        <table border="1" width="100%">
+          <tr>
+            <th bgcolor="#689aff" colspan="2"><font color="#ffffff">選択された駅情報</font></th>
+          </tr>
+          <tr>
+            <td bgcolor="#6a9cff" width="25%" nowrap><font color="#ffffff">駅名</font></td>
+            <td nowrap><div id="stname"><br></div></td>
+          </tr>
+          <tr>
+            <td bgcolor="#6a9cff" width="25%" nowrap><font color="#ffffff">駅コード</font></td>
+            <td nowrap><div id="stcode"><br></div></td>
+          </tr>
+          <tr>
+            <td bgcolor="#6a9cff" width="25%" nowrap><font color="#ffffff">緯度</font></td>
+            <td nowrap><div id="lati"><br></div></td>
+          </tr>
+          <tr>
+            <td bgcolor="#6a9cff" width="25%" nowrap><font color="#ffffff">経度</font></td>
+            <td nowrap><div id="longi"><br></div></td>
+          </tr>
+        </table>
+      </td>
+      <td width="75%">
+        <table border="1" width="100%" height="100%">
+          <tr>
+            <th width="100%" bgcolor="#689aff"><font color="#ffffff"><div id="mapname">全域（400％）</div></font></th>
+          </tr>
+          <tr>
+            <td width="100%" height="100%" valign="top"><div id="map" style="width:100%; height:100%;"></div></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  </body>
+</html>

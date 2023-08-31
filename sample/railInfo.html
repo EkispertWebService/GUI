@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="expGuiRail.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var rail;
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 路線情報
+  rail = new expGuiRail();
+}
+
+/*
+ * 会社一覧を取得
+ */
+function getCorpList(){
+  rail.setConfigure("type",rail.TYPE_TRAIN);
+  rail.searchCorporation(setCorporationList);
+}
+
+/*
+ * 会社一覧取得のコールバック
+ */
+function setCorporationList(isSuccess){
+  if(!isSuccess){
+    alert("会社一覧が取得できませんでした");
+  }else{
+    //会社一覧の出力
+    var buffer = "";
+    buffer+='<select id="corp" size="20">';
+    var corpList = rail.getCorporationList().split(",");
+    for(var i=0;i<corpList.length;i++){
+      buffer+='<option value="'+ corpList[i] +'">'+ corpList[i] +'</option>';
+    }
+    buffer+='</select>';
+    document.getElementById("railInfo").innerHTML = buffer;
+  }
+}
+
+/*
+ * 路線一覧を取得
+ */
+function getListList(){
+  var corpName = "ＪＲ";
+  rail.searchRail(corpName,setRailList);
+}
+
+/*
+ * 路線一覧取得のコールバック
+ */
+function setRailList(isSuccess){
+  if(!isSuccess){
+    alert("路線一覧が取得できませんでした");
+  }else{
+    //路線一覧の出力
+    var buffer = "";
+    buffer+='<select id="rail" size="20">';
+    var railList = rail.getRailList().split(",");
+    for(var i=0;i<railList.length;i++){
+      buffer+='<option value="'+ railList[i] +'">'+ railList[i] +'</option>';
+    }
+    buffer+='</select>';
+    document.getElementById("railInfo").innerHTML = buffer;
+  }
+}
+
+/*
+ * 停車駅一覧の取得
+ */
+function getStationList(direction){
+  var railName = "ＪＲ新幹線のぞみ";
+  var direction;
+  if(direction == "none"){
+    direction = rail.DIRECTION_NONE;
+  }else if(direction == "up"){
+    direction = rail.DIRECTION_UP;
+  }else if(direction == "down"){
+    direction = rail.DIRECTION_DOWN;
+  }
+  rail.searchStation(railName,direction,setStationList);
+}
+
+/*
+ * 停車駅一覧取得のコールバック
+ */
+function setStationList(isSuccess){
+  if(!isSuccess){
+    alert("駅一覧が取得できませんでした");
+  }else{
+    //駅一覧の出力
+    var buffer = "";
+    buffer+='<select id="station" name="station" size="20">';
+    var stationList = rail.getStationList().split(",");
+    for(var i=0;i<stationList.length;i++){
+      buffer+='<option value="'+ stationList[i] +'">'+ stationList[i] +'</option>';
+    }
+    buffer+='</select>';
+    document.getElementById("railInfo").innerHTML = buffer;
+  }
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<table class="sample">
+  <tr>
+    <td class="sample_header" colspan="3">路線情報パーツ</td>
+  </tr>
+  <tr>
+    <td class="sample_title">会社一覧</td>
+    <td class="sample_title">路線一覧</td>
+    <td class="sample_title">停車駅一覧</td>
+  </tr>
+  <tr>
+    <td>
+      <input class="sample_btn" type="button" value="会社一覧を取得" onClick="Javascript:getCorpList();">
+    </td>
+    <td>
+      <input class="sample_btn" type="button" value="ＪＲの路線を取得" onClick="Javascript:getListList();">
+    </td>
+    <td>
+      <input class="sample_btn" type="button" value="新幹線のぞみ(上り)" onClick="Javascript:getStationList('up');">
+      <input class="sample_btn" type="button" value="新幹線のぞみ(下り)" onClick="Javascript:getStationList('down');">
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title" colspan="3">結果表示</td>
+  </tr>
+  <tr>
+    <td>
+      <div id="railInfo"></div>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
