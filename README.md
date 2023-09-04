@@ -20,16 +20,16 @@
 ### 【使用例1】jsファイルをルートに設置した場合
 
 ~~~html
-<script type="text/javascript" src="コンポーネント名.js?key=keycode" charset="UTF-8"></script>
+<script type="text/javascript" src="コンポーネント名.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
 ~~~
 
 ### 【使用例2】ディレクトリ構成を残した場合
 
 ~~~html
-<script type="text/javascript" src="コンポーネント名/コンポーネント名.js?key=keycode" charset="UTF-8"></script>
+<script type="text/javascript" src="コンポーネント名/コンポーネント名.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
 ~~~
 
-※ keycode の部分には、Webサービスのキーコードを記述します。
+※ `YOUR_ACCESS_KEY` の部分には、「駅すぱあとWebサービス」のアクセスキーを記述します。
 
 ※ コンポーネントのご利用にはアクセスキーが必要になります。アクセスキーはサービス契約時に弊社より送付されます。
 
