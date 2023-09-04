@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiDateTime/expCss/expGuiDateTime.css">
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiStation/expCss/expGuiStation.css">
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiCondition/expCss/expGuiCondition.css">
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiCourse/expCss/expGuiCourse.css">
+<link class="css" rel="stylesheet" type="text/css" href="expSample.css">
+<script type="text/javascript" src="../expGuiDateTime/expGuiDateTime.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiCondition/expGuiCondition.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiStation/expGuiStation.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiCourse/expGuiCourse.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expSample.js" charset="UTF-8"></script>
+<script type="text/javascript">
+<!--
+    var key = "YOUR_ACCESS_KEY";
+
+    function changeUseOffpeakTeiki() {
+        // オフピーク定期券を利用する場合のみ、計算モードのセレクトボックスを有効化する
+        if (document.getElementById("use_offpeak_teiki").checked) {
+            document.getElementById("offpeak_teiki_mode").disabled = false;
+        } else {
+            document.getElementById("offpeak_teiki_mode").disabled = true;
+        }
+    }
+
+    /**
+    * オフピーク定期券を利用するための設定
+    */
+    function settingForOffpeakTeikiMode(){
+        // セレクトボックスで指定したオフピーク定期券利用時の計算モードを利用する
+        if (document.getElementById("use_offpeak_teiki").checked) {
+            document.getElementById("offpeakTeikiMode").value = document.getElementById("offpeak_teiki_mode").options.item(document.getElementById("offpeak_teiki_mode").selectedIndex).value;
+        } else {
+            document.getElementById("offpeakTeikiMode").value = "";
+        }
+        // オフピーク定期券利用時の計算モードは定期が設定されている場合のみ設定できる
+        if (document.getElementById("passRoute").value == "" && document.getElementById("offpeakTeikiMode").value != "") {
+            alert("下記の項目を確認してください。\n利用する定期が未設定でオフピーク定期券を利用することはできません。");
+            return false;
+        }
+        return true;
+    }
+
+    function searchWithTeiki(){
+        // セレクトボックスで指定した定期券を利用する
+        document.getElementById("passRoute").value = document.getElementById("teiki").options.item(document.getElementById("teiki").selectedIndex).value;
+        // オフピーク定期券を利用するための設定
+        if (settingForOffpeakTeikiMode() == false) {
+            return;
+        }
+        search();
+    }
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+    <!-- 日付入力パーツ -->
+    <h3 class="exp_sample_header">出発日</h3>
+    <div id="dateTime"></div>
+    
+    <!-- 探索条件パーツ -->
+    <h3 class="exp_sample_header">探索条件</h3>
+    <div id="condition"></div>
+
+    <!-- 駅名入力パーツ -->
+    <h3 class="exp_sample_header">地点情報</h3>
+    <div class="exp_sample_title">
+        出発地
+    </div>
+    <div id="station1" style="width:100%;"></div>
+    <div class="exp_sample_title">
+        目的地
+    </div>
+    <div id="station2" style="width:100%;"></div>
+
+    <!-- 定期券の設定 -->
+    <div class="exp_sample_title">
+        利用する定期
+    </div>
+    <select id="teiki" class="exp_select">
+        <option value="高円寺:ＪＲ中央線快速:Up:東京">高円寺:ＪＲ中央線快速:Up:東京</option>
+        <option value="高円寺:ＪＲ中央線快速:Up:新宿:ＪＲ山手線内回り:Down:品川">高円寺:ＪＲ中央線快速:Up:新宿:ＪＲ山手線内回り:Down:品川</option>
+    </select>
+
+    <!-- 定期控除のパラメータ -->
+    <input type="hidden" id="passRoute" value="">
+
+    <!-- オフピーク定期券利用時の計算モードの設定 -->
+    <div class="exp_sample_title">
+        オフピーク定期券の利用
+    </div>
+    <div>
+        <input type="checkbox" id="use_offpeak_teiki" onchange="JavaScript:changeUseOffpeakTeiki();"/>
+        <label for="use_offpeak_teiki">オフピーク定期券を利用する</label>
+    </div>
+    <select id="offpeak_teiki_mode" class="exp_select" disabled>
+        <option value="offpeakTime">オフピーク時間帯</option>
+        <option value="peakTime">ピーク時間帯</option>
+    </select>
+
+    <!-- オフピーク定期券利用時の計算モードのパラメータ -->
+    <input type="hidden" id="offpeakTeikiMode" value="">
+
+    <!-- 探索実行ボタン -->
+    <div class="exp_sample_btn_area">
+        <input class="exp_sample_btn" type="button" value="探索" onClick="Javascript:searchWithTeiki();">
+    </div>
+
+    <!-- 経路表示パーツ -->
+    <div id="result"></div>
+
+</body>
+</html>

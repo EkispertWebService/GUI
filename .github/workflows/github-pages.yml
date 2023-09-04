@@ -1,0 +1,45 @@
+# GitHub Actionsを使って、各デモページをGitHub Pagesにデプロイする。
+# デモページの各htmlファイルには、アクセスキーを直接書かないようにしているため、
+# GitHub Actionsのジョブでアクセスキーを設定して、その後GitHub Pagesにデプロイするようにしている。
+
+# 参考にしたワークフロー: https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#サイトを公開するカスタム-github-actions-ワークフローの作成
+
+name: Deploy static content to GitHub Pages
+
+on:
+  push:
+    branches: ["master"]
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+        # 各デモページにアクセスキーを設定する（デモページの各htmlファイルには、アクセスキーを直接書かないようにしている）
+      - name: Set EWS access key
+        run: sed -i 's/YOUR_ACCESS_KEY/${{secrets.EWS_ACCESS_KEY}}/g' ./sample/*.html
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
