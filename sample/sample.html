@@ -1,0 +1,294 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiDateTime/expCss/expGuiDateTime.css">
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiStation/expCss/expGuiStation.css">
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiCondition/expCss/expGuiCondition.css">
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiCourse/expCss/expGuiCourse.css">
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="../expGuiDateTime/expGuiDateTime.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiCondition/expGuiCondition.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiStation/expGuiStation.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiCourse/expGuiCourse.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+
+var dateTimeApp;// 日付入力パーツ
+var stationApp1;// 駅名入力パーツ#1
+var stationApp2;// 駅名入力パーツ#2
+var stationApp3;// 駅名入力パーツ#3
+var conditonApp;// 探索条件パーツ
+var resultApp;
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 日付入力パーツ初期化
+  dateTimeApp = new expGuiDateTime(document.getElementById("dateTime"));
+  dateTimeApp.setConfigure("ssl", true);
+  dateTimeApp.dispDateTime(dateTimeApp.SEARCHTYPE_PLAIN);
+
+  // 駅名入力パーツ#1初期化
+  stationApp1 = new expGuiStation(document.getElementById("station1"));
+  stationApp1.setConfigure("ssl", true);
+  stationApp1.setConfigure("maxStation",10);
+  stationApp1.setConfigure("type",stationApp1.TYPE_TRAIN +":"+ stationApp1.TYPE_PLANE +":"+ stationApp1.TYPE_SHIP);
+  stationApp1.dispStation();
+
+  // 駅名入力パーツ#2初期化
+  stationApp2 = new expGuiStation(document.getElementById("station2"));
+  stationApp2.setConfigure("ssl", true);
+  stationApp2.setConfigure("maxStation",10);
+  stationApp2.setConfigure("type",stationApp2.TYPE_TRAIN +":"+ stationApp2.TYPE_PLANE +":"+ stationApp2.TYPE_SHIP);
+  stationApp2.dispStation();
+
+  // 駅名入力パーツ#3初期化
+  stationApp3 = new expGuiStation(document.getElementById("station3"));
+  stationApp3.setConfigure("ssl", true);
+  stationApp3.setConfigure("maxStation",10);
+  stationApp3.setConfigure("type",stationApp3.TYPE_TRAIN +":"+ stationApp3.TYPE_PLANE +":"+ stationApp3.TYPE_SHIP);
+  stationApp3.dispStation();
+
+  // 探索条件パーツ初期化
+  conditonApp = new expGuiCondition(document.getElementById("condition"));
+  conditonApp.setConfigure("ssl", true);
+  conditonApp.dispCondition();
+
+  // 経路表示パーツ初期化
+  resultApp = new expGuiCourse(document.getElementById("result"));
+  resultApp.setConfigure("ssl", true);
+  resultApp.setConfigure("PriceChange",true);// 変更を許可
+  resultApp.setConfigure("AssignDia",true);
+}
+
+/*
+ * 探索前に入力チェックを行う
+ */
+function checkData(){
+  // メッセージの初期化
+  var errorMessage="";
+  if(!dateTimeApp.checkDate()){
+    // 日付入力パーツのチェック
+    errorMessage +="\n日付を正しく入力してください。";
+  }
+  if(stationApp1.getStation() == ""){
+    // 駅名入力パーツの空チェック
+    errorMessage +="\n出発地は必須です。";
+  }
+  if(stationApp2.getStation() == ""){
+    // 駅名入力パーツの空チェック
+    errorMessage +="\n目的地は必須です。";
+  }else{
+    if(stationApp1.getStation() == stationApp2.getStation()){
+      // 駅名同一チェック
+      errorMessage +="\n出発地と目的地が同一です。";
+    }
+  }
+  if(stationApp3.getStation() != ""){
+    if(stationApp1.getStation() == stationApp3.getStation()){
+      // 駅名同一チェック
+      errorMessage +="\n経由地が出発地と同一です。";
+    }else if(stationApp2.getStation() == stationApp3.getStation()){
+      // 駅名同一チェック
+      errorMessage +="\n経由地が目的地と同一です。";
+    }
+  }
+  if(errorMessage != ""){
+    alert("下記の項目を確認してください。"+errorMessage);
+    return false;
+  }else{
+    return true;
+  }
+}
+
+/*
+ * 探索ボタンの動作
+ */
+function searchRun(teikiFlag){
+  //入力チェック後に動作
+  if(checkData()){
+    var searchWord = "";
+    // 候補を閉じる
+    stationApp1.closeStationList();
+    stationApp2.closeStationList();
+    stationApp3.closeStationList();
+    // 発着地リストを作成
+    var viaList="";
+    viaList += stationApp1.getStationCode();
+    if(stationApp3.getStation() != ""){
+      viaList += ":"+ stationApp3.getStationCode();
+    }
+    viaList += ":"+ stationApp2.getStationCode();
+    // 経路表示パーツ#1の場合
+    searchWord +="viaList="+viaList;
+    // 探索種別
+    searchWord += '&date='+ dateTimeApp.getDate();
+    switch(dateTimeApp.getSearchType()){
+      case dateTimeApp.SEARCHTYPE_DEPARTURE:// ダイヤ出発
+        searchWord += '&searchType=departure';
+        searchWord += '&time='+ dateTimeApp.getTime();
+        break;
+      case dateTimeApp.SEARCHTYPE_ARRIVAL:// ダイヤ到着
+        searchWord += '&searchType=arrival';
+        searchWord += '&time='+ dateTimeApp.getTime();
+        break;
+      case dateTimeApp.SEARCHTYPE_FIRSTTRAIN:// 始発
+        searchWord += '&searchType=firstTrain';
+        break;
+      case dateTimeApp.SEARCHTYPE_LASTTRAIN:// 終電
+        searchWord += '&searchType=lastTrain';
+        break;
+      case dateTimeApp.SEARCHTYPE_PLAIN:// 平均
+        searchWord += '&searchType=plain';
+        break;
+    }
+    // ソート
+    searchWord += '&sort='+ conditonApp.getSortType();
+    // 探索結果数
+    searchWord += '&answerCount='+ conditonApp.getAnswerCount();
+    // 探索条件
+    searchWord += '&conditionDetail='+ conditonApp.getConditionDetail();
+    //定期券が存在する場合はセットする
+    if(teikiFlag){
+      searchWord += '&assignDetailRoute='+ document.getElementById("passRoute").value;
+    }
+    // 探索を実行
+    resultApp.search(searchWord,conditonApp.getPriceType(),result);
+  }
+}
+
+function searchTeiki(){
+  //入力チェック後に動作
+  if(checkData()){
+    var searchWord = "";
+    // 候補を閉じる
+    stationApp1.closeStationList();
+    stationApp2.closeStationList();
+    stationApp3.closeStationList();
+    // 発着地リストを作成
+    var viaList="";
+    viaList += stationApp1.getStationCode();
+    if(stationApp3.getStation() != ""){
+      viaList += ":"+ stationApp3.getStationCode();
+    }
+    viaList += ":"+ stationApp2.getStationCode();
+    // 経路表示パーツ#1の場合
+    searchWord +="viaList="+viaList;
+    // 探索種別
+    searchWord += '&date='+ dateTimeApp.getDate();
+    searchWord += '&searchType=plain';
+    // ソート
+    searchWord += '&sort='+ conditonApp.getSortType();
+    // 探索結果数
+    searchWord += '&answerCount='+ conditonApp.getAnswerCount();
+    // 探索条件
+    searchWord += '&conditionDetail='+ conditonApp.getConditionDetail();
+    // 探索を実行
+    resultApp.search(searchWord,resultApp.PRICE_TEIKI,result);
+  }
+}
+
+/*
+ * 探索実行時のコールバック関する
+ */
+function result(isSuccess){
+  if(!isSuccess){
+    alert("探索結果が取得できませんでした");
+  }else{
+    location.href = "#resultArea";
+  }
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<!-- 日付入力パーツ -->
+<table class="sample">
+  <tr>
+    <td class="sample_title">出発日</td>
+  </tr>
+  <tr>
+    <td>
+      <div id="dateTime"></div>
+    </td>
+  </tr>
+</table>
+
+<!-- 探索条件パーツ -->
+<table class="sample">
+  <tr>
+    <td class="sample_title">探索条件</td>
+  </tr>
+  <tr>
+    <td>
+      <div id="condition"></div>
+    </td>
+  </tr>
+</table>
+
+<!-- 駅名入力パーツ -->
+<table class="sample">
+  <tr>
+    <td class="sample_title">出発地</td>
+  </tr>
+  <tr>
+    <td>
+      <div id="station1" style="width:100%;"></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">目的地</td>
+  </tr>
+  <tr>
+    <td>
+      <div id="station2" style="width:100%;"></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">経由地</td>
+  </tr>
+  <tr>
+    <td>
+      <div id="station3" style="width:100%;"></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">定期経路</td>
+  </tr>
+  <tr>
+    <td>
+      <input class="sample_teiki" type="text" id="passRoute" value="高円寺:ＪＲ総武線:Up:東中野" readonly="readonly">
+    </td>
+  </tr>
+</table>
+
+<!-- 探索実行ボタン -->
+<div class="sample_btn_area">
+<input class="sample_btn" type="button" value="探索" onClick="Javascript:searchRun(false);">
+<input class="sample_btn" type="button" value="定期区間を控除して探索" onClick="Javascript:searchRun(true);">
+<input class="sample_btn" type="button" value="定期券を探索" onClick="Javascript:searchTeiki();">
+</div>
+<!-- 経路表示パーツ -->
+<a id="resultArea"></a>
+<table class="sample">
+  <tr>
+    <td>
+      <div id="result"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

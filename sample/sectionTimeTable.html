@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiSectionTimeTable/expCss/expGuiSectionTimeTable.css">
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="../expGuiSectionTimeTable/expGuiSectionTimeTable.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var sectionTimeTable;
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 区間時刻表
+  sectionTimeTable = new expGuiSectionTimeTable(document.getElementById("sectionTimetable"))
+  sectionTimeTable.bind("click",setTime);
+}
+
+/*
+ * 空路の区間時刻表
+ */
+function viewPlaneTimeTable(direction){
+  var lineName = "空路(東京－千歳)";
+  sectionTimeTable.dispPlaneTimetable(lineName,direction,resultSectionTimeTable);
+}
+
+/*
+ * バス停の区間時刻表
+ */
+function viewBusTimeTable(){
+  var from = "高円寺駅南口／関東バス";
+  var to = "新高円寺駅／関東バス";
+  sectionTimeTable.dispBusTimetable(from,to,resultSectionTimeTable);
+}
+
+/*
+ * 海路の区間時刻表
+ */
+function viewShipTimeTable(direction){
+  var lineName = "フェリー(久里浜－金谷)";
+  sectionTimeTable.dispShipTimetable(lineName,direction,resultSectionTimeTable);
+}
+
+/*
+ * 時刻表取得ののコールバック
+ */
+function resultSectionTimeTable(isSuccess){
+  if(!isSuccess){
+    alert("時刻表が取得できませんでした");
+  }
+}
+
+/*
+ * 時刻表内のクリックイベント
+ */
+function setTime(code){
+  var tmpLineObject = sectionTimeTable.getLineObject(code);
+  if(typeof tmpLineObject != 'undefined'){
+    var buffer = "";
+    if(typeof tmpLineObject.from != 'undefined'){
+      buffer += "出発地:"+ tmpLineObject.from +"\n";
+    }
+    if(typeof tmpLineObject.to != 'undefined'){
+      buffer += "目的地:"+ tmpLineObject.to +"\n";
+    }
+    if(typeof tmpLineObject.name != 'undefined'){
+      buffer += "名称:"+ tmpLineObject.name +"\n";
+    }
+    if(typeof tmpLineObject.number != 'undefined'){
+      buffer += "番号:"+ tmpLineObject.number +"\n";
+    }
+    buffer += "発時刻:"+ tmpLineObject.departureTime +"\n";
+    buffer += "着時刻:"+ tmpLineObject.arrivalTime +"\n";
+    alert(buffer);
+  }
+}
+
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<!-- 時刻表パーツ -->
+<table class="sample">
+  <tr>
+    <td class="sample_title">区間</td>
+  </tr>
+  <tr>
+    <td class="sample_conf">
+       <input class="sample_btn" type="button" value="空路(千歳－東京)" onClick="JavaScript:viewPlaneTimeTable(true);"><br>
+       <input class="sample_btn" type="button" value="空路(東京－千歳)" onClick="JavaScript:viewPlaneTimeTable(false);"><br>
+       <input class="sample_btn" type="button" value="高円寺駅南口～新高円寺駅" onClick="JavaScript:viewBusTimeTable();"><br>
+       <input class="sample_btn" type="button" value="フェリー(金谷久－里浜)" onClick="JavaScript:viewShipTimeTable(true);"><br>
+       <input class="sample_btn" type="button" value="フェリー(久里浜－金谷)" onClick="JavaScript:viewShipTimeTable(false);"><br>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">時刻表</td>
+  </tr>
+  <tr>
+    <td>
+      <div id="sectionTimetable" style="width:100%;"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+

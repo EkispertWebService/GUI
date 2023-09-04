@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
+<meta name="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiCourse/expCss/expGuiCourse.css">
+<link class="css" rel="stylesheet" type="text/css" href="sample.css">
+<script type="text/javascript" src="../expGuiCoupon/expGuiCoupon.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiCourse/expGuiCourse.js?key=YOUR_ACCESS_KEY" charset="UTF-8"></script>
+<script type="text/javascript" src="json2.js"></script>
+<script type="text/javascript">
+<!--
+var coupon;
+var resultApp;
+var couponResult;
+
+/*
+ * パーツを初期化
+ */
+function init(){
+  // 回数券情報
+  coupon = new expGuiCoupon();
+  // 経路探索
+  resultApp = new expGuiCourse(document.getElementById("course"));
+  resultApp.setConfigure("PriceChangeRefresh",true);
+  resultApp.bind("change",changeCourse);
+  // 回数券利用時の経路
+  couponResult = new expGuiCourse(document.getElementById("courseCoupon"));
+}
+
+/*
+ * 経路の取得
+ */
+function search(){
+  // 探索実行
+  resultApp.search("viaList=東京:新大阪&searchType="+ resultApp.SEARCHTYPE_PLAIN,resultApp.PRICE_ONEWAY,setResult);
+}
+
+/*
+ * 経路の取得
+ */
+function searchCoupon(){
+  if(document.getElementById("couponDetail")){
+    // 探索条件を設定
+    var searchObject = couponResult.createSearchInterface();
+    // 発着地を設定
+    searchObject.setViaList("東京:新大阪");
+    // 回数券を設定
+    var couponName = document.getElementById("couponDetail").options.item(document.getElementById("couponDetail").selectedIndex).value;
+    searchObject.setCoupon(couponName);
+    // 探索実行
+    couponResult.search(searchObject);
+  }else{
+    alert("回数券が選択されていません");
+  }
+}
+
+/*
+ * 経路探索のコールバック
+ */
+function setResult(isSuccess){
+  if(!isSuccess){
+    alert("探索結果が取得できませんでした");
+  }else{
+    coupon.searchCourseCoupon(resultApp.getSerializeData(),setCouponDetailList);
+  }
+}
+
+/*
+ * 経路の切り替え検出
+ */
+function changeCourse(){
+  coupon.searchCourseCoupon(resultApp.getSerializeData(),setCouponDetailList);
+}
+
+/*
+ * 回数券詳細一覧取得のコールバック
+ */
+function setCouponDetailList(isSuccess){
+  if(!isSuccess){
+    document.getElementById("couponDetailList").innerHTML = "";
+    alert("利用可能な回数券はありません");
+  }else{
+    //回数券詳細一覧の出力
+    var buffer = "";
+    buffer+='<select id="couponDetail" name="couponDetail" size="20">';
+    var couponList = coupon.getCouponDetailList().split(",");
+    for(var i=0;i<couponList.length;i++){
+      buffer+='<option value="'+ couponList[i] +'">'+ couponList[i] +'</option>';
+    }
+    buffer+='</select>';
+    document.getElementById("couponDetailList").innerHTML = buffer;
+  }
+}
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+<table class="sample">
+  <tr>
+    <td class="sample_header" colspan="2">回数券パーツ</td>
+  </tr>
+  <tr>
+    <td class="sample_top" colspan="2">
+      <input class="sample_btn" type="button" value="経路を表示" onClick="Javascript:search();">
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_title">探索結果</td>
+    <td class="sample_title">回数券詳細</td>
+  </tr>
+  <tr>
+    <td class="sample_top">
+      <div id="course"></div>
+    </td>
+    <td class="sample_top">
+      <div id="couponDetailList"></div>
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_header" colspan="2">回数券利用時の経路</td>
+  </tr>
+  <tr>
+    <td class="sample_top" colspan="2">
+      <input class="sample_btn" type="button" value="回数券を利用して経路を表示" onClick="Javascript:searchCoupon();">
+    </td>
+  </tr>
+  <tr>
+    <td class="sample_top" colspan="2">
+      <div id="courseCoupon"></div>
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>
+

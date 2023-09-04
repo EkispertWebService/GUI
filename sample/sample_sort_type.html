@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Webサービスサンプル</title>
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiDateTime/expCss/expGuiDateTime.css">
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiStation/expCss/expGuiStation.css">
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiCondition/expCss/expGuiCondition.css">
+<link class="css" rel="stylesheet" type="text/css" href="../expGuiCourse/expCss/expGuiCourse.css">
+<link class="css" rel="stylesheet" type="text/css" href="expSample.css">
+<script type="text/javascript" src="../expGuiDateTime/expGuiDateTime.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiCondition/expGuiCondition.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiStation/expGuiStation.js" charset="UTF-8"></script>
+<script type="text/javascript" src="../expGuiCourse/expGuiCourse.js" charset="UTF-8"></script>
+<script type="text/javascript" src="expSample.js" charset="UTF-8"></script>
+<script type="text/javascript">
+<!--
+    var key = "YOUR_ACCESS_KEY";
+
+    function searchWithSort(sortType){
+        // 各ソート順で探索
+        switch(sortType){
+            case 'price':
+                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_PRICE);
+                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_ONEWAY);
+                search();
+                break;
+            case 'time':
+                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_TIME);
+                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_ONEWAY);
+                search();
+                break;
+            case 'transfer':
+                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_TRANSFER);
+                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_ONEWAY);
+                search();
+                break;
+            case 'teiki1':
+                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_TEIKI1);
+                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_TEIKI);
+                search();
+                break;
+        }
+    }
+// -->
+</script>
+</head>
+<body onLoad="Javascript:init();">
+
+    <!-- 日付入力パーツ -->
+    <h3 class="exp_sample_header">出発日</h3>
+    <div id="dateTime"></div>
+    
+    <!-- 探索条件パーツ -->
+    <h3 class="exp_sample_header">探索条件</h3>
+    <div id="condition"></div>
+
+    <!-- 駅名入力パーツ -->
+    <h3 class="exp_sample_header">地点情報</h3>
+    <div class="exp_sample_title">
+        出発地
+    </div>
+    <div id="station1" style="width:100%;"></div>
+    <div class="exp_sample_title">
+        目的地
+    </div>
+    <div id="station2" style="width:100%;"></div>
+
+    <!-- 探索実行ボタン -->
+    <div class="exp_sample_btn_area">
+        <input class="exp_sample_btn" type="button" value="運賃順で探索" onClick="Javascript:searchWithSort('price');">
+        <input class="exp_sample_btn" type="button" value="時間順で探索" onClick="Javascript:searchWithSort('time');">
+        <input class="exp_sample_btn" type="button" value="乗換回数順で探索" onClick="Javascript:searchWithSort('transfer');">
+        <input class="exp_sample_btn" type="button" value="1ヶ月の定期順で探索" onClick="Javascript:searchWithSort('teiki1');">
+    </div>
+
+    <!-- 経路表示パーツ -->
+    <div id="result"></div>
+
+</body>
+</html>
