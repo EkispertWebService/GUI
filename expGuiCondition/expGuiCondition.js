@@ -201,8 +201,8 @@ var expGuiCondition = function (pObject, config) {
         // EX予約/スマートEX
         var conditionId = "JRReservation";
         var conditionLabel = "EX予約/スマートEX";
-        var tmpOption = new Array("適用しない","ＥＸ予約", "ＥＸ予約(ｅ特急券)", "ＥＸ予約(ＥＸ早特)", "ＥＸ予約(ＥＸ早特２１)", "ＥＸ予約(ＥＸグリーン早特)", "ＥＸ予約(ＥＸ早特２８)", "スマートＥＸ", "スマートＥＸ(ＥＸ早特)", "スマートＥＸ(ＥＸ早特２１)", "スマートＥＸ(ＥＸグリーン早特)", "スマートＥＸ(ＥＸ早特２８)");
-        var tmpValue = new Array("none", "exYoyaku", "exETokkyu", "exHayatoku", "exHayatoku21", "exGreenHayatoku", "exHayatoku28", "smartEx", "smartExHayatoku", "smartExHayatoku21", "smartExGreenHayatoku", "smartExHayatoku28");
+        var tmpOption = new Array("適用しない","ＥＸ予約", "ＥＸ予約(ｅ特急券)", "ＥＸ予約(ＥＸ早特)", "ＥＸ予約(ＥＸ早特２１)", "ＥＸ予約(ＥＸ早特２８)", "ＥＸ予約(ＥＸグリーン早特)", "スマートＥＸ", "スマートＥＸ(ＥＸ早特)", "スマートＥＸ(ＥＸ早特２１)", "スマートＥＸ(ＥＸ早特２８)", "スマートＥＸ(ＥＸグリーン早特)");
+        var tmpValue = new Array("none", "exYoyaku", "exETokkyu", "exHayatoku", "exHayatoku21", "exHayatoku28", "exGreenHayatoku", "smartEx", "smartExHayatoku", "smartExHayatoku21", "smartExHayatoku28", "smartExGreenHayatoku");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
         // 新幹線eチケット
         var conditionId = "shinkansenETicket";
