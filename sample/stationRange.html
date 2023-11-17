@@ -28,9 +28,9 @@ function init(){
 /*
  * 駅リストを取得
  */
-function searchStation(stationName,upperLimit){
+function searchMultipleStation(stationName,upperMinute){
   stationRange.setConfigure("type",stationRange.TYPE_TRAIN);
-  stationRange.searchStation(stationName,upperLimit,setStationList);
+  stationRange.searchMultipleStation(stationName,upperMinute,setStationList);
 }
 
 /*
@@ -79,10 +79,10 @@ function selectStation(){
   </tr>
   <tr>
     <td class="sample_top">
-      <input class="sample_btn" type="button" value="東京(10分)を範囲探索" onClick="Javascript:searchStation('東京',10);"><br>
-      <input class="sample_btn" type="button" value="高円寺(10分)を範囲探索" onClick="Javascript:searchStation('高円寺',10);"><br>
-      <input class="sample_btn" type="button" value="有楽町(15分)を範囲探索" onClick="Javascript:searchStation('有楽町',15);"><br>
-      <input class="sample_btn" type="button" value="飯田橋(20分)を範囲探索" onClick="Javascript:searchStation('飯田橋',20);"><br>
+      <input class="sample_btn" type="button" value="東京(10分)を範囲探索" onClick="Javascript:searchMultipleStation('東京',10);"><br>
+      <input class="sample_btn" type="button" value="高円寺(10分)を範囲探索" onClick="Javascript:searchMultipleStation('高円寺',10);"><br>
+      <input class="sample_btn" type="button" value="有楽町(15分)を範囲探索" onClick="Javascript:searchMultipleStation('有楽町',15);"><br>
+      <input class="sample_btn" type="button" value="飯田橋(20分)を範囲探索" onClick="Javascript:searchMultipleStation('飯田橋',20);"><br>
     </td>
     <td class="sample_top">
       <div id="stationRangeInfo"></div>
