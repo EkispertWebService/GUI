@@ -27,9 +27,11 @@ var stationTimetable;// 列車時刻表パーツ
 function init(){
   // 列車時刻表
   trainTimeTable = new expGuiTrainTimeTable(document.getElementById("trainTimetable"))
+  trainTimeTable.setConfigure("ssl", true);
   trainTimeTable.bind("click",setTime);
   // 駅時刻表の出力
   stationTimetable = new expGuiStationTimeTable(document.getElementById("stationTimetable"));
+  stationTimetable.setConfigure("ssl", true);
   stationTimetable.bind("click",viewTrainTimeTable);
   var stationName = document.getElementById("stationName").value;
   var lineCode = 1;

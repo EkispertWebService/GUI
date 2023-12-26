@@ -24,6 +24,7 @@ var stationTimetable;
 function init(){
   // 駅時刻表
   stationTimetable = new expGuiStationTimeTable(document.getElementById("stationTimetable"));
+  stationTimetable.setConfigure("ssl", true);
   stationTimetable.bind("click",setTime);
 }
 

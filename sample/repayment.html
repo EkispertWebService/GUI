@@ -26,9 +26,11 @@ var resultApp;// 経路表示パーツ
 function init(){
   // 払い戻し計算
   repayment = new expGuiRepayment(document.getElementById("repayment"));
+  repayment.setConfigure("ssl", true);
   repayment.bind('change',changeRepay);
   // 計算用の経路探索
   resultApp = new expGuiCourse(document.getElementById("teikiResult"));
+  resultApp.setConfigure("ssl", true);
 }
 
 /*
