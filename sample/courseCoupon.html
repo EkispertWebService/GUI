@@ -43,7 +43,7 @@ function init(){
  */
 function search(){
   // 探索実行
-  resultApp.search("viaList=東京:新大阪&searchType="+ resultApp.SEARCHTYPE_PLAIN,resultApp.PRICE_ONEWAY,setResult);
+  resultApp.search("viaList=東京:新横浜&searchType="+ resultApp.SEARCHTYPE_PLAIN,resultApp.PRICE_ONEWAY,setResult);
 }
 
 /*
@@ -54,7 +54,7 @@ function searchCoupon(){
     // 探索条件を設定
     var searchObject = couponResult.createSearchInterface();
     // 発着地を設定
-    searchObject.setViaList("東京:新大阪");
+    searchObject.setViaList("東京:新横浜");
     // 回数券を設定
     var couponName = document.getElementById("couponDetail").options.item(document.getElementById("couponDetail").selectedIndex).value;
     searchObject.setCoupon(couponName);
