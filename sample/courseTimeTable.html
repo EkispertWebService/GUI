@@ -31,10 +31,13 @@ var resultApp;//経路表示パーツ
 function init(){
   // 駅時刻表
   courseStationTimeTable = new expGuiStationTimeTable(document.getElementById("stationTimetable"));
+  courseStationTimeTable.setConfigure("ssl", true);
   // 区間時刻表
   courseSectionTimeTable = new expGuiSectionTimeTable(document.getElementById("sectionTimetable"));
+  courseSectionTimeTable.setConfigure("ssl", true);
   // 経路探索
   resultApp = new expGuiCourse(document.getElementById("course"));
+  resultApp.setConfigure("ssl", true);
 }
 
 /*

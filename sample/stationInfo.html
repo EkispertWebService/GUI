@@ -23,6 +23,7 @@ var station;
 function init(){
   // 駅情報
   station = new expGuiStationInfo();
+  station.setConfigure("ssl", true);
   station.setConfigure("type",station.TYPE_TRAIN);
   station.setConfigure("corporationBind","ＪＲ");
 }

@@ -23,6 +23,7 @@ var mapApp = new expGuiMap(document.getElementById("map"),{configure : {
                                                           change    : true
                                                         }
                                                       });
+mapApp.setConfigure("ssl", true);
 mapApp.dispMap("tokyo");
 mapApp.bind('click',onStationClick);
 

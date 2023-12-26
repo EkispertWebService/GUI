@@ -27,12 +27,15 @@ var couponResult;
 function init(){
   // 回数券情報
   coupon = new expGuiCoupon();
+  coupon.setConfigure("ssl", true);
   // 経路探索
   resultApp = new expGuiCourse(document.getElementById("course"));
+  resultApp.setConfigure("ssl", true);
   resultApp.setConfigure("PriceChangeRefresh",true);
   resultApp.bind("change",changeCourse);
   // 回数券利用時の経路
   couponResult = new expGuiCourse(document.getElementById("courseCoupon"));
+  couponResult.setConfigure("ssl", true);
 }
 
 /*
