@@ -15,6 +15,7 @@ var app;
 
 function onLoad() {
     app = new expGuiMap(document.getElementById("map"));
+    app.setConfigure("ssl", true);
     app.dispMapStation(22828,'jpnx4',onDispMapStation);
 }
 
