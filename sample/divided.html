@@ -27,8 +27,10 @@ var priceType;
 function init(){
   // 分割計算
   divided = new expGuiDivided();
+  divided.setConfigure("ssl", true);
   // 経路探索
   resultApp = new expGuiCourse(document.getElementById("course"));
+  resultApp.setConfigure("ssl", true);
   resultApp.bind("change",changeCourse);
 }
 

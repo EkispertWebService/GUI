@@ -27,9 +27,12 @@ var resultApp;// 経路表示パーツ
 function init(){
   // 地点情報
   fromLandmark = new expGuiLandmark();
+  fromLandmark.setConfigure("ssl", true);
   toLandmark = new expGuiLandmark();
+  toLandmark.setConfigure("ssl", true);
   // 経路探索
   resultApp = new expGuiCourse(document.getElementById("course"));
+  resultApp.setConfigure("ssl", true);
 }
 
 /*

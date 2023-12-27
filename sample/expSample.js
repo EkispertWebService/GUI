@@ -31,6 +31,7 @@ function init() {
     // 日付入力パーツ初期化
     if (document.getElementById("dateTime")) {
         dateTimeApp = new expGuiDateTime(document.getElementById("dateTime"));
+        dateTimeApp.setConfigure("ssl", true);
         dateTimeApp.dispDateTime();
         // クッキーから情報を復元する
         if (getCookie("searchType") != "") {
@@ -45,6 +46,7 @@ function init() {
     // 駅名入力パーツ#1初期化
     if (document.getElementById("station1")) {
         stationApp1 = new expGuiStation(document.getElementById("station1"));
+        stationApp1.setConfigure("ssl", true);
         if (typeof apiURL != 'undefined') {
             stationApp1.setConfigure("apiURL", apiURL);
         }
@@ -60,6 +62,7 @@ function init() {
     // 駅名入力パーツ#2初期化
     if (document.getElementById("station2")) {
         stationApp2 = new expGuiStation(document.getElementById("station2"));
+        stationApp2.setConfigure("ssl", true);
         if (typeof apiURL != 'undefined') {
             stationApp2.setConfigure("apiURL", apiURL);
         }
@@ -75,6 +78,7 @@ function init() {
     // 駅名入力パーツ#3初期化
     if (document.getElementById("station3")) {
         stationApp3 = new expGuiStation(document.getElementById("station3"));
+        stationApp3.setConfigure("ssl", true);
         if (typeof apiURL != 'undefined') {
             stationApp3.setConfigure("apiURL", apiURL);
         }
@@ -90,6 +94,7 @@ function init() {
     // 駅名入力パーツ#4初期化
     if (document.getElementById("station4")) {
         stationApp4 = new expGuiStation(document.getElementById("station4"));
+        stationApp4.setConfigure("ssl", true);
         if (typeof apiURL != 'undefined') {
             stationApp4.setConfigure("apiURL", apiURL);
         }
@@ -105,6 +110,7 @@ function init() {
     // 駅名入力パーツ#5初期化
     if (document.getElementById("station5")) {
         stationApp5 = new expGuiStation(document.getElementById("station5"));
+        stationApp5.setConfigure("ssl", true);
         if (typeof apiURL != 'undefined') {
             stationApp5.setConfigure("apiURL", apiURL);
         }
@@ -120,6 +126,7 @@ function init() {
     // 駅名入力パーツ#6初期化
     if (document.getElementById("station6")) {
         stationApp6 = new expGuiStation(document.getElementById("station6"));
+        stationApp6.setConfigure("ssl", true);
         if (typeof apiURL != 'undefined') {
             stationApp6.setConfigure("apiURL", apiURL);
         }
@@ -139,6 +146,7 @@ function init() {
     // 探索条件パーツ初期化
     if (document.getElementById("condition")) {
         conditionApp = new expGuiCondition(document.getElementById("condition"));
+        conditionApp.setConfigure("ssl", true);
         conditionApp.dispCondition();
         if (getCookie("answerCount") != "" && getCookie("sort") != "" && getCookie("priceType") != "" && getCookie("conditionDetail") != "") {
             conditionApp.setCondition(getCookie("answerCount"), getCookie("sort"), getCookie("priceType"), getCookie("conditionDetail"));
@@ -151,6 +159,7 @@ function init() {
     // 経路表示パーツ初期化
     if (document.getElementById("result")) {
         resultApp = new expGuiCourse(document.getElementById("result"));
+        resultApp.setConfigure("ssl", true);
         if (typeof apiURL != 'undefined') {
             resultApp.setConfigure("apiURL", apiURL);
         }
@@ -174,6 +183,7 @@ function init() {
         document.getElementById("repay_start").value = String(now.getFullYear()) + (now.getMonth() < 9 ? "0" : "") + String(now.getMonth() + 1) + (now.getDate() < 10 ? "0" : "") + String(now.getDate());
         document.getElementById("repay_repayment").value = String(now.getFullYear()) + (now.getMonth() < 9 ? "0" : "") + String(now.getMonth() + 1) + (now.getDate() < 10 ? "0" : "") + String(now.getDate());
         repaymentApp = new expGuiRepayment(document.getElementById("repayment"));
+        repaymentApp.setConfigure("ssl", true);
         if (typeof apiURL != 'undefined') {
             repaymentApp.setConfigure("apiURL", apiURL);
         }
@@ -188,6 +198,7 @@ function init() {
     stationApp1.setStation("高円寺");
 
     stationInfoApp = new expGuiStationInfo();
+    stationInfoApp.setConfigure("ssl", true);
     if (typeof apiURL != 'undefined') {
         stationInfoApp.setConfigure("apiURL", apiURL);
     }
@@ -198,6 +209,7 @@ function init() {
         initStationInfo();
     }
     railApp = new expGuiRail();
+    railApp.setConfigure("ssl", true);
     if (typeof apiURL != 'undefined') {
         railApp.setConfigure("apiURL", apiURL);
     }

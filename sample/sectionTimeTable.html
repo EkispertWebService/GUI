@@ -24,6 +24,7 @@ var sectionTimeTable;
 function init(){
   // 区間時刻表
   sectionTimeTable = new expGuiSectionTimeTable(document.getElementById("sectionTimetable"))
+  sectionTimeTable.setConfigure("ssl", true);
   sectionTimeTable.bind("click",setTime);
 }
 
