@@ -49,14 +49,15 @@ function search(){
 /*
  * 経路の取得
  */
-function searchCoupon(){
-  if(document.getElementById("couponDetail")){
+ function searchCoupon(){
+  var couponDetailElement = document.getElementById("couponDetail");
+  if(couponDetailElement && couponDetailElement.options.length > 0 && couponDetailElement.selectedIndex != -1){
     // 探索条件を設定
     var searchObject = couponResult.createSearchInterface();
     // 発着地を設定
     searchObject.setViaList("東京:新横浜");
     // 回数券を設定
-    var couponName = document.getElementById("couponDetail").options.item(document.getElementById("couponDetail").selectedIndex).value;
+    var couponName = couponDetailElement.options.item(couponDetailElement.selectedIndex).value;
     searchObject.setCoupon(couponName);
     // 探索実行
     couponResult.search(searchObject);
