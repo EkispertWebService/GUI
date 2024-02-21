@@ -1,5 +1,5 @@
 /**
- *  駅すぱあと Web サービス
+ *  駅すぱあと API
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
