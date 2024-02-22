@@ -1,5 +1,5 @@
 /**
- *  駅すぱあと Web サービス
+ *  駅すぱあと API
  *  路線情報パーツ
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
@@ -10,7 +10,7 @@
  **/
 
 var expGuiRail = function (pObject, config) {
-    // Webサービスの設定
+    // 駅すぱあと APIの設定
     var apiURL = "http://api.ekispert.jp/";
 
     // GETパラメータからキーの設定
