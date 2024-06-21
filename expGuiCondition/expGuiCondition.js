@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2024-03-19
+ *  Version:2024-06-21
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -64,7 +64,7 @@ var expGuiCondition = function (pObject, config) {
     // 変数郡
     // デフォルト探索条件
     var def_condition_t = "T3221233232319";
-    var def_condition_f = "F34211221200001";
+    var def_condition_f = "F33211221200001";
     var def_condition_a = "A23121141";
     var def_sortType = "ekispert"; // デフォルトソート
     var def_priceType = "oneway"; // 片道運賃がデフォルト
@@ -1204,7 +1204,9 @@ var expGuiCondition = function (pObject, config) {
             // 13:固定
             // 探索条件(F)
             setValue("surchargeKind", parseInt(conditionList_f[1]));
-            setValue("teikiKind", parseInt(conditionList_f[2]));
+            // 定期種別初期値については、「通勤:(value=3)、通学（大学）:(value=1)、通学（高校）:(value=2)、通学（中学）:(value=4)」の順でラジオボタンの要素を表示したい
+            // そのため、setRadioIndex()ではなくsetRadio()を使用して初期値を設定する必要があるため、parseInt()は行わない
+            setValue("teikiKind", conditionList_f[2]);
             setValue("JRSeasonalRate", parseInt(conditionList_f[3]));
             setValue("studentDiscount", parseInt(conditionList_f[4]));
             //  setValue("airFare",parseInt(conditionList_f[5]));(固定)
