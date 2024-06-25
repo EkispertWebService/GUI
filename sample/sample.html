@@ -27,7 +27,7 @@ var dateTimeApp;// 日付入力パーツ
 var stationApp1;// 駅名入力パーツ#1
 var stationApp2;// 駅名入力パーツ#2
 var stationApp3;// 駅名入力パーツ#3
-var conditonApp;// 探索条件パーツ
+var conditionApp;// 探索条件パーツ
 var resultApp;
 
 /*
@@ -61,9 +61,9 @@ function init(){
   stationApp3.dispStation();
 
   // 探索条件パーツ初期化
-  conditonApp = new expGuiCondition(document.getElementById("condition"));
-  conditonApp.setConfigure("ssl", true);
-  conditonApp.dispCondition();
+  conditionApp = new expGuiCondition(document.getElementById("condition"));
+  conditionApp.setConfigure("ssl", true);
+  conditionApp.dispCondition();
 
   // 経路表示パーツ初期化
   resultApp = new expGuiCourse(document.getElementById("result"));
@@ -154,17 +154,17 @@ function searchRun(teikiFlag){
         break;
     }
     // ソート
-    searchWord += '&sort='+ conditonApp.getSortType();
+    searchWord += '&sort='+ conditionApp.getSortType();
     // 探索結果数
-    searchWord += '&answerCount='+ conditonApp.getAnswerCount();
+    searchWord += '&answerCount='+ conditionApp.getAnswerCount();
     // 探索条件
-    searchWord += '&conditionDetail='+ conditonApp.getConditionDetail();
+    searchWord += '&conditionDetail='+ conditionApp.getConditionDetail();
     //定期券が存在する場合はセットする
     if(teikiFlag){
       searchWord += '&assignDetailRoute='+ document.getElementById("passRoute").value;
     }
     // 探索を実行
-    resultApp.search(searchWord,conditonApp.getPriceType(),result);
+    resultApp.search(searchWord,conditionApp.getPriceType(),result);
   }
 }
 
@@ -189,11 +189,11 @@ function searchTeiki(){
     searchWord += '&date='+ dateTimeApp.getDate();
     searchWord += '&searchType=plain';
     // ソート
-    searchWord += '&sort='+ conditonApp.getSortType();
+    searchWord += '&sort='+ conditionApp.getSortType();
     // 探索結果数
-    searchWord += '&answerCount='+ conditonApp.getAnswerCount();
+    searchWord += '&answerCount='+ conditionApp.getAnswerCount();
     // 探索条件
-    searchWord += '&conditionDetail='+ conditonApp.getConditionDetail();
+    searchWord += '&conditionDetail='+ conditionApp.getConditionDetail();
     // 探索を実行
     resultApp.search(searchWord,resultApp.PRICE_TEIKI,result);
   }
