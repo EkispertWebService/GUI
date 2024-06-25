@@ -22,23 +22,23 @@
         // 各ソート順で探索
         switch(sortType){
             case 'price':
-                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_PRICE);
-                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_ONEWAY);
+                conditionApp.setCondition(conditionApp.CONDITION_SORTTYPE,conditionApp.SORT_PRICE);
+                conditionApp.setCondition(conditionApp.CONDITION_PRICETYPE,conditionApp.PRICE_ONEWAY);
                 search();
                 break;
             case 'time':
-                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_TIME);
-                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_ONEWAY);
+                conditionApp.setCondition(conditionApp.CONDITION_SORTTYPE,conditionApp.SORT_TIME);
+                conditionApp.setCondition(conditionApp.CONDITION_PRICETYPE,conditionApp.PRICE_ONEWAY);
                 search();
                 break;
             case 'transfer':
-                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_TRANSFER);
-                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_ONEWAY);
+                conditionApp.setCondition(conditionApp.CONDITION_SORTTYPE,conditionApp.SORT_TRANSFER);
+                conditionApp.setCondition(conditionApp.CONDITION_PRICETYPE,conditionApp.PRICE_ONEWAY);
                 search();
                 break;
             case 'teiki1':
-                conditonApp.setCondition(conditonApp.CONDITON_SORTTYPE,conditonApp.SORT_TEIKI1);
-                conditonApp.setCondition(conditonApp.CONDITON_PRICETYPE,conditonApp.PRICE_TEIKI);
+                conditionApp.setCondition(conditionApp.CONDITION_SORTTYPE,conditionApp.SORT_TEIKI1);
+                conditionApp.setCondition(conditionApp.CONDITION_PRICETYPE,conditionApp.PRICE_TEIKI);
                 search();
                 break;
         }
