@@ -573,23 +573,30 @@ var expGuiCourse = function (pObject, config) {
             }
             // 経路表示
             viewResult();
-            // 表示する
-            document.getElementById(baseId + ':course').style.display = "block";
-            // 一度だけコールバックする
-            if (typeof callbackFunction == 'function') {
-                if (typeof result == 'undefined') {
-                    // 探索結果オブジェクトがない場合
-                    document.getElementById(baseId + ':course').style.display = "none";
+            if (typeof result == 'undefined') {
+                // 探索結果オブジェクトがない場合
+                document.getElementById(baseId + ':course').style.display = "none";
+                if (typeof callbackFunction == 'function') {
                     callbackFunction(false);
-                } else if (typeof result.ResultSet.Course == 'undefined') {
-                    // 探索結果が取得できていない場合
-                    document.getElementById(baseId + ':course').style.display = "none";
-                    callbackFunction(false);
-                } else {
-                    // 探索完了
-                    callbackFunction(true);
+                    callbackFunction = undefined;
                 }
-                callbackFunction = undefined;
+            } else if (typeof result.ResultSet.Course == 'undefined') {
+                // 探索結果が取得できていない場合
+                document.getElementById(baseId + ':course').style.display = "none";
+                if (typeof callbackFunction == 'function') {
+                    // 一度だけコールバックする
+                    callbackFunction(false);
+                    callbackFunction = undefined;
+                }
+            } else {
+                // 探索完了
+                // 表示する
+                document.getElementById(baseId + ':course').style.display = "block";
+                if (typeof callbackFunction == 'function') {
+                    // 一度だけコールバックする
+                    callbackFunction(true);
+                    callbackFunction = undefined;
+                }
             }
         }
     }
