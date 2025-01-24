@@ -1143,7 +1143,7 @@ var expGuiCourse = function (pObject, config) {
         }
         if (salesTaxRateIsNotSupported) {
             buffer += '<div class="exp_fareRevisionStatus">';
-            buffer += '赤色の金額は、消費税率変更に未対応です。';
+            buffer += '赤色の金額は、改定前運賃です。';
             buffer += '</div>';
         }
         // ソートを行う
@@ -2602,7 +2602,7 @@ var expGuiCourse = function (pObject, config) {
         if (priceViewFlag == "oneway" || priceViewFlag == "round") {
             if (salesTaxRateIsNotSupported) {
                 buffer += '<div class="exp_fareRevisionStatus exp_clearfix">';
-                buffer += '赤色の金額は、消費税率変更に未対応です。';
+                buffer += '赤色の金額は、改定前運賃です。';
                 buffer += '</div>';
             }
 
@@ -2615,7 +2615,7 @@ var expGuiCourse = function (pObject, config) {
         } else if (priceViewFlag == "teiki") {
             if (Teiki1SummarySalesTaxRateIsNotSupported || Teiki3SummarySalesTaxRateIsNotSupported || Teiki6SummarySalesTaxRateIsNotSupported || Teiki12SummarySalesTaxRateIsNotSupported) {
                 buffer += '<div class="exp_fareRevisionStatus exp_clearfix">';
-                buffer += '赤色の金額は、消費税率変更に未対応です。';
+                buffer += '赤色の金額は、改定前運賃です。';
                 buffer += '</div>';
             }
 
