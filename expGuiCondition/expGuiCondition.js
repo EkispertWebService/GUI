@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *  
- *  Version:2024-06-25
+ *  Version:2025-04-04
  *  
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -201,8 +201,8 @@ var expGuiCondition = function (pObject, config) {
         // EX予約/スマートEX
         var conditionId = "JRReservation";
         var conditionLabel = "EX予約/スマートEX";
-        var tmpOption = new Array("適用しない","ＥＸ予約", "ＥＸ予約(ｅ特急券)", "ＥＸ予約(ＥＸ早特)", "ＥＸ予約(ＥＸ早特１)", "ＥＸ予約(ＥＸ早特２１)", "ＥＸ予約(ＥＸ早特２８)", "ＥＸ予約(ＥＸグリーン早特)", "スマートＥＸ", "スマートＥＸ(ＥＸ早特)", "スマートＥＸ(ＥＸ早特１)", "スマートＥＸ(ＥＸ早特２１)", "スマートＥＸ(ＥＸ早特２８)", "スマートＥＸ(ＥＸグリーン早特)");
-        var tmpValue = new Array("none", "exYoyaku", "exETokkyu", "exHayatoku", "exHayatoku1", "exHayatoku21", "exHayatoku28", "exGreenHayatoku", "smartEx", "smartExHayatoku", "smartExHayatoku1", "smartExHayatoku21", "smartExHayatoku28", "smartExGreenHayatoku");
+        var tmpOption = new Array("適用しない","ＥＸ予約", "ＥＸ予約(ｅ特急券)", "ＥＸ予約(ＥＸ早特)", "ＥＸ予約(ＥＸ早特１)", "ＥＸ予約(ＥＸ早特２１)", "スマートＥＸ", "スマートＥＸ(ＥＸ早特)", "スマートＥＸ(ＥＸ早特１)", "スマートＥＸ(ＥＸ早特２１)");
+        var tmpValue = new Array("none", "exYoyaku", "exETokkyu", "exHayatoku", "exHayatoku1", "exHayatoku21", "smartEx", "smartExHayatoku", "smartExHayatoku1", "smartExHayatoku21");
         tmp_conditionObject[conditionId.toLowerCase()] = addCondition(conditionLabel, tmpOption, tmpValue);
         // 新幹線eチケット
         var conditionId = "shinkansenETicket";
@@ -1124,10 +1124,6 @@ var expGuiCondition = function (pObject, config) {
               return [3, 0];
             case 'exHayatoku21':
               return [4, 0];
-            case 'exGreenHayatoku':
-              return [5, 0];
-            case 'exHayatoku28':
-              return [6, 0];
             case 'exHayatoku1':
               return [7, 0];
             case 'smartEx':
@@ -1136,10 +1132,6 @@ var expGuiCondition = function (pObject, config) {
               return [0, 2];
             case 'smartExHayatoku21':
               return [0, 3];
-            case 'smartExGreenHayatoku':
-              return [0, 4];
-            case 'smartExHayatoku28':
-              return [0, 5];
             case 'smartExHayatoku1':
               return [0, 6];
             default:
@@ -1217,14 +1209,14 @@ var expGuiCondition = function (pObject, config) {
             setValue("preferredTicketOrder", parseInt(conditionList_f[10]));
             if (conditionList_f.length >= 12) {
                 if ( parseInt(conditionList_f[11]) > 0 ) {
-                    setValue("JRReservation", 14 - parseInt(conditionList_f[11]));
+                    setValue("JRReservation", 10 - parseInt(conditionList_f[11]));
                 } else if ( parseInt(conditionList_f[12]) > 0 ) {
-                    setValue("JRReservation", 14 - ( parseInt(conditionList_f[12]) + 7) );
+                    setValue("JRReservation", 10 - ( parseInt(conditionList_f[12]) + 5) );
                 } else {
-                    setValue("JRReservation", 14);
+                    setValue("JRReservation", 10);
                 }
             } else {
-                setValue("JRReservation", 14);
+                setValue("JRReservation", 10);
             }
             setValue("shinkansenETicket", parseInt(conditionList_f[13]));
             setValue("offpeakTeiki", parseInt(conditionList_f[14]));
