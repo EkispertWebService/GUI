@@ -4,7 +4,7 @@
  *  サンプルコード
  *  https://github.com/EkispertWebService/GUI
  *
- *  Version:2016-08-04
+ *  Version:2026-09-07
  *
  *  Copyright (C) Val Laboratory Corporation. All rights reserved.
  **/
@@ -615,7 +615,8 @@ var expGuiDateTime = function (pObject, config) {
         syuku = '';
         // ハッピーマンデーと振替休日
         if (week == 1) {
-            var moncnt = Math.floor(day / 7) + 1;
+            // 第何月曜か
+            var moncnt = Math.ceil(day / 7);
             // 振替休日
             // (2006年まで)「国民の祝日」が日曜日にあたるときは、その翌日を休日とする。
             if (furi == 1 && year <= 2006) {
